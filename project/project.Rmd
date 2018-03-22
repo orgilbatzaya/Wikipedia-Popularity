@@ -1,7 +1,7 @@
 ---
 title: "PROJECT TITLE"
-author: "NAME HERE"
-date: "TODAY'S DATE"
+author: "Duke Squirrels"
+date: "03/22/18"
 output: github_document
 ---
 
