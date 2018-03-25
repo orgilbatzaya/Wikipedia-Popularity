@@ -9,8 +9,18 @@ output: github_document
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
+```{r load-packages, message=FALSE}
+library(tidyverse)
+```
+
+
 ## Section 1. Introduction
 
 ## Section 2. Data analysis plan
 
 ## Section 3. Data
+
+```{r load-data, warning=FALSE, message=FALSE}
+panth <- read_csv("data/database.csv")
+```
+
