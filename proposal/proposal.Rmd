@@ -1,9 +1,13 @@
 ---
 title: "PROJECT TITLE"
-author: "NAME HERE"
-date: "TODAY'S DATE"
+author: "Duke Squirrels"
+date: "03/22/18"
 output: github_document
 ---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
 
 ## Section 1. Introduction
 
