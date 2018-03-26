@@ -9,12 +9,6 @@ output: github_document
 knitr::opts_chunk$set(echo = FALSE)
 ```
 
-```{r load-packages, message=FALSE}
-library(tidyverse)
-library(broom)
-```
-
-
 ## Section 1. Introduction
 
 ### Question
@@ -25,13 +19,32 @@ Using information from a variety of famous, historical figures, how have certain
 
 The data that we obtained contains information regarding famous figures throughout history. The data came from https://www.kaggle.com/mit/pantheon-project/data which originated from The Massachusetts Institute of Technology, about a year ago. The data is based off of wikipedia pages. We felt that this data is credible given that it originates from an institution like MIT. The variables within the data are as follows: `full_name`, `sex`, `birth_year`, `city `, `state`, `country`, `continent`, `latitude`, `longitude`, `occupation`, `industry`, `domain`, `article_langauges`, `page_views`, `average_views`, and `historical_popularity_index`.  
  
-For our question, we will be focusing on these particular variables: `full_name`, `birth_year`, `latitude`, `longitude`, `occupation`, and `industry`.
+For our question, we will be focusing on these particular variables: `full_name`, `birth_year`, `latitude`, `longitude`, `occupation`, `sex`, and `industry`.
 
 ## Section 2. Data analysis plan
 
+The outcomes we are expecting are proportions of men and women in the top 5 industries across time. The explanatory variables in this scenario are `sex`, while the response is the proportion in the industries.
+
+We will be using `sex` and `industry` to compare groups of historical figures across time.
+
+Add preliminary exploratory data analysis here:
+
+The statistical method that we believe will be useful includes finding the proportions of each industry grouped by sex.
+
+The results from the statistical method needed to support our hypothesized answer...
+
+
+
 ## Section 3. Data
+
+```{r load-packages, message=FALSE}
+library(tidyverse)
+```
 
 ```{r load-data, warning=FALSE, message=FALSE}
 panth <- read_csv("data/database.csv")
+
+panth %>%
+  glimpse()
 ```
 
