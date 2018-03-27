@@ -8,7 +8,7 @@ Section 1. Introduction
 
 ### Question
 
-Using information from a variety of famous, historical figures, how have certain industries changed throughout history, from a global perspective?
+What makes a person on Wikipedia popular?
 
 ### Data
 
