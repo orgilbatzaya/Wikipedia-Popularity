@@ -74,7 +74,7 @@ panth %>%
   filter(longitude != "NA" & latitude != "NA", industry == "Film And Theatre") %>%
   ggplot(panth, mapping = aes(x = longitude, y = latitude, color = sex, alpha = .1)) +
   geom_point() +
-  labs(title = "Visualizing geographical distributions of Government industry", subtitle = "by sex around the world", x = "Longitude", y = "Latitude", color = "sex")
+  labs(title = "Visualizing geographical distributions of Film and Theatre industry", subtitle = "by sex around the world", x = "Longitude", y = "Latitude", color = "sex")
 ```
 
 ```{r Film-And-Theatre_statistic}
