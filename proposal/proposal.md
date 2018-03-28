@@ -3,12 +3,17 @@ Wikipedia Popularity
 Duke Squirrels
 03/22/18
 
+Load Data
+---------
+
+Specified "NA" values and some odd values from data that R could not parse.
+
 Section 1. Introduction
 -----------------------
 
 ### Question
 
-What makes a person on Wikipedia popular?
+What makes a person "Wikipedia popular"?
 
 ### Data
 
@@ -49,13 +54,13 @@ This visualization of the \#1 industry (Government) and the resulting summary st
     ## 1 Film And Theatre Female   504 0.367
     ## 2 Film And Theatre Male     870 0.633
 
-Unlike the previous visualization with the Government industry, where women were only 6.6% of the total Wikipedia sites that were designated in the Government industry, there are significantly more women in the Film and Theatre category, though male historical figures still dominate the industry. We will create other visuals and calculate the proportions for the rest of the top 5 industries and will choose several other variables to conduct statistical analyses on in order to determine what makes a historical figure popular on a Wikipedia site.
+Unlike the previous visualization with the Government industry, where women comprised only 6.6% of the total "popular" Wikipedia sites that were designated in the Government industry, there are significantly more women in the Film and Theatre category, though male historical figures still dominate the industry. We will create other visuals and calculate the proportions for the rest of the top 5 industries and will choose several other variables to conduct statistical analyses on in order to determine what classifies a historical figure as "popular" on a Wikipedia site.
 
-The statistical method that we believe will be useful includes finding the proportions of each industry grouped by sex. We can also use simulation techniques to estimate the difference in the number of page views when comparing one `domain` to another. We will also use statistical summaries like mean and median to say, for example, what the mean historical popularity index is for the historical figures from China.
+The statistical method that we believe will be useful includes finding the proportions of each industry grouped by sex, birth year, and other variables. We can also use simulation techniques to estimate the difference in the number of page views when comparing one `domain` to another. We will also use statistical summaries like mean and median to say, for example, what the mean historical popularity index is for the historical figures from China.
 
 ### Hypothesis Testing
 
-Finally, we can use hypothesis testing to validate our results on what makes someone/industry/occupation popular. We can ask questions like: is the popularity index for women lower than that of men? Does America have the most popular filmmakers? Was war more prevalent in the past or present?
+Finally, we can use hypothesis testing to validate our results on what makes someone/industry/occupation popular on a Wikipedia site. We can ask questions like: is the popularity index for women lower than that of men? Does America have the most popular filmmakers? Does participating in a war impact the number of page views a figure gets? etc.
 
 Section 3. Data
 ---------------
@@ -67,7 +72,7 @@ Section 3. Data
     ## $ sex                         <chr> "Male", "Male", "Male", "Male", "M...
     ## $ birth_year                  <int> -384, -427, -4, -469, -356, 1452, ...
     ## $ city                        <chr> "Stageira", "Athens", "Judea", "At...
-    ## $ state                       <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA...
+    ## $ state                       <chr> "", "", "", "", "", "", "", "", ""...
     ## $ country                     <chr> "Greece", "Greece", "Israel", "Gre...
     ## $ continent                   <chr> "Europe", "Europe", "Asia", "Europ...
     ## $ latitude                    <dbl> 40.33333, 37.96667, 32.50000, 37.9...

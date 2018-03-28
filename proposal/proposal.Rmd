@@ -13,19 +13,20 @@ knitr::opts_chunk$set(echo = FALSE)
 library(tidyverse)
 ```
 
-##
+## Load Data
 
-```{r load-data, warning=FALSE, message=FALSE}
-panth <- read_csv("data/database.csv")
-
-
+```{r load-data, message=FALSE}
+panth <- read_csv("data/database.csv",
+                  na = c("Unknown", "1237?", "530s"))
 ```
+
+Specified "NA" values and some odd values from data that R could not parse.
 
 ## Section 1. Introduction
 
 ### Question
 
-What makes a person on Wikipedia popular?
+What makes a person "Wikipedia popular"?
 
 ### Data
 
@@ -84,13 +85,13 @@ panth %>%
   mutate(prop = n/sum(n))
 ```
 
-Unlike the previous visualization with the Government industry, where women were only 6.6% of the total Wikipedia sites that were designated in the Government industry, there are significantly more women in the Film and Theatre category, though male historical figures still dominate the industry. We will create other visuals and calculate the proportions for the rest of the top 5 industries and will choose several other variables to conduct statistical analyses on in order to determine what makes a historical figure popular on a Wikipedia site.  
+Unlike the previous visualization with the Government industry, where women comprised only 6.6% of the total "popular" Wikipedia sites that were designated in the Government industry, there are significantly more women in the Film and Theatre category, though male historical figures still dominate the industry. We will create other visuals and calculate the proportions for the rest of the top 5 industries and will choose several other variables to conduct statistical analyses on in order to determine what classifies a historical figure as "popular" on a Wikipedia site.  
 
-The statistical method that we believe will be useful includes finding the proportions of each industry grouped by sex. We can also use simulation techniques to estimate the difference in the number of page views when comparing one `domain` to another. We will also use statistical summaries like mean and median to say, for example, what the mean historical popularity index is for the historical figures from China.
+The statistical method that we believe will be useful includes finding the proportions of each industry grouped by sex, birth year, and other variables. We can also use simulation techniques to estimate the difference in the number of page views when comparing one `domain` to another. We will also use statistical summaries like mean and median to say, for example, what the mean historical popularity index is for the historical figures from China.
 
 ### Hypothesis Testing
 
-Finally, we can use hypothesis testing to validate our results on what makes someone/industry/occupation popular. We can ask questions like: is the popularity index for women lower than that of men? Does America have the most popular filmmakers? Was war more prevalent in the past or present?
+Finally, we can use hypothesis testing to validate our results on what makes someone/industry/occupation popular on a Wikipedia site. We can ask questions like: is the popularity index for women lower than that of men? Does America have the most popular filmmakers? Does participating in a war impact the number of page views a figure gets? etc. 
 
 ## Section 3. Data
 
