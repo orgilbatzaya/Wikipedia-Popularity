@@ -1,7 +1,7 @@
 ---
 title: "PROJECT TITLE"
 author: "Duke Squirrels"
-date: "03/22/18"
+date: "04/19/2018"
 output: github_document
 ---
 
@@ -12,9 +12,5 @@ knitr::opts_chunk$set(echo = FALSE)
 Your project goes here! Before you submit, make sure your chunks are turned off with `echo = FALSE`. 
 
 ## Introduction
-
-## Data Analysis Plan
-
-## Data
 
 ## Conclusion
