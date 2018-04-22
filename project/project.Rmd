@@ -16,12 +16,10 @@ library(tidyverse)
 library(infer)
 ```
 
-
 ```{r load-data, message=FALSE}
 panth <- read_csv("data/cdatabase.csv",
                   na = c("Unknown", "1237?", "530s"))
 ```
-
 
 ## Introduction
 
@@ -29,7 +27,41 @@ panth <- read_csv("data/cdatabase.csv",
 
 ### Question 1
 
+#### Filter out NA values and record the number of observations and variables 
+#### Make a new dataset to avoid overriding the original dataframe
+#### Record how many of the historical figures are men and how many are women
+
+```{r filter_NAs}
+panth_mod <- na.omit(panth)
+
+panth_mod %>%
+  ncol()
+
+panth_mod %>%
+  nrow()
+```
+
+There are 17 variables and 10,279 observations (with all NAs removed in the new dataframe). Before removing the NAs, the full dataframe had 11,341 observations.
+
+```{r men-and-women}
+panth_mod %>%
+  count(sex)
+```
+
+Based on the filtered dataframe, there are 1,427 women and 8,852 men that are considered historical figures. 
+
+##### Reference
+
+http://www.dummies.com/programming/r/how-to-remove-rows-with-missing-data-in-r/
+
 ### Question 2
+
+#### Create a map showing the concentration of popular historical figures around the world
+
+```{r industry_preliminary_visual}
+  ggplot(panth_mod, mapping = aes(x = longitude, y = latitude, color = sex)) +
+  geom_point(alpha = .2) 
+```
 
 ### Question 3
 
