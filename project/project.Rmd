@@ -13,7 +13,10 @@ Your project goes here! Before you submit, make sure your chunks are turned off 
 
 ```{r load-packages, message=FALSE}
 library(tidyverse)
-library(infer)
+library(maps)
+library(mapdata)
+library(ggmap)
+library(maptools)
 ```
 
 ```{r load-data, message=FALSE}
@@ -59,9 +62,11 @@ http://www.dummies.com/programming/r/how-to-remove-rows-with-missing-data-in-r/
 #### Create a map showing the concentration of popular historical figures around the world
 
 ```{r industry_preliminary_visual}
-  ggplot(panth_mod, mapping = aes(x = longitude, y = latitude, color = sex)) +
-  geom_point(alpha = .2) 
+map("world", interior = FALSE)
 ```
+
+
+
 
 ### Question 3
 
