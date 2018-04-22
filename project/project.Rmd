@@ -62,11 +62,10 @@ http://www.dummies.com/programming/r/how-to-remove-rows-with-missing-data-in-r/
 #### Create a map showing the concentration of popular historical figures around the world
 
 ```{r industry_preliminary_visual}
-map("world", interior = FALSE)
+panth_mod %>%
+  ggplot(panth, mapping = aes(x = longitude, y = latitude, color = sex)) +
+  geom_point(alpha = .2)
 ```
-
-
-
 
 ### Question 3
 
@@ -85,15 +84,5 @@ map("world", interior = FALSE)
 ### Question 8
 
 ### Question 9
-
-### Section 4 - Hypothesis Testing
-
-### Question 10
-
-### Question 11
-
-### Question 12
-
-### Question 13
 
 ## Conclusion

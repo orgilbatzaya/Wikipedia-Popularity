@@ -62,15 +62,5 @@ Based on the filtered dataframe, there are 1,427 women and 8,852 men that are co
 
 ### Question 9
 
-### Section 4 - Hypothesis Testing
-
-### Question 10
-
-### Question 11
-
-### Question 12
-
-### Question 13
-
 Conclusion
 ----------
