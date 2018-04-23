@@ -48,7 +48,7 @@ There are 17 variables and 10,279 observations (with all NAs removed in the new 
 
 ```{r men-and-women}
 panth_mod %>%
-  count(sex)
+  count(domain)
 ```
 
 Based on the filtered dataframe, there are 1,427 women and 8,852 men that are considered historical figures. 
@@ -61,10 +61,12 @@ http://www.dummies.com/programming/r/how-to-remove-rows-with-missing-data-in-r/
 
 #### Create a map showing the concentration of popular historical figures around the world
 
-```{r industry_preliminary_visual}
+```{r espana}
 panth_mod %>%
-  ggplot(panth, mapping = aes(x = longitude, y = latitude, color = sex)) +
-  geom_point(alpha = .2)
+  filter(domain %in% c("Sports","Arts"))%>%
+  filter(latitude < 44, latitude >35, longitude>-9,longitude<3.5)%>%
+  ggplot(panth, mapping = aes(x = longitude, y = latitude, color = domain)) +
+  geom_point(alpha = .4)
 ```
 
 ### Question 3
