@@ -8,8 +8,6 @@ Your project goes here! Before you submit, make sure your chunks are turned off 
 Load Packages
 -------------
 
-    ## Warning: running command 'timedatectl' had status 1
-
 Load Data
 ---------
 
@@ -121,6 +119,10 @@ The linear model, based on the output, is:
     ## 15     continentSouth America  0.8157495
 
     ## [1] 45240.98
+
+### Visual
+
+![](project_files/figure-markdown_github/unnamed-chunk-1-1.png)
 
 Conclusion
 ----------

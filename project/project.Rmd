@@ -120,6 +120,18 @@ tidy(selected_model) %>%
 glance(m_full)$AIC
 ```
 
+### Visual
+```{r}
+panth_mod %>%
+  filter(continent != "Europe",
+         article_languages > 50)%>%
+  ggplot(mapping = aes(y = historical_popularity_index, x = article_languages,
+                       color = factor(continent))) + geom_point(alpha = .5) + 
+    geom_smooth(method = "lm", se = FALSE)+
+    labs(x = "Article Languages", y = "Popularity Index", 
+    title = "Effect of number of article languages on popularity index") 
+    
+```
 
 ## Conclusion
 
