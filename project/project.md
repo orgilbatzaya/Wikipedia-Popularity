@@ -66,7 +66,21 @@ Based on the filtered dataframe, there are 1,427 women and 8,852 men that are co
 
 ### Section 3 - Linear Modeling
 
+#### Create a linear model to estimate historical popularity index by sex, article languages, & industry
+
 ### Question 7
+
+    ##                          term    estimate
+    ## 1                 (Intercept) 17.76900799
+    ## 2                     sexMale  1.64681208
+    ## 3        domainBusiness & Law  0.29532744
+    ## 4           domainExploration  0.81049401
+    ## 5            domainHumanities  1.75170260
+    ## 6          domainInstitutions  1.15094275
+    ## 7         domainPublic Figure  1.10625828
+    ## 8  domainScience & Technology  1.02891915
+    ## 9                domainSports -4.14464358
+    ## 10          article_languages  0.07184644
 
 ### Question 8
 

@@ -13,6 +13,7 @@ Your project goes here! Before you submit, make sure your chunks are turned off 
 
 ```{r load-packages, message=FALSE}
 library(tidyverse)
+library(broom)
 ```
 
 ```{r load-data, message=FALSE}
@@ -81,7 +82,16 @@ panth_mod %>%
 
 ### Section 3 - Linear Modeling
 
+#### Create a linear model to estimate historical popularity index by sex, article languages, & industry
+
 ### Question 7
+
+```{r estimating_popularity}
+m_pop <- lm(historical_popularity_index ~ sex + domain + article_languages, data = panth_mod)
+tidy(m_pop) %>%
+  select(term, estimate)
+```
+
 
 ### Question 8
 
