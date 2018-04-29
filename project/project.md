@@ -5,6 +5,14 @@ Duke Squirrels
 
 Your project goes here! Before you submit, make sure your chunks are turned off with `echo = FALSE`.
 
+Load Packages
+-------------
+
+    ## Warning: running command 'timedatectl' had status 1
+
+Load Data
+---------
+
 Introduction
 ------------
 
@@ -30,27 +38,19 @@ Based on the filtered dataframe, there are 1,427 women and 8,852 men that are co
 
 <http://www.dummies.com/programming/r/how-to-remove-rows-with-missing-data-in-r/>
 
-### Section 3 - Linear Modeling
-
-#### Create a linear model to estimate historical popularity index by sex, article languages, & domain
-
-### Question 7
-
     ##          term  estimate
     ## 1 (Intercept) 20.802384
     ## 2     sexMale  1.553512
+
+Here we estimated the historical popularity index using the `sex` variable. The slope fo the categorical variable `sexMale` is 1.55, suggesting that historical figures who are men have, on average, an increase in their overall popularity index of 1.55 as long as all other variables are held constant.
 
 The linear model, based on the output, is:
 
 `(historical_popularity_index) = 20.8(intercept) + 1.55(sexMale)`
 
-### Question 9
-
     ## [1] 0.02538845
 
-Based off of the `glance` code, we found that the R squared for the linear model `m_pop` is 2.54%, which means that 2.54% of the variability of the data can be explained by the linear model.
-
-### Question 10
+We found that the r-squared for the linear model `m_pop` is 2.54%, which suggests that 2.54% of the variability of the data can be explained by the linear model.
 
     ##                          term   estimate
     ## 1                 (Intercept) 17.3085615
@@ -71,7 +71,7 @@ Based off of the `glance` code, we found that the R squared for the linear model
 
 The linear model, based on the output, is:
 
-`(historical_popularity_index) = 17.3(intercept) + 1.52(sexMale) + 0.3255091(domainBusiness & Law) + 0.5980194(domainExploration) + 1.5000406(domainHumanities) + 0.9254946(domainInstitutions) + 1.0060640(domainPublic Figure) + 0.8719940(domainScience & Technology) + -4.3857126(domainSports) + 0.0711697(article_languages)   + 0.5457353(continentAsia) + 1.1232304(continentEurope) + 0.0600264(continentNorth America  ) + -0.5348510(continentOceania) + 0.8157495(continentSouth America)` \`
+`(historical_popularity_index) = 17.3(intercept) + 1.52(sexMale) + 0.3255091(domainBusiness & Law) + 0.5980194(domainExploration) + 1.5000406(domainHumanities) + 0.9254946(domainInstitutions) + 1.0060640(domainPublic Figure) + 0.8719940(domainScience & Technology) + -4.3857126(domainSports) + 0.0711697(article_languages)   + 0.5457353(continentAsia) + 1.1232304(continentEurope) + 0.0600264(continentNorth America  ) + -0.5348510(continentOceania) + 0.8157495(continentSouth America)`
 
 Conclusion
 ----------

@@ -11,10 +11,14 @@ knitr::opts_chunk$set(echo = FALSE)
 
 Your project goes here! Before you submit, make sure your chunks are turned off with `echo = FALSE`. 
 
+## Load Packages
+
 ```{r load-packages, message=FALSE}
 library(tidyverse)
 library(broom)
 ```
+
+## Load Data
 
 ```{r load-data, message=FALSE}
 panth <- read_csv("data/cdatabase.csv",
@@ -27,7 +31,6 @@ The data that we obtained contains information regarding historical figures. We 
 For our write-up, we chose to focus on the variables `full_name`, `birth_year`, `latitude`, `longitude`, `occupation`, `sex`, and `industry`. However, in our linear full model, we will select more than just these variables. By the end of our data analysis, we aim to derive the perfect combination of variables that lead to a high popularity index, which is recorded in the dataframe.
 
 ### Section 1- Introduction to the Data
-
 
 ```{r filter_NAs}
 panth_mod <- na.omit(panth)
@@ -52,42 +55,34 @@ Based on the filtered dataframe, there are 1,427 women and 8,852 men that are co
 
 http://www.dummies.com/programming/r/how-to-remove-rows-with-missing-data-in-r/
 
-
-
-### Section 3 - Linear Modeling
-
-#### Create a linear model to estimate historical popularity index by sex, article languages, & domain
-
-### Question 7
-
 ```{r estimating_popularity_sex}
 m_pop_sex <- lm(historical_popularity_index ~ sex , data = panth_mod)
 tidy(m_pop_sex) %>%
   select(term, estimate)
 ```
 
+Here we estimated the historical popularity index using the `sex` variable. The slope fo the categorical variable `sexMale` is 1.55, suggesting that historical figures who are men have, on average, an increase in their overall popularity index of 1.55 as long as all other variables are held constant. 
+
 The linear model, based on the output, is:
 
 `(historical_popularity_index) = 20.8(intercept) + 1.55(sexMale)`
-
-### Question 9
 
 ```{r}
 glance(m_pop_sex)$r.squared
 ```
 
-Based off of the `glance` code, we found that the R squared for the linear model `m_pop` is 2.54%, which means that 2.54% of the variability of the data can be explained by the linear model.
+We found that the r-squared for the linear model `m_pop` is 2.54%, which suggests that 2.54% of the variability of the data can be explained by the linear model.
 
-### Question 10
 ```{r full_model}
 m_full <- lm(historical_popularity_index ~ sex + domain + article_languages + continent, data = panth_mod)
 tidy(m_full) %>%
   select(term, estimate)
 ```
+
 The linear model, based on the output, is:
 
 `(historical_popularity_index) = 17.3(intercept) + 1.52(sexMale) + 0.3255091(domainBusiness & Law) +
-0.5980194(domainExploration) + 1.5000406(domainHumanities) + 0.9254946(domainInstitutions) + 1.0060640(domainPublic Figure) + 0.8719940(domainScience & Technology) + -4.3857126(domainSports) + 0.0711697(article_languages)	+ 0.5457353(continentAsia) + 1.1232304(continentEurope) + 0.0600264(continentNorth America	) + -0.5348510(continentOceania) + 0.8157495(continentSouth America) `									`
+0.5980194(domainExploration) + 1.5000406(domainHumanities) + 0.9254946(domainInstitutions) + 1.0060640(domainPublic Figure) + 0.8719940(domainScience & Technology) + -4.3857126(domainSports) + 0.0711697(article_languages)	+ 0.5457353(continentAsia) + 1.1232304(continentEurope) + 0.0600264(continentNorth America	) + -0.5348510(continentOceania) + 0.8157495(continentSouth America)`
 
 ## Conclusion
 
