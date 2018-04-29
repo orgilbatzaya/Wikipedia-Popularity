@@ -61,7 +61,7 @@ tidy(m_pop_sex) %>%
   select(term, estimate)
 ```
 
-Here we estimated the historical popularity index using the `sex` variable. The slope fo the categorical variable `sexMale` is 1.55, suggesting that historical figures who are men have, on average, an increase in their overall popularity index of 1.55 as long as all other variables are held constant. 
+Here we estimated the historical popularity index using the `sex` variable. The slope for the categorical variable `sexMale` is 1.55, suggesting that historical figures who are men have, on average, an increase in their overall popularity index of 1.55 as long as all other variables are held constant. 
 
 The linear model, based on the output, is:
 
@@ -78,6 +78,8 @@ m_full <- lm(historical_popularity_index ~ sex + domain + article_languages + co
 tidy(m_full) %>%
   select(term, estimate)
 ```
+
+Here we estimated the historical popularity index using the `sex`, `domain`, `article_languages`, and `continent` variables. We would interpret the slope the same way we did with the simple linear regression above that had the `sex` variable only.
 
 The linear model, based on the output, is:
 
