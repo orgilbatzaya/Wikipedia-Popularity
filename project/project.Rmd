@@ -72,6 +72,12 @@ The linear model, based on the output, is:
 
 ### Question 9
 
+```{r}
+glance(m_pop)$r.squared
+```
+
+Based off of the `glance` code, we found that the R squared for the linear model `m_pop` is 56.18276% which means that this percentage is the variability of the data that can be explained by the linear model.
+
 ## Conclusion
 
 
