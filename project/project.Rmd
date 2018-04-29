@@ -94,6 +94,7 @@ glance(m_pop_sex)$r.squared
 
 We found that the r-squared for the linear model `m_pop` is 2.54%, which suggests that 2.54% of the variability of the data can be explained by the linear model.
 
+<<<<<<< HEAD
 ```{r}
 panth_mod%>%
   filter(birth_year > 1920)%>%
@@ -109,6 +110,22 @@ tidy(m_pop_sex2) %>%
 ```
 
 
+=======
+### Visual
+
+```{r}
+panth_mod %>%
+  filter(continent != "Europe",
+         article_languages > 50)%>%
+  ggplot(mapping = aes(y = historical_popularity_index, x = article_languages,
+                       color = factor(continent))) + geom_point(alpha = .5) + 
+    geom_smooth(method = "lm", se = FALSE)+
+    labs(x = "Article Languages", y = "Popularity Index", 
+    title = "Effect of number of article languages on popularity index") 
+    
+```
+
+>>>>>>> e7f8d462542fa3f70d50da36f82abf6f4a2bc040
 ### Multiple Linear Regression
 
 ```{r full_model}
@@ -122,12 +139,12 @@ tidy(m_full) %>%
   select(term, estimate)
 ```
 
-Here we estimated the historical popularity index using the `sex`, `domain`, `article_languages`, and `continent` variables. We would interpret the slope the same way we did with the simple linear regression above that had the `sex` variable only.
+Here we estimated the historical popularity index using the `sex`, `domain`, `article_languages`, and `continent` variables. We also included the interaction between continent and article languages. We would interpret the slope the same way we did with the simple linear regression above that had the `sex` variable only.
 
 The linear model, based on the output, is:
 
 `(historical_popularity_index) = 16.13336476	(intercept) + 1.51505537(sexMale) + 0.32594321	(domainBusiness & Law) +
-0.56575963	(domainExploration) + 1.49018106	(domainHumanities) + 0.92757490	(domainInstitutions) + 1.01544834(domainPublic Figure) + 0.86254971(domainScience & Technology) + 	-4.37872010(domainSports) + 0.10057213	(article_languages)	+ 	1.59712745	(continentAsia) + 2.22815622	(continentEurope) + 1.46826358(continentNorth America	) + 	1.13423735(continentOceania) + 2.88294445	(continentSouth America)`+ -0.02635754(article_languages:continentAsia) + -0.02759474(article_languages:continentEurope) + -0.03508578(article_languages:continentNorth America) + -0.04278132(article_languages:continentOceania) + -0.05213559(article_languages:continentSouth America)	
+0.56575963	(domainExploration) + 1.49018106	(domainHumanities) + 0.92757490	(domainInstitutions) + 1.01544834(domainPublic Figure) + 0.86254971(domainScience & Technology) + 	-4.37872010(domainSports) + 0.10057213	(article_languages)	+ 	1.59712745	(continentAsia) + 2.22815622	(continentEurope) + 1.46826358(continentNorth America	) + 	1.13423735(continentOceania) + 2.88294445	(continentSouth America) + -0.02635754(article_languages:continentAsia) + -0.02759474(article_languages:continentEurope) + -0.03508578(article_languages:continentNorth America) + -0.04278132(article_languages:continentOceania) + -0.05213559(article_languages:continentSouth America)`	
 
 ```{r full_r-squared}
 glance(m_full)$r.squared
@@ -144,43 +161,6 @@ tidy(selected_model) %>%
 glance(m_full)$AIC
 ```
 
-### Visual
-```{r}
-panth_mod %>%
-  filter(continent != "Europe",
-         article_languages > 50)%>%
-  ggplot(mapping = aes(y = historical_popularity_index, x = article_languages,
-                       color = factor(continent))) + geom_point(alpha = .5) + 
-    geom_smooth(method = "lm", se = FALSE)+
-    labs(x = "Article Languages", y = "Popularity Index", 
-    title = "Effect of number of article languages on popularity index") 
-    
-```
+
 
 ## Conclusion
-
-
-
-
-
-
-
-
-
-
-
-### Question 2
-
-#### Create a map showing the concentration of popular historical figures around the world
-
-```{r Italy}
-panth_mod %>%
-  filter(country == "Italy") %>%
-  filter(domain %in% c("Sports","Arts"))%>%
-  ggplot(panth, mapping = aes(x = longitude, y = latitude, color = domain)) +
-  geom_point(alpha = .4) +
-  theme_grey() +
-  labs(title = "Distribution of historical figures in Italy", 
-       subtitle = "Focusing on the Domains of Arts and Sports", x = "Longitude", y = "Latitude", color = "Domain")
-```
-
