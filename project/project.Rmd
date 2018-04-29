@@ -24,16 +24,10 @@ panth <- read_csv("data/cdatabase.csv",
 ## Introduction
 
 The data that we obtained contains information regarding historical figures. We downloaded the data from Kaggle, but the data was collected by the Massachusetts Institute of Technology about a year ago. The data is based off of metrics from many wikipedia pages and believe the variables in the dataframe can be used to extrapolate what makes a historical figure "popular" by Wikipedia standards. 
-
 For our write-up, we chose to focus on the variables `full_name`, `birth_year`, `latitude`, `longitude`, `occupation`, `sex`, and `industry`. By the end of our data analysis, we aim to derive the perfect combination of variables that lead to a high popularity index, which is recorded in the dataframe.
 
 ### Section 1- Introduction to the Data
 
-### Question 1
-
-#### Filter out NA values and record the number of observations and variables 
-#### Make a new dataset to avoid overriding the original dataframe
-#### Record how many of the historical figures are men and how many are women
 
 ```{r filter_NAs}
 panth_mod <- na.omit(panth)
@@ -58,29 +52,7 @@ Based on the filtered dataframe, there are 1,427 women and 8,852 men that are co
 
 http://www.dummies.com/programming/r/how-to-remove-rows-with-missing-data-in-r/
 
-### Question 2
 
-#### Create a map showing the concentration of popular historical figures around the world
-
-```{r Italy}
-panth_mod %>%
-  filter(country == "Italy") %>%
-  filter(domain %in% c("Sports","Arts"))%>%
-  ggplot(panth, mapping = aes(x = longitude, y = latitude, color = domain)) +
-  geom_point(alpha = .4) +
-  theme_grey() +
-  labs(title = "Distribution of historical figures in Italy", subtitle = "Focusing on the Domains of Arts and Sports", x = "Longitude", y = "Latitude", color = "Domain")
-```
-
-### Question 3
-
-### Section 2 - Mapping
-
-### Question 4
-
-### Question 5
-
-### Question 6
 
 ### Section 3 - Linear Modeling
 
@@ -101,3 +73,28 @@ The linear model, based on the output, is:
 ### Question 9
 
 ## Conclusion
+
+
+
+
+
+
+
+
+
+
+
+### Question 2
+
+#### Create a map showing the concentration of popular historical figures around the world
+
+```{r Italy}
+panth_mod %>%
+  filter(country == "Italy") %>%
+  filter(domain %in% c("Sports","Arts"))%>%
+  ggplot(panth, mapping = aes(x = longitude, y = latitude, color = domain)) +
+  geom_point(alpha = .4) +
+  theme_grey() +
+  labs(title = "Distribution of historical figures in Italy", subtitle = "Focusing on the Domains of Arts and Sports", x = "Longitude", y = "Latitude", color = "Domain")
+```
+

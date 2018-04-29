@@ -5,24 +5,12 @@ Duke Squirrels
 
 Your project goes here! Before you submit, make sure your chunks are turned off with `echo = FALSE`.
 
-    ## Warning: running command 'timedatectl' had status 1
-
 Introduction
 ------------
 
-The data that we obtained contains information regarding historical figures. We downloaded the data from Kaggle, but the data was collected by the Massachusetts Institute of Technology about a year ago. The data is based off of metrics from many wikipedia pages and believe the variables in the dataframe can be used to extrapolate what makes a historical figure "popular" by Wikipedia standards.
-
-For our write-up, we chose to focus on the variables `full_name`, `birth_year`, `latitude`, `longitude`, `occupation`, `sex`, and `industry`. By the end of our data analysis, we aim to derive the perfect combination of variables that lead to a high popularity index, which is recorded in the dataframe.
+The data that we obtained contains information regarding historical figures. We downloaded the data from Kaggle, but the data was collected by the Massachusetts Institute of Technology about a year ago. The data is based off of metrics from many wikipedia pages and believe the variables in the dataframe can be used to extrapolate what makes a historical figure "popular" by Wikipedia standards. For our write-up, we chose to focus on the variables `full_name`, `birth_year`, `latitude`, `longitude`, `occupation`, `sex`, and `industry`. By the end of our data analysis, we aim to derive the perfect combination of variables that lead to a high popularity index, which is recorded in the dataframe.
 
 ### Section 1- Introduction to the Data
-
-### Question 1
-
-#### Filter out NA values and record the number of observations and variables
-
-#### Make a new dataset to avoid overriding the original dataframe
-
-#### Record how many of the historical figures are men and how many are women
 
     ## [1] 17
 
@@ -41,22 +29,6 @@ Based on the filtered dataframe, there are 1,427 women and 8,852 men that are co
 ##### Reference
 
 <http://www.dummies.com/programming/r/how-to-remove-rows-with-missing-data-in-r/>
-
-### Question 2
-
-#### Create a map showing the concentration of popular historical figures around the world
-
-![](project_files/figure-markdown_github/Italy-1.png)
-
-### Question 3
-
-### Section 2 - Mapping
-
-### Question 4
-
-### Question 5
-
-### Question 6
 
 ### Section 3 - Linear Modeling
 
@@ -84,3 +56,9 @@ The linear model, based on the output, is:
 
 Conclusion
 ----------
+
+### Question 2
+
+#### Create a map showing the concentration of popular historical figures around the world
+
+![](project_files/figure-markdown_github/Italy-1.png)
