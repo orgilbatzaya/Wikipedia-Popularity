@@ -36,27 +36,42 @@ Based on the filtered dataframe, there are 1,427 women and 8,852 men that are co
 
 ### Question 7
 
-    ##                          term    estimate
-    ## 1                 (Intercept) 17.76900799
-    ## 2                     sexMale  1.64681208
-    ## 3        domainBusiness & Law  0.29532744
-    ## 4           domainExploration  0.81049401
-    ## 5            domainHumanities  1.75170260
-    ## 6          domainInstitutions  1.15094275
-    ## 7         domainPublic Figure  1.10625828
-    ## 8  domainScience & Technology  1.02891915
-    ## 9                domainSports -4.14464358
-    ## 10          article_languages  0.07184644
+    ##          term  estimate
+    ## 1 (Intercept) 20.802384
+    ## 2     sexMale  1.553512
 
 The linear model, based on the output, is:
 
-`(historical_popularity_index) = 17.769(intercept) + 1.647(sexMale) + 0.295(domainBusiness & Law) + 0.810(domainExploration) + 1.752(domainHumanities) + 1.151(domaintInstitutions) + 1.106(domainPublic Figure) + 1.029(domainScience & Technology) - 4.1446(domainSports) + 0.072(article_languages)`
+`(historical_popularity_index) = 20.8(intercept) + 1.55(sexMale)`
 
 ### Question 9
 
-    ## [1] 0.5618276
+    ## [1] 0.02538845
 
-Based off of the `glance` code, we found that the R squared for the linear model `m_pop` is 56.18276% which means that this percentage is the variability of the data that can be explained by the linear model.
+Based off of the `glance` code, we found that the R squared for the linear model `m_pop` is 2.54%, which means that 2.54% of the variability of the data can be explained by the linear model.
+
+### Question 10
+
+    ##                          term   estimate
+    ## 1                 (Intercept) 17.3085615
+    ## 2                     sexMale  1.5192217
+    ## 3        domainBusiness & Law  0.3255091
+    ## 4           domainExploration  0.5980194
+    ## 5            domainHumanities  1.5000406
+    ## 6          domainInstitutions  0.9254946
+    ## 7         domainPublic Figure  1.0060640
+    ## 8  domainScience & Technology  0.8719940
+    ## 9                domainSports -4.3857126
+    ## 10          article_languages  0.0711697
+    ## 11              continentAsia  0.5457353
+    ## 12            continentEurope  1.1232304
+    ## 13     continentNorth America  0.0600264
+    ## 14           continentOceania -0.5348510
+    ## 15     continentSouth America  0.8157495
+
+The linear model, based on the output, is:
+
+`(historical_popularity_index) = 17.3(intercept) + 1.52(sexMale) + 0.3255091(domainBusiness & Law) + 0.5980194(domainExploration) + 1.5000406(domainHumanities) + 0.9254946(domainInstitutions) + 1.0060640(domainPublic Figure) + 0.8719940(domainScience & Technology) + -4.3857126(domainSports) + 0.0711697(article_languages)   + 0.5457353(continentAsia) + 1.1232304(continentEurope) + 0.0600264(continentNorth America  ) + -0.5348510(continentOceania) + 0.8157495(continentSouth America)` \`
 
 Conclusion
 ----------
