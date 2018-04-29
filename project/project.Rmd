@@ -64,10 +64,12 @@ http://www.dummies.com/programming/r/how-to-remove-rows-with-missing-data-in-r/
 
 ```{r espana}
 panth_mod %>%
+  filter(country == "Italy") %>%
   filter(domain %in% c("Sports","Arts"))%>%
-  filter(latitude < 44, latitude >35, longitude>-9,longitude<3.5)%>%
   ggplot(panth, mapping = aes(x = longitude, y = latitude, color = domain)) +
-  geom_point(alpha = .4)
+  geom_point(alpha = .4) +
+  theme_grey() +
+  labs(title = "Distribution of historical figures in Italy", subtitle = "Focusing on the Domains of Arts and Sports", x = "Longitude", y = "Latitude", color = "Domain")
 ```
 
 ### Question 3
@@ -94,7 +96,7 @@ tidy(m_pop) %>%
 
 The linear model, based on the output, is:
 
-(historical_popularity_index) = 17.769(intercept) + 1.647(sexMale) + 0.295(domainBusiness & Law) + 0.810(domainExploration) + 1.752(domainHumanities) + 1.151(domaintInstitutions) + 1.106(domainPublic Figure) + 1.029(domainScience & Technology) - 4.1446(domainSports) + 0.072(article_languages)
+`(historical_popularity_index) = 17.769(intercept) + 1.647(sexMale) + 0.295(domainBusiness & Law) + 0.810(domainExploration) + 1.752(domainHumanities) + 1.151(domaintInstitutions) + 1.106(domainPublic Figure) + 1.029(domainScience & Technology) - 4.1446(domainSports) + 0.072(article_languages)`
 
 ### Question 9
 
