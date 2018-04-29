@@ -8,6 +8,8 @@ Your project goes here! Before you submit, make sure your chunks are turned off 
 Load Packages
 -------------
 
+    ## Warning: running command 'timedatectl' had status 1
+
 Load Data
 ---------
 
@@ -32,15 +34,27 @@ There are 17 variables and 10,279 observations (with all NAs removed in the new 
 
 Based on the filtered dataframe, there are 1,427 women and 8,852 men that are considered historical figures.
 
+    ## Warning: The plyr::rename operation has created duplicates for the
+    ## following name(s): (`y`)
+
+![](project_files/figure-markdown_github/distribution-of-index-1.png)
+
+    ## # A tibble: 1 x 3
+    ##    mean median    sd
+    ##   <dbl>  <dbl> <dbl>
+    ## 1  22.1   22.9  3.37
+
 ##### Reference
 
 <http://www.dummies.com/programming/r/how-to-remove-rows-with-missing-data-in-r/>
+
+### Simple Linear Regression
 
     ##          term  estimate
     ## 1 (Intercept) 20.802384
     ## 2     sexMale  1.553512
 
-Here we estimated the historical popularity index using the `sex` variable. The slope for the categorical variable `sexMale` is 1.55, suggesting that historical figures who are men have, on average, an increase in their overall popularity index of 1.55 as long as all other variables are held constant.
+Here we estimated the historical popularity index using the `sex` variable. The slope fo the categorical variable `sexMale` is 1.55, suggesting that historical figures who are men have, on average, an increase in their overall popularity index of 1.55 as long as all other variables are held constant.
 
 The linear model, based on the output, is:
 
@@ -49,6 +63,8 @@ The linear model, based on the output, is:
     ## [1] 0.02538845
 
 We found that the r-squared for the linear model `m_pop` is 2.54%, which suggests that 2.54% of the variability of the data can be explained by the linear model.
+
+### Multiple Linear Regression
 
     ##                          term   estimate
     ## 1                 (Intercept) 17.3085615
@@ -67,11 +83,11 @@ We found that the r-squared for the linear model `m_pop` is 2.54%, which suggest
     ## 14           continentOceania -0.5348510
     ## 15     continentSouth America  0.8157495
 
-Here we estimated the historical popularity index using the `sex`, `domain`, `article_languages`, and `continent` variables. We would interpret the slope the same way we did with the simple linear regression above that had the `sex` variable only.
-
 The linear model, based on the output, is:
 
 `(historical_popularity_index) = 17.3(intercept) + 1.52(sexMale) + 0.3255091(domainBusiness & Law) + 0.5980194(domainExploration) + 1.5000406(domainHumanities) + 0.9254946(domainInstitutions) + 1.0060640(domainPublic Figure) + 0.8719940(domainScience & Technology) + -4.3857126(domainSports) + 0.0711697(article_languages)   + 0.5457353(continentAsia) + 1.1232304(continentEurope) + 0.0600264(continentNorth America  ) + -0.5348510(continentOceania) + 0.8157495(continentSouth America)`
+
+    ## [1] 0.5811313
 
 Conclusion
 ----------

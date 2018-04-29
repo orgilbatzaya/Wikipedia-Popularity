@@ -51,9 +51,24 @@ panth_mod %>%
 
 Based on the filtered dataframe, there are 1,427 women and 8,852 men that are considered historical figures. 
 
+```{r distribution-of-index}
+panth_mod %>%
+  ggplot(mapping = aes(x = historical_popularity_index)) +
+  geom_histogram(bins = 20) + 
+  labs(title = "Distribution of Historical Popularity Index Scores", y = "Count", y = "Historical Popularity Index Score")
+
+panth_mod %>%
+  summarise(mean = mean(historical_popularity_index), 
+            median = median(historical_popularity_index), 
+            sd = sd(historical_popularity_index))
+```
+
+
 ##### Reference
 
 http://www.dummies.com/programming/r/how-to-remove-rows-with-missing-data-in-r/
+
+### Simple Linear Regression
 
 ```{r estimating_popularity_sex}
 m_pop_sex <- lm(historical_popularity_index ~ sex , data = panth_mod)
@@ -61,17 +76,19 @@ tidy(m_pop_sex) %>%
   select(term, estimate)
 ```
 
-Here we estimated the historical popularity index using the `sex` variable. The slope for the categorical variable `sexMale` is 1.55, suggesting that historical figures who are men have, on average, an increase in their overall popularity index of 1.55 as long as all other variables are held constant. 
+Here we estimated the historical popularity index using the `sex` variable. The slope fo the categorical variable `sexMale` is 1.55, suggesting that historical figures who are men have, on average, an increase in their overall popularity index of 1.55 as long as all other variables are held constant. 
 
 The linear model, based on the output, is:
 
 `(historical_popularity_index) = 20.8(intercept) + 1.55(sexMale)`
 
-```{r}
+```{r r-squared}
 glance(m_pop_sex)$r.squared
 ```
 
 We found that the r-squared for the linear model `m_pop` is 2.54%, which suggests that 2.54% of the variability of the data can be explained by the linear model.
+
+### Multiple Linear Regression
 
 ```{r full_model}
 m_full <- lm(historical_popularity_index ~ sex + domain + article_languages + continent, data = panth_mod)
@@ -79,12 +96,15 @@ tidy(m_full) %>%
   select(term, estimate)
 ```
 
-Here we estimated the historical popularity index using the `sex`, `domain`, `article_languages`, and `continent` variables. We would interpret the slope the same way we did with the simple linear regression above that had the `sex` variable only.
-
 The linear model, based on the output, is:
 
 `(historical_popularity_index) = 17.3(intercept) + 1.52(sexMale) + 0.3255091(domainBusiness & Law) +
 0.5980194(domainExploration) + 1.5000406(domainHumanities) + 0.9254946(domainInstitutions) + 1.0060640(domainPublic Figure) + 0.8719940(domainScience & Technology) + -4.3857126(domainSports) + 0.0711697(article_languages)	+ 0.5457353(continentAsia) + 1.1232304(continentEurope) + 0.0600264(continentNorth America	) + -0.5348510(continentOceania) + 0.8157495(continentSouth America)`
+
+```{r full_r-squared}
+glance(m_full)$r.squared
+```
+
 
 ## Conclusion
 
