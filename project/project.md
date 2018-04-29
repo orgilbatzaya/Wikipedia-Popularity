@@ -5,8 +5,6 @@ Duke Squirrels
 
 Your project goes here! Before you submit, make sure your chunks are turned off with `echo = FALSE`.
 
-    ## Warning: running command 'timedatectl' had status 1
-
 Introduction
 ------------
 
@@ -66,7 +64,7 @@ Based on the filtered dataframe, there are 1,427 women and 8,852 men that are co
 
 ### Section 3 - Linear Modeling
 
-#### Create a linear model to estimate historical popularity index by sex, article languages, & industry
+#### Create a linear model to estimate historical popularity index by sex, article languages, & domain
 
 ### Question 7
 
@@ -82,7 +80,9 @@ Based on the filtered dataframe, there are 1,427 women and 8,852 men that are co
     ## 9                domainSports -4.14464358
     ## 10          article_languages  0.07184644
 
-### Question 8
+The linear model, based on the output, is:
+
+(historical\_popularity\_index) = 17.769(intercept) + 1.647(sexMale) + 0.295(domainBusiness & Law) + 0.810(domainExploration) + 1.752(domainHumanities) + 1.151(domaintInstitutions) + 1.106(domainPublic Figure) + 1.029(domainScience & Technology) - 4.1446(domainSports) + 0.072(article\_languages)
 
 ### Question 9
 

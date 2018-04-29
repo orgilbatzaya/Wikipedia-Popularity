@@ -82,7 +82,7 @@ panth_mod %>%
 
 ### Section 3 - Linear Modeling
 
-#### Create a linear model to estimate historical popularity index by sex, article languages, & industry
+#### Create a linear model to estimate historical popularity index by sex, article languages, & domain
 
 ### Question 7
 
@@ -92,8 +92,9 @@ tidy(m_pop) %>%
   select(term, estimate)
 ```
 
+The linear model, based on the output, is:
 
-### Question 8
+(historical_popularity_index) = 17.769(intercept) + 1.647(sexMale) + 0.295(domainBusiness & Law) + 0.810(domainExploration) + 1.752(domainHumanities) + 1.151(domaintInstitutions) + 1.106(domainPublic Figure) + 1.029(domainScience & Technology) - 4.1446(domainSports) + 0.072(article_languages)
 
 ### Question 9
 
