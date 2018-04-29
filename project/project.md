@@ -8,6 +8,8 @@ Your project goes here! Before you submit, make sure your chunks are turned off 
 Load Packages
 -------------
 
+    ## Warning: running command 'timedatectl' had status 1
+
 Load Data
 ---------
 
@@ -61,6 +63,10 @@ The linear model, based on the output, is:
 
 We found that the r-squared for the linear model `m_pop` is 2.54%, which suggests that 2.54% of the variability of the data can be explained by the linear model.
 
+### Visual
+
+![](project_files/figure-markdown_github/unnamed-chunk-1-1.png)
+
 ### Multiple Linear Regression
 
     ##                                        term    estimate
@@ -85,11 +91,11 @@ We found that the r-squared for the linear model `m_pop` is 2.54%, which suggest
     ## 19       article_languages:continentOceania -0.04278132
     ## 20 article_languages:continentSouth America -0.05213559
 
-Here we estimated the historical popularity index using the `sex`, `domain`, `article_languages`, and `continent` variables. We would interpret the slope the same way we did with the simple linear regression above that had the `sex` variable only.
+Here we estimated the historical popularity index using the `sex`, `domain`, `article_languages`, and `continent` variables. We also included the interaction between continent and article languages. We would interpret the slope the same way we did with the simple linear regression above that had the `sex` variable only.
 
 The linear model, based on the output, is:
 
-`(historical_popularity_index) = 16.13336476    (intercept) + 1.51505537(sexMale) + 0.32594321  (domainBusiness & Law) + 0.56575963  (domainExploration) + 1.49018106    (domainHumanities) + 0.92757490 (domainInstitutions) + 1.01544834(domainPublic Figure) + 0.86254971(domainScience & Technology) +   -4.37872010(domainSports) + 0.10057213  (article_languages) +   1.59712745  (continentAsia) + 2.22815622    (continentEurope) + 1.46826358(continentNorth America   ) +     1.13423735(continentOceania) + 2.88294445   (continentSouth America)`+ -0.02635754(article\_languages:continentAsia) + -0.02759474(article\_languages:continentEurope) + -0.03508578(article\_languages:continentNorth America) + -0.04278132(article\_languages:continentOceania) + -0.05213559(article\_languages:continentSouth America)
+`(historical_popularity_index) = 16.13336476    (intercept) + 1.51505537(sexMale) + 0.32594321  (domainBusiness & Law) + 0.56575963  (domainExploration) + 1.49018106    (domainHumanities) + 0.92757490 (domainInstitutions) + 1.01544834(domainPublic Figure) + 0.86254971(domainScience & Technology) +   -4.37872010(domainSports) + 0.10057213  (article_languages) +   1.59712745  (continentAsia) + 2.22815622    (continentEurope) + 1.46826358(continentNorth America   ) +     1.13423735(continentOceania) + 2.88294445   (continentSouth America) + -0.02635754(article_languages:continentAsia) + -0.02759474(article_languages:continentEurope) + -0.03508578(article_languages:continentNorth America) + -0.04278132(article_languages:continentOceania) + -0.05213559(article_languages:continentSouth America)`
 
     ## [1] 0.582584
 
@@ -129,15 +135,5 @@ The linear model, based on the output, is:
 
     ## [1] 45215.27
 
-### Visual
-
-![](project_files/figure-markdown_github/unnamed-chunk-1-1.png)
-
 Conclusion
 ----------
-
-### Question 2
-
-#### Create a map showing the concentration of popular historical figures around the world
-
-![](project_files/figure-markdown_github/Italy-1.png)
