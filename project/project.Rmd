@@ -44,12 +44,10 @@ panth_mod %>%
 
 There are 17 variables and 10,279 observations (with all NAs removed in the new dataframe). Before removing the NAs, the full dataframe had 11,341 observations.
 
-```{r men-and-women}
-panth_mod %>%
-  count(sex)
-```
+##### Reference
 
-Based on the filtered dataframe, there are 1,427 women and 8,852 men that are considered historical figures. 
+http://www.dummies.com/programming/r/how-to-remove-rows-with-missing-data-in-r/
+
 
 ```{r distribution-of-index}
 panth_mod %>%
@@ -66,9 +64,15 @@ panth_mod %>%
 
 To get a better understanding of our dataset, we created a histogram that shows the distribution of the historical popularity index scores for the historical figures and ran summary statistics. The median score was 22.8723 and the mean was 22.14023. The distribution is left skewed and unimodal. 
 
-##### Reference
+### Section 2 - Men and Women
 
-http://www.dummies.com/programming/r/how-to-remove-rows-with-missing-data-in-r/
+```{r men-and-women}
+panth_mod %>%
+  count(sex)
+```
+
+Based on the filtered dataframe, there are 1,427 women and 8,852 men that are considered historical figures. There are about 6.2 times as many historical men than women overall in the data. The timeframe of this data starts at `r panth_mod%>%arrange(birth_year)%>%select(birth_year)%>%head(1) `, or 3500 BCE, and ends at `r panth_mod%>%arrange(desc(birth_year))%>%select(birth_year)%>%head(1)`, spanning about 5000 years. 
+
 
 ### Simple Linear Regression
 
@@ -89,6 +93,21 @@ glance(m_pop_sex)$r.squared
 ```
 
 We found that the r-squared for the linear model `m_pop` is 2.54%, which suggests that 2.54% of the variability of the data can be explained by the linear model.
+
+```{r}
+panth_mod%>%
+  filter(birth_year > 1920)%>%
+  count(sex)%>%
+  mutate(prop = n/sum(n))
+```
+For historical figures born after 1920, there are about 4 times as many male historical figures than female figures. This is intriguing because in this 85 year timeframe from 1920 - 2005, we have 1053 historical women out of a total of 1427 women in the entire timeframe. 
+
+```{r new_m_pop_sex}
+m_pop_sex2 <- lm(historical_popularity_index ~ sex , data = panth_mod%>%filter(birth_year > 1920))
+tidy(m_pop_sex2) %>%
+  select(term, estimate)
+```
+
 
 ### Multiple Linear Regression
 

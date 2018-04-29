@@ -24,13 +24,9 @@ The data that we obtained contains information regarding historical figures. We 
 
 There are 17 variables and 10,279 observations (with all NAs removed in the new dataframe). Before removing the NAs, the full dataframe had 11,341 observations.
 
-    ## # A tibble: 2 x 2
-    ##   sex        n
-    ##   <chr>  <int>
-    ## 1 Female  1427
-    ## 2 Male    8852
+##### Reference
 
-Based on the filtered dataframe, there are 1,427 women and 8,852 men that are considered historical figures.
+<http://www.dummies.com/programming/r/how-to-remove-rows-with-missing-data-in-r/>
 
 ![](project_files/figure-markdown_github/distribution-of-index-1.png)
 
@@ -41,9 +37,15 @@ Based on the filtered dataframe, there are 1,427 women and 8,852 men that are co
 
 To get a better understanding of our dataset, we created a histogram that shows the distribution of the historical popularity index scores for the historical figures and ran summary statistics. The median score was 22.8723 and the mean was 22.14023. The distribution is left skewed and unimodal.
 
-##### Reference
+### Section 2 - Men and Women
 
-<http://www.dummies.com/programming/r/how-to-remove-rows-with-missing-data-in-r/>
+    ## # A tibble: 2 x 2
+    ##   sex        n
+    ##   <chr>  <int>
+    ## 1 Female  1427
+    ## 2 Male    8852
+
+Based on the filtered dataframe, there are 1,427 women and 8,852 men that are considered historical figures. There are about 6.2 times as many historical men than women overall in the data. The timeframe of this data starts at -3500, or 3500 BCE, and ends at 2005, spanning about 5000 years.
 
 ### Simple Linear Regression
 
@@ -60,6 +62,18 @@ The linear model, based on the output, is:
     ## [1] 0.02538845
 
 We found that the r-squared for the linear model `m_pop` is 2.54%, which suggests that 2.54% of the variability of the data can be explained by the linear model.
+
+    ## # A tibble: 2 x 3
+    ##   sex        n  prop
+    ##   <chr>  <int> <dbl>
+    ## 1 Female  1053 0.196
+    ## 2 Male    4309 0.804
+
+For historical figures born after 1920, there are about 4 times as many male historical figures than female figures. This is intriguing because in this 85 year timeframe from 1920 - 2005, we have 1053 historical women out of a total of 1427 women in the entire timeframe.
+
+    ##          term   estimate
+    ## 1 (Intercept) 19.6057504
+    ## 2     sexMale  0.5687071
 
 ### Multiple Linear Regression
 
@@ -131,7 +145,7 @@ The linear model, based on the output, is:
 
 ### Visual
 
-![](project_files/figure-markdown_github/unnamed-chunk-1-1.png)
+![](project_files/figure-markdown_github/unnamed-chunk-2-1.png)
 
 Conclusion
 ----------
