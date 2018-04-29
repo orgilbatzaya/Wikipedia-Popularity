@@ -94,7 +94,7 @@ glance(m_pop_sex)$r.squared
 
 We found that the r-squared for the linear model `m_pop` is 2.54%, which suggests that 2.54% of the variability of the data can be explained by the linear model.
 
-<<<<<<< HEAD
+
 ```{r}
 panth_mod%>%
   filter(birth_year > 1920)%>%
@@ -109,8 +109,6 @@ tidy(m_pop_sex2) %>%
   select(term, estimate)
 ```
 
-
-=======
 ### Visual
 
 ```{r}
@@ -125,7 +123,6 @@ panth_mod %>%
     
 ```
 
->>>>>>> e7f8d462542fa3f70d50da36f82abf6f4a2bc040
 ### Multiple Linear Regression
 
 ```{r full_model}

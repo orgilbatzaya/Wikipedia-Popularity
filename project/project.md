@@ -8,8 +8,6 @@ Your project goes here! Before you submit, make sure your chunks are turned off 
 Load Packages
 -------------
 
-    ## Warning: running command 'timedatectl' had status 1
-
 Load Data
 ---------
 
@@ -65,7 +63,6 @@ The linear model, based on the output, is:
 
 We found that the r-squared for the linear model `m_pop` is 2.54%, which suggests that 2.54% of the variability of the data can be explained by the linear model.
 
-<<<<<<< HEAD
     ## # A tibble: 2 x 3
     ##   sex        n  prop
     ##   <chr>  <int> <dbl>
@@ -77,11 +74,10 @@ For historical figures born after 1920, there are about 4 times as many male his
     ##          term   estimate
     ## 1 (Intercept) 19.6057504
     ## 2     sexMale  0.5687071
-=======
+
 ### Visual
 
-![](project_files/figure-markdown_github/unnamed-chunk-1-1.png)
->>>>>>> e7f8d462542fa3f70d50da36f82abf6f4a2bc040
+![](project_files/figure-markdown_github/unnamed-chunk-2-1.png)
 
 ### Multiple Linear Regression
 
@@ -151,12 +147,5 @@ The linear model, based on the output, is:
 
     ## [1] 45215.27
 
-<<<<<<< HEAD
-### Visual
-
-![](project_files/figure-markdown_github/unnamed-chunk-2-1.png)
-
-=======
->>>>>>> e7f8d462542fa3f70d50da36f82abf6f4a2bc040
 Conclusion
 ----------
