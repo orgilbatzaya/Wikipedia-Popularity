@@ -63,62 +63,71 @@ We found that the r-squared for the linear model `m_pop` is 2.54%, which suggest
 
 ### Multiple Linear Regression
 
-    ##                          term   estimate
-    ## 1                 (Intercept) 17.3085615
-    ## 2                     sexMale  1.5192217
-    ## 3        domainBusiness & Law  0.3255091
-    ## 4           domainExploration  0.5980194
-    ## 5            domainHumanities  1.5000406
-    ## 6          domainInstitutions  0.9254946
-    ## 7         domainPublic Figure  1.0060640
-    ## 8  domainScience & Technology  0.8719940
-    ## 9                domainSports -4.3857126
-    ## 10          article_languages  0.0711697
-    ## 11              continentAsia  0.5457353
-    ## 12            continentEurope  1.1232304
-    ## 13     continentNorth America  0.0600264
-    ## 14           continentOceania -0.5348510
-    ## 15     continentSouth America  0.8157495
+    ##                                        term    estimate
+    ## 1                               (Intercept) 16.13336476
+    ## 2                                   sexMale  1.51505537
+    ## 3                      domainBusiness & Law  0.32594321
+    ## 4                         domainExploration  0.56575963
+    ## 5                          domainHumanities  1.49018106
+    ## 6                        domainInstitutions  0.92757490
+    ## 7                       domainPublic Figure  1.01544834
+    ## 8                domainScience & Technology  0.86254971
+    ## 9                              domainSports -4.37872010
+    ## 10                        article_languages  0.10057213
+    ## 11                            continentAsia  1.59712745
+    ## 12                          continentEurope  2.22815622
+    ## 13                   continentNorth America  1.46826358
+    ## 14                         continentOceania  1.13423735
+    ## 15                   continentSouth America  2.88294445
+    ## 16          article_languages:continentAsia -0.02635754
+    ## 17        article_languages:continentEurope -0.02759474
+    ## 18 article_languages:continentNorth America -0.03508578
+    ## 19       article_languages:continentOceania -0.04278132
+    ## 20 article_languages:continentSouth America -0.05213559
 
 Here we estimated the historical popularity index using the `sex`, `domain`, `article_languages`, and `continent` variables. We would interpret the slope the same way we did with the simple linear regression above that had the `sex` variable only.
 
 The linear model, based on the output, is:
 
-`(historical_popularity_index) = 17.3(intercept) + 1.52(sexMale) + 0.3255091(domainBusiness & Law) + 0.5980194(domainExploration) + 1.5000406(domainHumanities) + 0.9254946(domainInstitutions) + 1.0060640(domainPublic Figure) + 0.8719940(domainScience & Technology) + -4.3857126(domainSports) + 0.0711697(article_languages)   + 0.5457353(continentAsia) + 1.1232304(continentEurope) + 0.0600264(continentNorth America  ) + -0.5348510(continentOceania) + 0.8157495(continentSouth America)`
+`(historical_popularity_index) = 16.13336476    (intercept) + 1.51505537(sexMale) + 0.32594321  (domainBusiness & Law) + 0.56575963  (domainExploration) + 1.49018106    (domainHumanities) + 0.92757490 (domainInstitutions) + 1.01544834(domainPublic Figure) + 0.86254971(domainScience & Technology) +   -4.37872010(domainSports) + 0.10057213  (article_languages) +   1.59712745  (continentAsia) + 2.22815622    (continentEurope) + 1.46826358(continentNorth America   ) +     1.13423735(continentOceania) + 2.88294445   (continentSouth America)`+ -0.02635754(article\_languages:continentAsia) + -0.02759474(article\_languages:continentEurope) + -0.03508578(article\_languages:continentNorth America) + -0.04278132(article\_languages:continentOceania) + -0.05213559(article\_languages:continentSouth America)
 
-    ## [1] 0.5811313
+    ## [1] 0.582584
 
 ### Backwards Selection with AIC
 
-    ## Start:  AIC=16068.44
+    ## Start:  AIC=16042.73
     ## historical_popularity_index ~ sex + domain + article_languages + 
-    ##     continent
+    ##     continent + continent * article_languages
     ## 
-    ##                     Df Sum of Sq   RSS   AIC
-    ## <none>                           48931 16068
-    ## - continent          5      2255 51186 16522
-    ## - sex                1      2464 51395 16572
-    ## - article_languages  1     15554 64485 18904
-    ## - domain             7     36206 85137 21747
+    ##                               Df Sum of Sq   RSS   AIC
+    ## <none>                                     48761 16043
+    ## - article_languages:continent  5       170 48931 16068
+    ## - sex                          1      2448 51210 16544
+    ## - domain                       7     35938 84699 21704
 
-    ##                          term   estimate
-    ## 1                 (Intercept) 17.3085615
-    ## 2                     sexMale  1.5192217
-    ## 3        domainBusiness & Law  0.3255091
-    ## 4           domainExploration  0.5980194
-    ## 5            domainHumanities  1.5000406
-    ## 6          domainInstitutions  0.9254946
-    ## 7         domainPublic Figure  1.0060640
-    ## 8  domainScience & Technology  0.8719940
-    ## 9                domainSports -4.3857126
-    ## 10          article_languages  0.0711697
-    ## 11              continentAsia  0.5457353
-    ## 12            continentEurope  1.1232304
-    ## 13     continentNorth America  0.0600264
-    ## 14           continentOceania -0.5348510
-    ## 15     continentSouth America  0.8157495
+    ##                                        term    estimate
+    ## 1                               (Intercept) 16.13336476
+    ## 2                                   sexMale  1.51505537
+    ## 3                      domainBusiness & Law  0.32594321
+    ## 4                         domainExploration  0.56575963
+    ## 5                          domainHumanities  1.49018106
+    ## 6                        domainInstitutions  0.92757490
+    ## 7                       domainPublic Figure  1.01544834
+    ## 8                domainScience & Technology  0.86254971
+    ## 9                              domainSports -4.37872010
+    ## 10                        article_languages  0.10057213
+    ## 11                            continentAsia  1.59712745
+    ## 12                          continentEurope  2.22815622
+    ## 13                   continentNorth America  1.46826358
+    ## 14                         continentOceania  1.13423735
+    ## 15                   continentSouth America  2.88294445
+    ## 16          article_languages:continentAsia -0.02635754
+    ## 17        article_languages:continentEurope -0.02759474
+    ## 18 article_languages:continentNorth America -0.03508578
+    ## 19       article_languages:continentOceania -0.04278132
+    ## 20 article_languages:continentSouth America -0.05213559
 
-    ## [1] 45240.98
+    ## [1] 45215.27
 
 ### Visual
 

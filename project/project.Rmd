@@ -93,7 +93,12 @@ We found that the r-squared for the linear model `m_pop` is 2.54%, which suggest
 ### Multiple Linear Regression
 
 ```{r full_model}
-m_full <- lm(historical_popularity_index ~ sex + domain + article_languages + continent, data = panth_mod)
+m_full <- lm(historical_popularity_index ~ sex +
+               domain +
+               article_languages +
+               continent +
+               continent * article_languages,
+             data = panth_mod)
 tidy(m_full) %>%
   select(term, estimate)
 ```
@@ -102,8 +107,8 @@ Here we estimated the historical popularity index using the `sex`, `domain`, `ar
 
 The linear model, based on the output, is:
 
-`(historical_popularity_index) = 17.3(intercept) + 1.52(sexMale) + 0.3255091(domainBusiness & Law) +
-0.5980194(domainExploration) + 1.5000406(domainHumanities) + 0.9254946(domainInstitutions) + 1.0060640(domainPublic Figure) + 0.8719940(domainScience & Technology) + -4.3857126(domainSports) + 0.0711697(article_languages)	+ 0.5457353(continentAsia) + 1.1232304(continentEurope) + 0.0600264(continentNorth America	) + -0.5348510(continentOceania) + 0.8157495(continentSouth America)`
+`(historical_popularity_index) = 16.13336476	(intercept) + 1.51505537(sexMale) + 0.32594321	(domainBusiness & Law) +
+0.56575963	(domainExploration) + 1.49018106	(domainHumanities) + 0.92757490	(domainInstitutions) + 1.01544834(domainPublic Figure) + 0.86254971(domainScience & Technology) + 	-4.37872010(domainSports) + 0.10057213	(article_languages)	+ 	1.59712745	(continentAsia) + 2.22815622	(continentEurope) + 1.46826358(continentNorth America	) + 	1.13423735(continentOceania) + 2.88294445	(continentSouth America)`+ -0.02635754(article_languages:continentAsia) + -0.02759474(article_languages:continentEurope) + -0.03508578(article_languages:continentNorth America) + -0.04278132(article_languages:continentOceania) + -0.05213559(article_languages:continentSouth America)	
 
 ```{r full_r-squared}
 glance(m_full)$r.squared
@@ -156,6 +161,7 @@ panth_mod %>%
   ggplot(panth, mapping = aes(x = longitude, y = latitude, color = domain)) +
   geom_point(alpha = .4) +
   theme_grey() +
-  labs(title = "Distribution of historical figures in Italy", subtitle = "Focusing on the Domains of Arts and Sports", x = "Longitude", y = "Latitude", color = "Domain")
+  labs(title = "Distribution of historical figures in Italy", 
+       subtitle = "Focusing on the Domains of Arts and Sports", x = "Longitude", y = "Latitude", color = "Domain")
 ```
 
