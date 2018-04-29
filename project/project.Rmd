@@ -49,7 +49,7 @@ There are 17 variables and 10,279 observations (with all NAs removed in the new 
 
 ```{r men-and-women}
 panth_mod %>%
-  count(domain)
+  count(sex)
 ```
 
 Based on the filtered dataframe, there are 1,427 women and 8,852 men that are considered historical figures. 
@@ -62,7 +62,7 @@ http://www.dummies.com/programming/r/how-to-remove-rows-with-missing-data-in-r/
 
 #### Create a map showing the concentration of popular historical figures around the world
 
-```{r espana}
+```{r Italy}
 panth_mod %>%
   filter(country == "Italy") %>%
   filter(domain %in% c("Sports","Arts"))%>%

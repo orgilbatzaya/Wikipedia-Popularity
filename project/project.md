@@ -30,17 +30,11 @@ For our write-up, we chose to focus on the variables `full_name`, `birth_year`, 
 
 There are 17 variables and 10,279 observations (with all NAs removed in the new dataframe). Before removing the NAs, the full dataframe had 11,341 observations.
 
-    ## # A tibble: 8 x 2
-    ##   domain                   n
-    ##   <chr>                <int>
-    ## 1 Arts                  2767
-    ## 2 Business & Law         103
-    ## 3 Exploration             88
-    ## 4 Humanities            1227
-    ## 5 Institutions          2753
-    ## 6 Public Figure          319
-    ## 7 Science & Technology  1315
-    ## 8 Sports                1707
+    ## # A tibble: 2 x 2
+    ##   sex        n
+    ##   <chr>  <int>
+    ## 1 Female  1427
+    ## 2 Male    8852
 
 Based on the filtered dataframe, there are 1,427 women and 8,852 men that are considered historical figures.
 
@@ -52,7 +46,7 @@ Based on the filtered dataframe, there are 1,427 women and 8,852 men that are co
 
 #### Create a map showing the concentration of popular historical figures around the world
 
-![](project_files/figure-markdown_github/espana-1.png)
+![](project_files/figure-markdown_github/Italy-1.png)
 
 ### Question 3
 
