@@ -55,7 +55,8 @@ Based on the filtered dataframe, there are 1,427 women and 8,852 men that are co
 panth_mod %>%
   ggplot(mapping = aes(x = historical_popularity_index)) +
   geom_histogram(bins = 20) + 
-  labs(title = "Distribution of Historical Popularity Index Scores", y = "Count", y = "Historical Popularity Index Score")
+  labs(title = "Distribution of Historical Popularity Index Scores", y = "Count", 
+       x = "Historical Popularity Index Score")
 
 panth_mod %>%
   summarise(mean = mean(historical_popularity_index), 
@@ -63,6 +64,7 @@ panth_mod %>%
             sd = sd(historical_popularity_index))
 ```
 
+To get a better understanding of our dataset, we created a histogram that shows the distribution of the historical popularity index scores for the historical figures and ran summary statistics. The median score was 22.8723 and the mean was 22.14023. The distribution is left skewed and unimodal. 
 
 ##### Reference
 
@@ -76,7 +78,7 @@ tidy(m_pop_sex) %>%
   select(term, estimate)
 ```
 
-Here we estimated the historical popularity index using the `sex` variable. The slope fo the categorical variable `sexMale` is 1.55, suggesting that historical figures who are men have, on average, an increase in their overall popularity index of 1.55 as long as all other variables are held constant. 
+Here we estimated the historical popularity index using the `sex` variable. The slope for the categorical variable `sexMale` is 1.55, suggesting that historical figures who are men have, on average, an increase in their overall popularity index of 1.55 as long as all other variables are held constant. 
 
 The linear model, based on the output, is:
 
@@ -105,6 +107,17 @@ The linear model, based on the output, is:
 
 ```{r full_r-squared}
 glance(m_full)$r.squared
+```
+
+### Backwards Selection with AIC
+
+```{r backwards_selection}
+selected_model <- step(m_full, direction = "backward")
+
+tidy(selected_model) %>%
+  select(term, estimate)
+
+glance(m_full)$AIC
 ```
 
 
