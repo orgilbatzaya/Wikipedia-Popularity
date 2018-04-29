@@ -1,5 +1,5 @@
 ---
-title: "PROJECT TITLE"
+title: "What makes for a good historical popularity index?"
 author: "Duke Squirrels"
 date: "04/19/2018"
 output: github_document
@@ -95,6 +95,8 @@ m_full <- lm(historical_popularity_index ~ sex + domain + article_languages + co
 tidy(m_full) %>%
   select(term, estimate)
 ```
+
+Here we estimated the historical popularity index using the `sex`, `domain`, `article_languages`, and `continent` variables. We would interpret the slope the same way we did with the simple linear regression above that had the `sex` variable only.
 
 The linear model, based on the output, is:
 

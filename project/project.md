@@ -1,4 +1,4 @@
-PROJECT TITLE
+What makes for a good historical popularity index?
 ================
 Duke Squirrels
 04/19/2018
@@ -7,8 +7,6 @@ Your project goes here! Before you submit, make sure your chunks are turned off 
 
 Load Packages
 -------------
-
-    ## Warning: running command 'timedatectl' had status 1
 
 Load Data
 ---------
@@ -82,6 +80,8 @@ We found that the r-squared for the linear model `m_pop` is 2.54%, which suggest
     ## 13     continentNorth America  0.0600264
     ## 14           continentOceania -0.5348510
     ## 15     continentSouth America  0.8157495
+
+Here we estimated the historical popularity index using the `sex`, `domain`, `article_languages`, and `continent` variables. We would interpret the slope the same way we did with the simple linear regression above that had the `sex` variable only.
 
 The linear model, based on the output, is:
 
