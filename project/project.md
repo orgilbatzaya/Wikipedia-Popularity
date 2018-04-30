@@ -3,10 +3,10 @@ What makes for a good historical popularity index?
 Duke Squirrels
 04/19/2018
 
-Your project goes here! Before you submit, make sure your chunks are turned off with `echo = FALSE`.
-
 Load Packages
 -------------
+
+    ## Warning: running command 'timedatectl' had status 1
 
 Load Data
 ---------
@@ -28,6 +28,30 @@ There are 17 variables and 10,279 observations (with all NAs removed in the new 
 
 <http://www.dummies.com/programming/r/how-to-remove-rows-with-missing-data-in-r/>
 
+    ## # A tibble: 8 x 2
+    ##   domain                   n
+    ##   <chr>                <int>
+    ## 1 Arts                  2767
+    ## 2 Institutions          2753
+    ## 3 Sports                1707
+    ## 4 Science & Technology  1315
+    ## 5 Humanities            1227
+    ## 6 Public Figure          319
+    ## 7 Business & Law         103
+    ## 8 Exploration             88
+
+    ## # A tibble: 6 x 2
+    ##   continent         n
+    ##   <chr>         <int>
+    ## 1 Europe         6073
+    ## 2 North America  2351
+    ## 3 Asia           1021
+    ## 4 Africa          362
+    ## 5 South America   352
+    ## 6 Oceania         120
+
+Looking at simply the number of historical figures in each of the domain categories, it becomes easier to see which domain is the most popular. Specifically, the Arts dominate the `domain` variable, which is surprising because the `Institutions` domain incudes political, military, and religious figures which have dominated history. When looking at the number of historical figure by continent, Europe is the continent with the most historical figures across the ~5000 year timespan of the data with more historical figures than all other continents combined. This is not very surprising because many of the world's greatest thinkers and most influential figures came from all over Europe.
+
 ![](project_files/figure-markdown_github/distribution-of-index-1.png)
 
     ## # A tibble: 1 x 3
@@ -39,13 +63,13 @@ To get a better understanding of our dataset, we created a histogram that shows 
 
 ### Section 2 - Men and Women
 
-    ## # A tibble: 2 x 2
-    ##   sex        n
-    ##   <chr>  <int>
-    ## 1 Female  1427
-    ## 2 Male    8852
+    ## # A tibble: 2 x 3
+    ##   sex        n  prop
+    ##   <chr>  <int> <dbl>
+    ## 1 Female  1427 0.139
+    ## 2 Male    8852 0.861
 
-Based on the filtered dataframe, there are 1,427 women and 8,852 men that are considered historical figures. There are about 6.2 times as many historical men than women overall in the data. The timeframe of this data starts at -3500, or 3500 BCE, and ends at 2005, spanning about 5000 years.
+Based on the filtered dataframe, there are 1,427 women and 8,852 men that are considered historical figures of the total 10,279 historical figures. There are about 6.2 times as many historical men than women overall in the data. The timeframe of this data starts at -3500, or 3500 BCE, and ends at 2005, spanning about 5000 years. This means that a mere 13.9% of women in the entire timeframe are considered historical figures.
 
 ### Simple Linear Regression
 
@@ -61,7 +85,7 @@ The linear model, based on the output, is:
 
     ## [1] 0.02538845
 
-We found that the r-squared for the linear model `m_pop` is 2.54%, which suggests that 2.54% of the variability of the data can be explained by the linear model.
+We found that the r-squared for the linear model `m_pop` is 2.54%, which suggests that 2.54% of the variability of the data can be explained by the linear model and that the model does not fit our data very well. In the next few steps, we will continue to re-evaluate our model to determine what combination of variables result in a high or low popularity index score.
 
     ## # A tibble: 2 x 3
     ##   sex        n  prop
@@ -75,9 +99,19 @@ For historical figures born after 1920, there are about 4 times as many male his
     ## 1 (Intercept) 19.6057504
     ## 2     sexMale  0.5687071
 
+In the previous model, we predicted the `historical_popularity_index` by `sex` across the entire ~5000 year time period of the data. The result was that historical figures who were men had, on average and with all other variables held constant, a popularity index score that was 1.55 points higher than that of women who were historical figures. However, in this model, we thought it would be interesting to analyze the 85 year timeframe after the year 1920, when women were given the right to vote in the U.S. and when, later in the century, women across the world where also granted greater rights. As a result, women made up about 20% of the historical figures as opposed to making up 13.9% of the historical figure population in the previous analysis.
+
+The resulting linear model that only looked at the historical figures after 1920 is as follows:
+
+`(historical_popularity_index) = 19.6(intercept) + 0.569(sexMale)`
+
+The slope of the `sexMale` variable decreased significantly from the previous analysis. This shows that time is a factor that affects the historical popularity index of women specifically.
+
 ### Visual
 
-![](project_files/figure-markdown_github/unnamed-chunk-2-1.png)
+![](project_files/figure-markdown_github/visualizing-index-by-popularity-1.png)
+
+Because there are so many historical figures from Europe, there is a lot of clustering near the 50-60 language marker. Additionally, Europe and Asia's slopes are very similar. This could be because Europe has 6,073 figures with pages translated into 50 or more languages and very high popularity index scores or that Asia has 1,021 popular historical figures, but those figures have pages that have been translated into much more than 50 languages. For example, there is a historical figure that is an outlier in the visual. Looking at the data, we identified this individual as Jesus Christ, whose Wikipedia page has been translated into 214 different languages.
 
 ### Multiple Linear Regression
 
