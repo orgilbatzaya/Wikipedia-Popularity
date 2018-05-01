@@ -59,7 +59,7 @@ Looking at simply the number of historical figures in each of the domain categor
     ##   <dbl>  <dbl> <dbl>
     ## 1  22.1   22.9  3.37
 
-To get a better understanding of our dataset, we created a histogram that shows the distribution of the historical popularity index scores for the historical figures and ran summary statistics. The median score was 22.8723 and the mean was 22.14023. The distribution is left skewed and unimodal.
+To get a better understanding of our dataset, we created a faceted histogram that shows the distribution of the historical popularity index scores for the historical figures across all of the domains in the dataset and ran summary statistics on the dataframe as a whole. The visual lets us see the true distribution of historical figures across all of the domains, letting us know which areas are the most popular and have produced the most historical figures. The median popularity index score was 22.8723 and the mean was 22.14023.
 
 ### Section 2 - Men and Women
 
