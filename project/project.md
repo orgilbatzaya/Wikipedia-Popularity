@@ -6,8 +6,6 @@ Duke Squirrels
 Load Packages
 -------------
 
-    ## Warning: running command 'timedatectl' had status 1
-
 Load Data
 ---------
 
@@ -196,6 +194,28 @@ The linear model, based on the output, is:
     ## 20 article_languages:continentSouth America -0.05213559
 
     ## [1] 45215.27
+
+### Distance
+
+    ## # A tibble: 9 x 3
+    ##   distance name.arts               name.sci         
+    ##      <dbl> <chr>                   <chr>            
+    ## 1     87.3 Michelangelo            Leonardo da Vinci
+    ## 2    476.  Wolfgang Amadeus Mozart Leonardo da Vinci
+    ## 3    778.  Johann Sebastian Bach   Isaac Newton     
+    ## 4    780.  Michelangelo            Archimedes       
+    ## 5    801.  Johann Sebastian Bach   Leonardo da Vinci
+    ## 6   1116.  Wolfgang Amadeus Mozart Isaac Newton     
+    ## 7   1206.  Wolfgang Amadeus Mozart Archimedes       
+    ## 8   1380.  Michelangelo            Isaac Newton     
+    ## 9   1594.  Johann Sebastian Bach   Archimedes
+
+    ## # A tibble: 3 x 2
+    ##   name.arts               closest
+    ##   <chr>                     <dbl>
+    ## 1 Johann Sebastian Bach     778. 
+    ## 2 Michelangelo               87.3
+    ## 3 Wolfgang Amadeus Mozart   476.
 
 ### The perfect historical popularity index
 
