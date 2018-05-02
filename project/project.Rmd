@@ -1,5 +1,5 @@
 ---
-title: "What makes for a good historical popularity index?"
+title: "Wikipedia Popularity"
 author: "Duke Squirrels"
 date: "04/19/2018"
 output: github_document
@@ -68,6 +68,7 @@ panth_mod %>%
        x = "Historical Popularity Index Score", subtitle = "by Domain")
 
 panth_mod %>%
+  group_by(domain)%>%
   summarise(mean = mean(historical_popularity_index), 
             median = median(historical_popularity_index), 
             sd = sd(historical_popularity_index))
@@ -133,15 +134,24 @@ The slope of the `sexMale` variable decreased significantly from the previous an
 
 ```{r visualizing-index-by-popularity}
 panth_mod %>%
-  filter(article_languages > 50)%>%
+  filter(article_languages > 50 & continent != "Oceania")%>%
   ggplot(mapping = aes(y = historical_popularity_index, x = article_languages,
-                       color = factor(continent))) + geom_point(alpha = .3) + 
+                       color = factor(continent))) + geom_point(alpha = .5) + 
     geom_smooth(method = "lm", se = FALSE)+
     labs(x = "Number of Article Languages", y = "Popularity Index", 
     title = "Effect of the number of languages the article is translated into on popularity index", color = "Continent") 
 ```
 
 Because there are so many historical figures from Europe, there is a lot of clustering near the 50-60 language marker. Additionally, Europe and Asia's slopes are very similar. This could be because Europe has 6,073 figures with pages translated into 50 or more languages and very high popularity index scores or that Asia has 1,021 popular historical figures, but those figures have pages that have been translated into much more than 50 languages. For example, there is a historical figure that is an outlier in the visual. Looking at the data, we identified this individual as Jesus Christ, whose Wikipedia page has been translated into 214 different languages. 
+
+```{r who-is-the-outlier}
+panth_mod %>%
+  select(full_name, historical_popularity_index, article_languages, country) %>%
+  filter(historical_popularity_index <20, article_languages >175)
+```
+
+
+Interestingly, one of the historical figures has a low popularity index score, but his/her wikipedia page has been translated into almost 200 different languages. After filtering the data to locate the point that had a popularity index score less than 20 and an article that was translated into more than 175 languages, we derived that the outlier historical figure from North America is Corbin Bleu, the actor from High School Musical.
 
 ### Multiple Linear Regression
 
@@ -160,8 +170,7 @@ Here we estimated the historical popularity index using the `sex`, `domain`, `ar
 
 The linear model, based on the output, is:
 
-`(historical_popularity_index) = 16.13336476	(intercept) + 1.51505537(sexMale) + 0.32594321	(domainBusiness & Law) +
-0.56575963	(domainExploration) + 1.49018106	(domainHumanities) + 0.92757490	(domainInstitutions) + 1.01544834(domainPublic Figure) + 0.86254971(domainScience & Technology) + 	-4.37872010(domainSports) + 0.10057213	(article_languages)	+ 	1.59712745	(continentAsia) + 2.22815622	(continentEurope) + 1.46826358(continentNorth America	) + 	1.13423735(continentOceania) + 2.88294445	(continentSouth America) + -0.02635754(article_languages:continentAsia) + -0.02759474(article_languages:continentEurope) + -0.03508578(article_languages:continentNorth America) + -0.04278132(article_languages:continentOceania) + -0.05213559(article_languages:continentSouth America)`	
+`(historical_popularity_index) = 16.13336476	(intercept) + 1.51505537(sexMale) + 0.32594321	(domainBusiness & Law) + 0.56575963	(domainExploration) + 1.49018106	(domainHumanities) + 0.92757490	(domainInstitutions) + 1.01544834(domainPublic Figure) + 0.86254971(domainScience & Technology) + 	-4.37872010(domainSports) + 0.10057213	(article_languages)	+ 	1.59712745	(continentAsia) + 2.22815622	(continentEurope) + 1.46826358(continentNorth America	) + 	1.13423735(continentOceania) + 2.88294445	(continentSouth America) + -0.02635754(article_languages:continentAsia) + -0.02759474(article_languages:continentEurope) + -0.03508578(article_languages:continentNorth America) + -0.04278132(article_languages:continentOceania) + -0.05213559(article_languages:continentSouth America)`	
 
 ```{r full_r-squared}
 glance(m_full)$r.squared
@@ -177,5 +186,9 @@ tidy(selected_model) %>%
 
 glance(m_full)$AIC
 ```
+
+### The perfect historical popularity index
+
+
 
 ## Conclusion

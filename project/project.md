@@ -1,4 +1,4 @@
-What makes for a good historical popularity index?
+Wikipedia Popularity
 ================
 Duke Squirrels
 04/19/2018
@@ -54,10 +54,17 @@ Looking at simply the number of historical figures in each of the domain categor
 
 ![](project_files/figure-markdown_github/distribution-of-index-1.png)
 
-    ## # A tibble: 1 x 3
-    ##    mean median    sd
-    ##   <dbl>  <dbl> <dbl>
-    ## 1  22.1   22.9  3.37
+    ## # A tibble: 8 x 4
+    ##   domain                mean median    sd
+    ##   <chr>                <dbl>  <dbl> <dbl>
+    ## 1 Arts                  21.8   22.4  3.06
+    ## 2 Business & Law        22.3   22.6  2.36
+    ## 3 Exploration           23.5   23.4  2.85
+    ## 4 Humanities            24.3   24.3  2.21
+    ## 5 Institutions          23.6   23.8  2.37
+    ## 6 Public Figure         22.4   22.8  3.03
+    ## 7 Science & Technology  23.4   23.2  1.83
+    ## 8 Sports                17.7   17.3  2.86
 
 To get a better understanding of our dataset, we created a faceted histogram that shows the distribution of the historical popularity index scores for the historical figures across all of the domains in the dataset and ran summary statistics on the dataframe as a whole. The visual lets us see the true distribution of historical figures across all of the domains, letting us know which areas are the most popular and have produced the most historical figures. The median popularity index score was 22.8723 and the mean was 22.14023.
 
@@ -113,6 +120,13 @@ The slope of the `sexMale` variable decreased significantly from the previous an
 
 Because there are so many historical figures from Europe, there is a lot of clustering near the 50-60 language marker. Additionally, Europe and Asia's slopes are very similar. This could be because Europe has 6,073 figures with pages translated into 50 or more languages and very high popularity index scores or that Asia has 1,021 popular historical figures, but those figures have pages that have been translated into much more than 50 languages. For example, there is a historical figure that is an outlier in the visual. Looking at the data, we identified this individual as Jesus Christ, whose Wikipedia page has been translated into 214 different languages.
 
+    ## # A tibble: 1 x 4
+    ##   full_name   historical_popularity_index article_languages country      
+    ##   <chr>                             <dbl>             <int> <chr>        
+    ## 1 Corbin Bleu                        18.9               193 United States
+
+Interestingly, one of the historical figures has a low popularity index score, but his/her wikipedia page has been translated into almost 200 different languages. After filtering the data to locate the point that had a popularity index score less than 20 and an article that was translated into more than 175 languages, we derived that the outlier historical figure from North America is Corbin Bleu, the actor from High School Musical.
+
 ### Multiple Linear Regression
 
     ##                                        term    estimate
@@ -141,7 +155,7 @@ Here we estimated the historical popularity index using the `sex`, `domain`, `ar
 
 The linear model, based on the output, is:
 
-`(historical_popularity_index) = 16.13336476    (intercept) + 1.51505537(sexMale) + 0.32594321  (domainBusiness & Law) + 0.56575963  (domainExploration) + 1.49018106    (domainHumanities) + 0.92757490 (domainInstitutions) + 1.01544834(domainPublic Figure) + 0.86254971(domainScience & Technology) +   -4.37872010(domainSports) + 0.10057213  (article_languages) +   1.59712745  (continentAsia) + 2.22815622    (continentEurope) + 1.46826358(continentNorth America   ) +     1.13423735(continentOceania) + 2.88294445   (continentSouth America) + -0.02635754(article_languages:continentAsia) + -0.02759474(article_languages:continentEurope) + -0.03508578(article_languages:continentNorth America) + -0.04278132(article_languages:continentOceania) + -0.05213559(article_languages:continentSouth America)`
+`(historical_popularity_index) = 16.13336476    (intercept) + 1.51505537(sexMale) + 0.32594321  (domainBusiness & Law) + 0.56575963 (domainExploration) + 1.49018106    (domainHumanities) + 0.92757490 (domainInstitutions) + 1.01544834(domainPublic Figure) + 0.86254971(domainScience & Technology) +   -4.37872010(domainSports) + 0.10057213  (article_languages) +   1.59712745  (continentAsia) + 2.22815622    (continentEurope) + 1.46826358(continentNorth America   ) +     1.13423735(continentOceania) + 2.88294445   (continentSouth America) + -0.02635754(article_languages:continentAsia) + -0.02759474(article_languages:continentEurope) + -0.03508578(article_languages:continentNorth America) + -0.04278132(article_languages:continentOceania) + -0.05213559(article_languages:continentSouth America)`
 
     ## [1] 0.582584
 
@@ -180,6 +194,8 @@ The linear model, based on the output, is:
     ## 20 article_languages:continentSouth America -0.05213559
 
     ## [1] 45215.27
+
+### The perfect historical popularity index
 
 Conclusion
 ----------
