@@ -210,12 +210,13 @@ The linear model, based on the output, is:
     ## 8   1380.  Michelangelo            Isaac Newton     
     ## 9   1594.  Johann Sebastian Bach   Archimedes
 
-    ## # A tibble: 3 x 2
-    ##   name.arts               closest
-    ##   <chr>                     <dbl>
-    ## 1 Johann Sebastian Bach     778. 
-    ## 2 Michelangelo               87.3
-    ## 3 Wolfgang Amadeus Mozart   476.
+    ## # A tibble: 3 x 3
+    ## # Groups:   name.arts [3]
+    ##   name.arts               closest name.sci         
+    ##   <chr>                     <dbl> <chr>            
+    ## 1 Wolfgang Amadeus Mozart   476.  Leonardo da Vinci
+    ## 2 Michelangelo               87.3 Leonardo da Vinci
+    ## 3 Johann Sebastian Bach     778.  Isaac Newton
 
 ### The perfect historical popularity index
 

@@ -235,8 +235,11 @@ art_sci %>%
 ```{r}
 art_sci_mindist <- art_sci %>%
   group_by(name.arts) %>%
-  summarise(closest = min(distance))
-art_sci_mindist
+  mutate(closest = min(distance)) 
+  
+art_sci_mindist%>%
+  filter(closest == distance)%>%
+  select(name.arts,closest,name.sci)
 ```
 
 ### The perfect historical popularity index
