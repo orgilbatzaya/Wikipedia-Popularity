@@ -48,7 +48,6 @@ There are 17 variables and 10,279 observations (with all NAs removed in the new 
 
 http://www.dummies.com/programming/r/how-to-remove-rows-with-missing-data-in-r/
 
-
 ```{r looking-at-data}
 panth_mod %>%
   count(domain) %>%
@@ -97,7 +96,7 @@ tidy(m_pop_sex) %>%
   select(term, estimate)
 ```
 
-Here we estimated the historical popularity index using the `sex` variable. The slope for the categorical variable `sexMale` is 1.55, suggesting that historical figures who are men have, on average, an increase in their overall popularity index of 1.55 as long as all other variables are held constant. 
+Here we estimated the historical popularity index using the `sex` variable using a simple linear regression. The slope for the categorical variable `sexMale` is 1.55, suggesting that historical figures who are men have, on average, an increase in their overall popularity index of 1.55 as long as all other variables are held constant. 
 
 The linear model, based on the output, is:
 
@@ -144,16 +143,21 @@ panth_mod %>%
     title = "Effect of the number of languages the article is translated into on popularity index", color = "Continent") 
 ```
 
-Because there are so many historical figures from Europe, there is a lot of clustering near the 50-60 language marker. Additionally, Europe and Asia's slopes are very similar. This could be because Europe has 6,073 figures with pages translated into 50 or more languages and very high popularity index scores or that Asia has 1,021 popular historical figures, but those figures have pages that have been translated into much more than 50 languages. For example, there is a historical figure that is an outlier in the visual. Looking at the data, we identified this individual as Jesus Christ, whose Wikipedia page has been translated into 214 different languages. 
+```{r greater-than-200}
+panth_mod %>%
+  select(full_name, historical_popularity_index, article_languages, country) %>%
+  filter(article_languages > 200)
+```
+
+Because there are so many historical figures from Europe, there is a lot of clustering near the 50-60 language marker. Additionally, Europe and Asia's slopes are very similar. This could be because Europe has 6,073 figures with pages translated into 50 or more languages and very high popularity index scores or that Asia has 1,021 popular historical figures, but those figures have pages that have been translated into much more than 50 languages. For example, there is a historical figure that is an outlier considering Asia's spread in the visual. By filtering the data for the figure with a page translated into more than 200 languages, we identified this individual as Jesus Christ, whose Wikipedia page has been translated into 214 different languages. The fact that Jesus has his page translated into this many languages is not surprising.
 
 ```{r who-is-the-outlier}
 panth_mod %>%
   select(full_name, historical_popularity_index, article_languages, country) %>%
-  filter(historical_popularity_index <20, article_languages >175)
+  filter(historical_popularity_index < 20, article_languages > 175)
 ```
 
-
-Interestingly, one of the historical figures has a low popularity index score, but his/her wikipedia page has been translated into almost 200 different languages. After filtering the data to locate the point that had a popularity index score less than 20 and an article that was translated into more than 175 languages, we derived that the outlier historical figure from North America is Corbin Bleu, the actor from High School Musical.
+Interestingly, one of the historical figures has a low popularity index score, an outlier, but his/her wikipedia page has been translated into almost 200 different languages. After filtering the data to locate the point that had a popularity index score less than 20 and an article that was translated into more than 175 languages, we derived that the outlier historical figure from North America is Corbin Bleu, the actor from High School Musical.
 
 ### Multiple Linear Regression
 
@@ -189,8 +193,9 @@ tidy(selected_model) %>%
 glance(m_full)$AIC
 ```
 
-### Distance 
-```{r}
+### Distance
+
+```{r haversine}
 haversine <- function(long1, lat1, long2, lat2, round = 3) {
   # convert to radians
   long1 = long1 * pi / 180
@@ -207,7 +212,7 @@ haversine <- function(long1, lat1, long2, lat2, round = 3) {
 }
 ```
 
-```{r}
+```{r creating-distance}
 panth_mod2 <- panth_mod%>%
   filter(domain == "Arts", continent == "Europe")%>%
   mutate(long.arts = longitude, lat.arts = latitude, name.arts = full_name)%>%
@@ -226,13 +231,13 @@ art_sci <- art_sci%>%
   mutate(distance = haversine(long.arts, lat.arts, long.sci, lat.sci,round=3))
 ```
 
-```{r}
-
+```{r dist-arts-sci}
 art_sci %>%
   select(distance,name.arts,name.sci) %>%
   arrange(distance)
 ```
-```{r}
+
+```{r comparing-dist}
 art_sci_mindist <- art_sci %>%
   group_by(name.arts) %>%
   mutate(closest = min(distance)) 
@@ -244,6 +249,7 @@ art_sci_mindist%>%
 
 ### The perfect historical popularity index
 
-
+Based on the full and selected models, to have the highest popularity index score, one should:
+be a man, study in the domain of the humanities, and live somewhere in the continent of South America.
 
 ## Conclusion

@@ -6,6 +6,8 @@ Duke Squirrels
 Load Packages
 -------------
 
+    ## Warning: running command 'timedatectl' had status 1
+
 Load Data
 ---------
 
@@ -84,7 +86,7 @@ Based on the filtered dataframe, there are 1,427 women and 8,852 men that are co
     ## 1 (Intercept) 20.802384
     ## 2     sexMale  1.553512
 
-Here we estimated the historical popularity index using the `sex` variable. The slope for the categorical variable `sexMale` is 1.55, suggesting that historical figures who are men have, on average, an increase in their overall popularity index of 1.55 as long as all other variables are held constant.
+Here we estimated the historical popularity index using the `sex` variable using a simple linear regression. The slope for the categorical variable `sexMale` is 1.55, suggesting that historical figures who are men have, on average, an increase in their overall popularity index of 1.55 as long as all other variables are held constant.
 
 The linear model, based on the output, is:
 
@@ -118,14 +120,19 @@ The slope of the `sexMale` variable decreased significantly from the previous an
 
 ![](project_files/figure-markdown_github/visualizing-index-by-popularity-1.png)
 
-Because there are so many historical figures from Europe, there is a lot of clustering near the 50-60 language marker. Additionally, Europe and Asia's slopes are very similar. This could be because Europe has 6,073 figures with pages translated into 50 or more languages and very high popularity index scores or that Asia has 1,021 popular historical figures, but those figures have pages that have been translated into much more than 50 languages. For example, there is a historical figure that is an outlier in the visual. Looking at the data, we identified this individual as Jesus Christ, whose Wikipedia page has been translated into 214 different languages.
+    ## # A tibble: 1 x 4
+    ##   full_name    historical_popularity_index article_languages country
+    ##   <chr>                              <dbl>             <int> <chr>  
+    ## 1 Jesus Christ                        31.9               214 Israel
+
+Because there are so many historical figures from Europe, there is a lot of clustering near the 50-60 language marker. Additionally, Europe and Asia's slopes are very similar. This could be because Europe has 6,073 figures with pages translated into 50 or more languages and very high popularity index scores or that Asia has 1,021 popular historical figures, but those figures have pages that have been translated into much more than 50 languages. For example, there is a historical figure that is an outlier considering Asia's spread in the visual. By filtering the data for the figure with a page translated into more than 200 languages, we identified this individual as Jesus Christ, whose Wikipedia page has been translated into 214 different languages. The fact that Jesus has his page translated into this many languages is not surprising.
 
     ## # A tibble: 1 x 4
     ##   full_name   historical_popularity_index article_languages country      
     ##   <chr>                             <dbl>             <int> <chr>        
     ## 1 Corbin Bleu                        18.9               193 United States
 
-Interestingly, one of the historical figures has a low popularity index score, but his/her wikipedia page has been translated into almost 200 different languages. After filtering the data to locate the point that had a popularity index score less than 20 and an article that was translated into more than 175 languages, we derived that the outlier historical figure from North America is Corbin Bleu, the actor from High School Musical.
+Interestingly, one of the historical figures has a low popularity index score, an outlier, but his/her wikipedia page has been translated into almost 200 different languages. After filtering the data to locate the point that had a popularity index score less than 20 and an article that was translated into more than 175 languages, we derived that the outlier historical figure from North America is Corbin Bleu, the actor from High School Musical.
 
 ### Multiple Linear Regression
 
@@ -201,24 +208,26 @@ The linear model, based on the output, is:
     ##   distance name.arts               name.sci         
     ##      <dbl> <chr>                   <chr>            
     ## 1     87.3 Michelangelo            Leonardo da Vinci
-    ## 2    476.  Wolfgang Amadeus Mozart Leonardo da Vinci
-    ## 3    778.  Johann Sebastian Bach   Isaac Newton     
-    ## 4    780.  Michelangelo            Archimedes       
-    ## 5    801.  Johann Sebastian Bach   Leonardo da Vinci
-    ## 6   1116.  Wolfgang Amadeus Mozart Isaac Newton     
-    ## 7   1206.  Wolfgang Amadeus Mozart Archimedes       
-    ## 8   1380.  Michelangelo            Isaac Newton     
-    ## 9   1594.  Johann Sebastian Bach   Archimedes
+    ## 2    476   Wolfgang Amadeus Mozart Leonardo da Vinci
+    ## 3    778   Johann Sebastian Bach   Isaac Newton     
+    ## 4    780   Michelangelo            Archimedes       
+    ## 5    801   Johann Sebastian Bach   Leonardo da Vinci
+    ## 6   1116   Wolfgang Amadeus Mozart Isaac Newton     
+    ## 7   1206   Wolfgang Amadeus Mozart Archimedes       
+    ## 8   1380   Michelangelo            Isaac Newton     
+    ## 9   1594   Johann Sebastian Bach   Archimedes
 
     ## # A tibble: 3 x 3
     ## # Groups:   name.arts [3]
     ##   name.arts               closest name.sci         
     ##   <chr>                     <dbl> <chr>            
-    ## 1 Wolfgang Amadeus Mozart   476.  Leonardo da Vinci
+    ## 1 Wolfgang Amadeus Mozart   476   Leonardo da Vinci
     ## 2 Michelangelo               87.3 Leonardo da Vinci
-    ## 3 Johann Sebastian Bach     778.  Isaac Newton
+    ## 3 Johann Sebastian Bach     778   Isaac Newton
 
 ### The perfect historical popularity index
+
+Based on the full and selected models, to have the highest popularity index score, one should: be a man, study in the domain of the humanities, and live somewhere in the continent of South America.
 
 Conclusion
 ----------
