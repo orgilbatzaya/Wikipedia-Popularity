@@ -130,7 +130,8 @@ panth_mod%>%
 For historical figures born after 1920, there are about 4 times as many male historical figures than female figures. This is intriguing because in this 85 year timeframe from 1920 - 2005, we have 1053 historical women out of a total of 1427 women in the entire timeframe. 
 
 ```{r new_m_pop_sex}
-m_pop_sex2 <- lm(historical_popularity_index ~ sex , data = panth_mod%>%filter(birth_year > 1920))
+m_pop_sex2 <- lm(historical_popularity_index ~ sex , data = panth_mod %>%
+                   filter(birth_year > 1920))
 tidy(m_pop_sex2) %>%
   select(term, estimate)
 ```
@@ -189,7 +190,7 @@ Here we estimated the historical popularity index using the `sex`, `domain`, `ar
 
 The linear model, based on the output, is:
 
-`(historical_popularity_index) = 16.13336476	(intercept) + 1.51505537(sexMale) + 0.32594321	(domainBusiness & Law) + 0.56575963	(domainExploration) + 1.49018106	(domainHumanities) + 0.92757490	(domainInstitutions) + 1.01544834(domainPublic Figure) + 0.86254971(domainScience & Technology) + 	-4.37872010(domainSports) + 0.10057213	(article_languages)	+ 	1.59712745	(continentAsia) + 2.22815622	(continentEurope) + 1.46826358(continentNorth America	) + 	1.13423735(continentOceania) + 2.88294445	(continentSouth America) + -0.02635754(article_languages:continentAsia) + -0.02759474(article_languages:continentEurope) + -0.03508578(article_languages:continentNorth America) + -0.04278132(article_languages:continentOceania) + -0.05213559(article_languages:continentSouth America)`	
+`(historical_popularity_index) = 19.9(intercept) + 1.43(sexMale) + 0.335(domainBusiness & Law) + 0.275	(domainExploration) + 1.097(domainHumanities) + 0.398(domainInstitutions) + 0.763(domainPublic Figure) + 0.778(domainScience & Technology) - 4.20(domainSports) + 0.0893(article_languages)	+ 1.235	(continentAsia) + 2.063(continentEurope) + 1.322(continentNorth America	) + 0.980(continentOceania) + 2.68(continentSouth America) - 0.0235(article_languages:continentAsia) - 0.0209(article_languages:continentEurope) - 0.0227(article_languages:continentNorth America) - 0.0303(article_languages:continentOceania) - 0.0384(article_languages:continentSouth America)`	
 
 ```{r full_r-squared}
 glance(m_full)$r.squared
@@ -205,6 +206,11 @@ tidy(selected_model) %>%
 
 glance(m_full)$AIC
 ```
+
+### The perfect historical popularity index
+
+Based on the full and selected models, to have the highest popularity index score, one should:
+be a man, study in the domain of the humanities, and live somewhere in the continent of South America.
 
 ### Distance
 
@@ -294,10 +300,5 @@ hum_art_mindist %>%
   filter(closest == distance)%>%
   select(name.arts, closest, name.hum)
 ```
-
-### The perfect historical popularity index
-
-Based on the full and selected models, to have the highest popularity index score, one should:
-be a man, study in the domain of the humanities, and live somewhere in the continent of South America.
 
 ## Conclusion
