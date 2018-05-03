@@ -6,8 +6,6 @@ Duke Squirrels
 Load Packages
 -------------
 
-    ## Warning: running command 'timedatectl' had status 1
-
 Load Data
 ---------
 
@@ -25,6 +23,8 @@ It is important to note that the dataframe has been updated as recently as last 
     ## [1] 10279
 
 There are 17 variables and 10,279 observations (with all NAs removed in the new dataframe). Before removing the NAs, the full dataframe had 11,341 observations.
+
+In addition, we decided to rank the historical figures to based off of their `historical_popularity_index`
 
 ##### Reference
 
@@ -207,62 +207,62 @@ The linear model, based on the output, is:
     ## # A tibble: 90,000 x 3
     ##    distance name.arts               name.sci                     
     ##       <dbl> <chr>                   <chr>                        
-    ##  1        0 Wolfgang Amadeus Mozart Christian Doppler            
-    ##  2        0 Johann Sebastian Bach   Ernst Karl Abbe              
-    ##  3        0 Richard Wagner          Gottfried Wilhelm von Leibniz
-    ##  4        0 Claude Monet            Antoine Lavoisier            
-    ##  5        0 Claude Monet            Rudolf Diesel                
-    ##  6        0 Claude Monet            Pierre Curie                 
-    ##  7        0 Claude Monet            Antoine Henri Becquerel      
-    ##  8        0 Claude Monet            Jacques Lacan                
-    ##  9        0 Claude Monet            Vilfredo Pareto              
-    ## 10        0 Claude Monet            Augustin Louis Cauchy        
+    ##  1       0. Wolfgang Amadeus Mozart Christian Doppler            
+    ##  2       0. Johann Sebastian Bach   Ernst Karl Abbe              
+    ##  3       0. Richard Wagner          Gottfried Wilhelm von Leibniz
+    ##  4       0. Claude Monet            Antoine Lavoisier            
+    ##  5       0. Claude Monet            Rudolf Diesel                
+    ##  6       0. Claude Monet            Pierre Curie                 
+    ##  7       0. Claude Monet            Antoine Henri Becquerel      
+    ##  8       0. Claude Monet            Jacques Lacan                
+    ##  9       0. Claude Monet            Vilfredo Pareto              
+    ## 10       0. Claude Monet            Augustin Louis Cauchy        
     ## # ... with 89,990 more rows
 
     ## # A tibble: 739 x 3
     ## # Groups:   name.arts [300]
     ##    name.arts               closest name.sci                     
     ##    <chr>                     <dbl> <chr>                        
-    ##  1 Wolfgang Amadeus Mozart     0   Christian Doppler            
+    ##  1 Wolfgang Amadeus Mozart     0.  Christian Doppler            
     ##  2 Michelangelo               15.3 Luca Pacioli                 
-    ##  3 Johann Sebastian Bach       0   Ernst Karl Abbe              
+    ##  3 Johann Sebastian Bach       0.  Ernst Karl Abbe              
     ##  4 Ludwig van Beethoven       23.2 Hermann Emil Fischer         
     ##  5 Vincent van Gogh           46.0 Gerardus Mercator            
-    ##  6 Pablo Picasso             114   Pomponius Mela               
+    ##  6 Pablo Picasso             114.  Pomponius Mela               
     ##  7 Raphael                    42.3 Luca Pacioli                 
     ##  8 Albrecht Dürer             15.6 Georg Ohm                    
     ##  9 Salvador Dalí              60.4 François Arago               
-    ## 10 Richard Wagner              0   Gottfried Wilhelm von Leibniz
+    ## 10 Richard Wagner              0.  Gottfried Wilhelm von Leibniz
     ## # ... with 729 more rows
 
     ## # A tibble: 90,000 x 3
     ##    distance name.arts             name.hum       
     ##       <dbl> <chr>                 <chr>          
-    ##  1        0 Praxiteles            Plato          
-    ##  2        0 Praxiteles            Socrates       
-    ##  3        0 Sandro Botticelli     Dante Alighieri
-    ##  4        0 Giotto di Bondone     Dante Alighieri
-    ##  5        0 Donatello             Dante Alighieri
-    ##  6        0 Filippo Brunelleschi  Dante Alighieri
-    ##  7        0 Jean-Baptiste Lully   Dante Alighieri
-    ##  8        0 Cimabue               Dante Alighieri
-    ##  9        0 Andrea del Verrocchio Dante Alighieri
-    ## 10        0 Paolo Uccello         Dante Alighieri
+    ##  1       0. Praxiteles            Plato          
+    ##  2       0. Praxiteles            Socrates       
+    ##  3       0. Sandro Botticelli     Dante Alighieri
+    ##  4       0. Giotto di Bondone     Dante Alighieri
+    ##  5       0. Donatello             Dante Alighieri
+    ##  6       0. Filippo Brunelleschi  Dante Alighieri
+    ##  7       0. Jean-Baptiste Lully   Dante Alighieri
+    ##  8       0. Cimabue               Dante Alighieri
+    ##  9       0. Andrea del Verrocchio Dante Alighieri
+    ## 10       0. Paolo Uccello         Dante Alighieri
     ## # ... with 89,990 more rows
 
     ## # A tibble: 932 x 3
     ## # Groups:   name.arts [300]
     ##    name.arts            closest name.hum           
     ##    <chr>                  <dbl> <chr>              
-    ##  1 Praxiteles               0   Plato              
-    ##  2 Praxiteles               0   Socrates           
+    ##  1 Praxiteles               0.  Plato              
+    ##  2 Praxiteles               0.  Socrates           
     ##  3 Thespis                 61.5 Pythagoras         
     ##  4 Ozzy Osbourne           36.4 William Shakespeare
     ##  5 Edward Elgar            38.4 William Shakespeare
-    ##  6 Sandro Botticelli        0   Dante Alighieri    
-    ##  7 Giotto di Bondone        0   Dante Alighieri    
-    ##  8 Donatello                0   Dante Alighieri    
-    ##  9 Filippo Brunelleschi     0   Dante Alighieri    
+    ##  6 Sandro Botticelli        0.  Dante Alighieri    
+    ##  7 Giotto di Bondone        0.  Dante Alighieri    
+    ##  8 Donatello                0.  Dante Alighieri    
+    ##  9 Filippo Brunelleschi     0.  Dante Alighieri    
     ## 10 Fra Angelico            24.1 Dante Alighieri    
     ## # ... with 922 more rows
 

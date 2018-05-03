@@ -32,7 +32,7 @@ It is important to note that the dataframe has been updated as recently as last 
 
 ### Section 1- Introduction to the Data
 
-```{r filter_NAs}
+```{r filter_NAs_rank_data}
 panth_mod <- na.omit(panth)
 
 panth_mod %>%
@@ -40,9 +40,17 @@ panth_mod %>%
 
 panth_mod %>%
   nrow()
+
+panth_mod <- panth_mod %>%
+  mutate(
+    rank = 1:nrow(panth_mod)
+  )
 ```
 
+
 There are 17 variables and 10,279 observations (with all NAs removed in the new dataframe). Before removing the NAs, the full dataframe had 11,341 observations.
+
+In addition, we decided to rank the historical figures to based off of their `historical_popularity_index`
 
 ##### Reference
 
