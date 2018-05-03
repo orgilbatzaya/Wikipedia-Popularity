@@ -225,6 +225,27 @@ The linear model, based on the output, is:
     ## 2 Michelangelo               87.3 Leonardo da Vinci
     ## 3 Johann Sebastian Bach     778   Isaac Newton
 
+    ## # A tibble: 9 x 3
+    ##   distance name.arts               name.hum 
+    ##      <dbl> <chr>                   <chr>    
+    ## 1     1019 Michelangelo            Aristotle
+    ## 2     1170 Michelangelo            Plato    
+    ## 3     1170 Michelangelo            Socrates 
+    ## 4     1176 Wolfgang Amadeus Mozart Aristotle
+    ## 5     1395 Wolfgang Amadeus Mozart Plato    
+    ## 6     1395 Wolfgang Amadeus Mozart Socrates 
+    ## 7     1560 Johann Sebastian Bach   Aristotle
+    ## 8     1789 Johann Sebastian Bach   Plato    
+    ## 9     1789 Johann Sebastian Bach   Socrates
+
+    ## # A tibble: 3 x 3
+    ## # Groups:   name.arts [3]
+    ##   name.arts               closest name.hum 
+    ##   <chr>                     <dbl> <chr>    
+    ## 1 Wolfgang Amadeus Mozart    1176 Aristotle
+    ## 2 Michelangelo               1019 Aristotle
+    ## 3 Johann Sebastian Bach      1560 Aristotle
+
 ### The perfect historical popularity index
 
 Based on the full and selected models, to have the highest popularity index score, one should: be a man, study in the domain of the humanities, and live somewhere in the continent of South America.

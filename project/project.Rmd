@@ -87,7 +87,6 @@ panth_mod %>%
 
 Based on the filtered dataframe, there are 1,427 women and 8,852 men that are considered historical figures of the total 10,279 historical figures. There are about 6.2 times as many historical men than women overall in the data. The timeframe of this data starts at `r panth_mod%>%arrange(birth_year)%>%select(birth_year)%>%head(1) `, or 3500 BCE, and ends at `r panth_mod%>%arrange(desc(birth_year))%>%select(birth_year)%>%head(1)`, spanning about 5000 years. This means that a mere 13.9% of women in the entire timeframe are considered historical figures.
 
-
 ### Simple Linear Regression
 
 ```{r estimating_popularity_sex}
@@ -217,18 +216,18 @@ panth_mod2 <- panth_mod%>%
   filter(domain == "Arts", continent == "Europe")%>%
   mutate(long.arts = longitude, lat.arts = latitude, name.arts = full_name)%>%
   head(3)%>%
-  select(long.arts,lat.arts,name.arts,continent)
+  select(long.arts, lat.arts, name.arts, continent)
 
 panth_mod3 <- panth_mod%>%
   filter(domain == "Science & Technology", continent == "Europe")%>%
   mutate(long.sci = longitude, lat.sci = latitude, name.sci = full_name)%>%
   head(3)%>%
-  select(long.sci,lat.sci,name.sci,continent)
+  select(long.sci, lat.sci, name.sci, continent)
 
 art_sci <- full_join(panth_mod2, panth_mod3, by = "continent")
 
 art_sci <- art_sci%>%
-  mutate(distance = haversine(long.arts, lat.arts, long.sci, lat.sci,round=3))
+  mutate(distance = haversine(long.arts, lat.arts, long.sci, lat.sci, round=3))
 ```
 
 ```{r dist-arts-sci}
@@ -244,7 +243,42 @@ art_sci_mindist <- art_sci %>%
   
 art_sci_mindist%>%
   filter(closest == distance)%>%
-  select(name.arts,closest,name.sci)
+  select(name.arts, closest, name.sci)
+```
+
+```{r creating-distance2}
+panth_mod4 <- panth_mod%>%
+  filter(domain == "Humanities", continent == "Europe")%>%
+  mutate(long.hum = longitude, lat.hum = latitude, name.hum = full_name)%>%
+  head(3)%>%
+  select(long.hum, lat.hum, name.hum, continent)
+
+panth_mod5 <- panth_mod%>%
+  filter(domain == "Arts", continent == "Europe")%>%
+  mutate(long.arts = longitude, lat.arts = latitude, name.arts = full_name)%>%
+  head(3)%>%
+  select(long.arts, lat.arts, name.arts, continent)
+
+hum_art <- full_join(panth_mod4, panth_mod5, by = "continent")
+
+hum_art <- hum_art %>%
+  mutate(distance = haversine(long.arts, lat.arts, long.hum, lat.hum, round=3))
+```
+
+```{r dist}
+hum_art %>%
+  select(distance, name.arts, name.hum) %>%
+  arrange(distance)
+```
+
+```{r comparing-dist2}
+hum_art_mindist <- hum_art %>%
+  group_by(name.arts) %>%
+  mutate(closest = min(distance)) 
+  
+hum_art_mindist %>%
+  filter(closest == distance)%>%
+  select(name.arts, closest, name.hum)
 ```
 
 ### The perfect historical popularity index
