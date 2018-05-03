@@ -22,6 +22,20 @@ It is important to note that the dataframe has been updated as recently as last 
 
     ## [1] 10279
 
+    ## # A tibble: 10 x 4
+    ##    full_name            rank birth_year historical_popularity_index
+    ##    <chr>               <int>      <int>                       <dbl>
+    ##  1 Aristotle               1       -384                        32.0
+    ##  2 Plato                   2       -427                        32.0
+    ##  3 Jesus Christ            3         -4                        31.9
+    ##  4 Socrates                4       -469                        31.7
+    ##  5 Alexander the Great     5       -356                        31.6
+    ##  6 Leonardo da Vinci       6       1452                        31.5
+    ##  7 Julius Caesar           7       -100                        31.1
+    ##  8 Homer                   8       -800                        31.1
+    ##  9 Pythagoras              9       -570                        31.1
+    ## 10 Archimedes             10       -287                        31.0
+
 There are 17 variables and 10,279 observations (with all NAs removed in the new dataframe). Before removing the NAs, the full dataframe had 11,341 observations.
 
 In addition, we decided to rank the historical figures to based off of their `historical_popularity_index`
@@ -136,27 +150,28 @@ Interestingly, one of the historical figures has a low popularity index score, a
 
 ### Multiple Linear Regression
 
-    ##                                        term    estimate
-    ## 1                               (Intercept) 16.13336476
-    ## 2                                   sexMale  1.51505537
-    ## 3                      domainBusiness & Law  0.32594321
-    ## 4                         domainExploration  0.56575963
-    ## 5                          domainHumanities  1.49018106
-    ## 6                        domainInstitutions  0.92757490
-    ## 7                       domainPublic Figure  1.01544834
-    ## 8                domainScience & Technology  0.86254971
-    ## 9                              domainSports -4.37872010
-    ## 10                        article_languages  0.10057213
-    ## 11                            continentAsia  1.59712745
-    ## 12                          continentEurope  2.22815622
-    ## 13                   continentNorth America  1.46826358
-    ## 14                         continentOceania  1.13423735
-    ## 15                   continentSouth America  2.88294445
-    ## 16          article_languages:continentAsia -0.02635754
-    ## 17        article_languages:continentEurope -0.02759474
-    ## 18 article_languages:continentNorth America -0.03508578
-    ## 19       article_languages:continentOceania -0.04278132
-    ## 20 article_languages:continentSouth America -0.05213559
+    ##                                        term     estimate
+    ## 1                               (Intercept) 19.904940468
+    ## 2                                   sexMale  1.430356106
+    ## 3                      domainBusiness & Law  0.334560092
+    ## 4                         domainExploration  0.275254286
+    ## 5                          domainHumanities  1.097207712
+    ## 6                        domainInstitutions  0.397500049
+    ## 7                       domainPublic Figure  0.763276129
+    ## 8                domainScience & Technology  0.778088066
+    ## 9                              domainSports -4.201724123
+    ## 10                        article_languages  0.089262210
+    ## 11                            continentAsia  1.234794023
+    ## 12                          continentEurope  2.062914933
+    ## 13                   continentNorth America  1.321529547
+    ## 14                         continentOceania  0.979711141
+    ## 15                   continentSouth America  2.677561833
+    ## 16                               birth_year -0.001813092
+    ## 17          article_languages:continentAsia -0.023467037
+    ## 18        article_languages:continentEurope -0.020964963
+    ## 19 article_languages:continentNorth America -0.022734323
+    ## 20       article_languages:continentOceania -0.030285172
+    ## 21 article_languages:continentSouth America -0.038432329
 
 Here we estimated the historical popularity index using the `sex`, `domain`, `article_languages`, and `continent` variables. We also included the interaction between continent and article languages. We would interpret the slope the same way we did with the simple linear regression above that had the `sex` variable only.
 
@@ -164,43 +179,45 @@ The linear model, based on the output, is:
 
 `(historical_popularity_index) = 16.13336476    (intercept) + 1.51505537(sexMale) + 0.32594321  (domainBusiness & Law) + 0.56575963 (domainExploration) + 1.49018106    (domainHumanities) + 0.92757490 (domainInstitutions) + 1.01544834(domainPublic Figure) + 0.86254971(domainScience & Technology) +   -4.37872010(domainSports) + 0.10057213  (article_languages) +   1.59712745  (continentAsia) + 2.22815622    (continentEurope) + 1.46826358(continentNorth America   ) +     1.13423735(continentOceania) + 2.88294445   (continentSouth America) + -0.02635754(article_languages:continentAsia) + -0.02759474(article_languages:continentEurope) + -0.03508578(article_languages:continentNorth America) + -0.04278132(article_languages:continentOceania) + -0.05213559(article_languages:continentSouth America)`
 
-    ## [1] 0.582584
+    ## [1] 0.6347138
 
 ### Backwards Selection with AIC
 
-    ## Start:  AIC=16042.73
+    ## Start:  AIC=14673.49
     ## historical_popularity_index ~ sex + domain + article_languages + 
-    ##     continent + continent * article_languages
+    ##     continent + birth_year + continent * article_languages
     ## 
     ##                               Df Sum of Sq   RSS   AIC
-    ## <none>                                     48761 16043
-    ## - article_languages:continent  5       170 48931 16068
-    ## - sex                          1      2448 51210 16544
-    ## - domain                       7     35938 84699 21704
+    ## <none>                                     42672 14674
+    ## - article_languages:continent  5      76.8 42749 14682
+    ## - sex                          1    2179.4 44851 15184
+    ## - birth_year                   1    6089.7 48761 16043
+    ## - domain                       7   28066.2 70738 19855
 
-    ##                                        term    estimate
-    ## 1                               (Intercept) 16.13336476
-    ## 2                                   sexMale  1.51505537
-    ## 3                      domainBusiness & Law  0.32594321
-    ## 4                         domainExploration  0.56575963
-    ## 5                          domainHumanities  1.49018106
-    ## 6                        domainInstitutions  0.92757490
-    ## 7                       domainPublic Figure  1.01544834
-    ## 8                domainScience & Technology  0.86254971
-    ## 9                              domainSports -4.37872010
-    ## 10                        article_languages  0.10057213
-    ## 11                            continentAsia  1.59712745
-    ## 12                          continentEurope  2.22815622
-    ## 13                   continentNorth America  1.46826358
-    ## 14                         continentOceania  1.13423735
-    ## 15                   continentSouth America  2.88294445
-    ## 16          article_languages:continentAsia -0.02635754
-    ## 17        article_languages:continentEurope -0.02759474
-    ## 18 article_languages:continentNorth America -0.03508578
-    ## 19       article_languages:continentOceania -0.04278132
-    ## 20 article_languages:continentSouth America -0.05213559
+    ##                                        term     estimate
+    ## 1                               (Intercept) 19.904940468
+    ## 2                                   sexMale  1.430356106
+    ## 3                      domainBusiness & Law  0.334560092
+    ## 4                         domainExploration  0.275254286
+    ## 5                          domainHumanities  1.097207712
+    ## 6                        domainInstitutions  0.397500049
+    ## 7                       domainPublic Figure  0.763276129
+    ## 8                domainScience & Technology  0.778088066
+    ## 9                              domainSports -4.201724123
+    ## 10                        article_languages  0.089262210
+    ## 11                            continentAsia  1.234794023
+    ## 12                          continentEurope  2.062914933
+    ## 13                   continentNorth America  1.321529547
+    ## 14                         continentOceania  0.979711141
+    ## 15                   continentSouth America  2.677561833
+    ## 16                               birth_year -0.001813092
+    ## 17          article_languages:continentAsia -0.023467037
+    ## 18        article_languages:continentEurope -0.020964963
+    ## 19 article_languages:continentNorth America -0.022734323
+    ## 20       article_languages:continentOceania -0.030285172
+    ## 21 article_languages:continentSouth America -0.038432329
 
-    ## [1] 45215.27
+    ## [1] 43846.03
 
 ### Distance
 

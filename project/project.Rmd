@@ -45,6 +45,11 @@ panth_mod <- panth_mod %>%
   mutate(
     rank = 1:nrow(panth_mod)
   )
+
+panth_mod %>%
+  select(full_name,rank, birth_year, historical_popularity_index) %>%
+  arrange() %>%
+  head(10)
 ```
 
 
@@ -173,6 +178,7 @@ m_full <- lm(historical_popularity_index ~ sex +
                domain +
                article_languages +
                continent +
+               birth_year +
                continent * article_languages,
              data = panth_mod)
 tidy(m_full) %>%
