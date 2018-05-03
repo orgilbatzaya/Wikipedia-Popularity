@@ -225,26 +225,35 @@ The linear model, based on the output, is:
     ## 2 Michelangelo               87.3 Leonardo da Vinci
     ## 3 Johann Sebastian Bach     778   Isaac Newton
 
-    ## # A tibble: 9 x 3
-    ##   distance name.arts               name.hum 
-    ##      <dbl> <chr>                   <chr>    
-    ## 1     1019 Michelangelo            Aristotle
-    ## 2     1170 Michelangelo            Plato    
-    ## 3     1170 Michelangelo            Socrates 
-    ## 4     1176 Wolfgang Amadeus Mozart Aristotle
-    ## 5     1395 Wolfgang Amadeus Mozart Plato    
-    ## 6     1395 Wolfgang Amadeus Mozart Socrates 
-    ## 7     1560 Johann Sebastian Bach   Aristotle
-    ## 8     1789 Johann Sebastian Bach   Plato    
-    ## 9     1789 Johann Sebastian Bach   Socrates
+    ## # A tibble: 100 x 3
+    ##    distance name.arts               name.hum           
+    ##       <dbl> <chr>                   <chr>              
+    ##  1     61.3 Michelangelo            Dante Alighieri    
+    ##  2    111   Raphael                 Dante Alighieri    
+    ##  3    191   Michelangelo            Virgil             
+    ##  4    214   Raphael                 Virgil             
+    ##  5    345   Wolfgang Amadeus Mozart Virgil             
+    ##  6    445   Vincent van Gogh        William Shakespeare
+    ##  7    468   Wolfgang Amadeus Mozart Dante Alighieri    
+    ##  8    482   Albrecht Dürer          Virgil             
+    ##  9    630   Albrecht Dürer          Dante Alighieri    
+    ## 10    631   Ludwig van Beethoven    William Shakespeare
+    ## # ... with 90 more rows
 
-    ## # A tibble: 3 x 3
-    ## # Groups:   name.arts [3]
-    ##   name.arts               closest name.hum 
-    ##   <chr>                     <dbl> <chr>    
-    ## 1 Wolfgang Amadeus Mozart    1176 Aristotle
-    ## 2 Michelangelo               1019 Aristotle
-    ## 3 Johann Sebastian Bach      1560 Aristotle
+    ## # A tibble: 10 x 3
+    ## # Groups:   name.arts [10]
+    ##    name.arts               closest name.hum           
+    ##    <chr>                     <dbl> <chr>              
+    ##  1 Ludwig van Beethoven      631   William Shakespeare
+    ##  2 Vincent van Gogh          445   William Shakespeare
+    ##  3 Michelangelo               61.3 Dante Alighieri    
+    ##  4 Pablo Picasso            1541   Dante Alighieri    
+    ##  5 Raphael                   111   Dante Alighieri    
+    ##  6 Salvador Dalí             694   Dante Alighieri    
+    ##  7 Wolfgang Amadeus Mozart   345   Virgil             
+    ##  8 Johann Sebastian Bach     652   Virgil             
+    ##  9 Albrecht Dürer            482   Virgil             
+    ## 10 Richard Wagner            661   Immanuel Kant
 
 ### The perfect historical popularity index
 

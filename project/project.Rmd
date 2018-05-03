@@ -250,13 +250,13 @@ art_sci_mindist%>%
 panth_mod4 <- panth_mod%>%
   filter(domain == "Humanities", continent == "Europe")%>%
   mutate(long.hum = longitude, lat.hum = latitude, name.hum = full_name)%>%
-  head(3)%>%
+  head(10)%>%
   select(long.hum, lat.hum, name.hum, continent)
 
 panth_mod5 <- panth_mod%>%
   filter(domain == "Arts", continent == "Europe")%>%
   mutate(long.arts = longitude, lat.arts = latitude, name.arts = full_name)%>%
-  head(3)%>%
+  head(10)%>%
   select(long.arts, lat.arts, name.arts, continent)
 
 hum_art <- full_join(panth_mod4, panth_mod5, by = "continent")
