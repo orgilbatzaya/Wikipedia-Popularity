@@ -6,8 +6,6 @@ Duke Squirrels
 Load Packages
 -------------
 
-    ## Warning: running command 'timedatectl' had status 1
-
 Load Data
 ---------
 
@@ -25,18 +23,18 @@ It is important to note that the dataframe has been updated as recently as last 
     ## [1] 10279
 
     ## # A tibble: 10 x 4
-    ##    full_name            rank birth_year historical_popularity_index
-    ##    <chr>               <int>      <int>                       <dbl>
-    ##  1 Aristotle               1      - 384                        32.0
-    ##  2 Plato                   2      - 427                        32.0
-    ##  3 Jesus Christ            3      -   4                        31.9
-    ##  4 Socrates                4      - 469                        31.7
-    ##  5 Alexander the Great     5      - 356                        31.6
-    ##  6 Leonardo da Vinci       6       1452                        31.5
-    ##  7 Julius Caesar           7      - 100                        31.1
-    ##  8 Homer                   8      - 800                        31.1
-    ##  9 Pythagoras              9      - 570                        31.1
-    ## 10 Archimedes             10      - 287                        31.0
+    ##     rank full_name           birth_year historical_popularity_index
+    ##    <int> <chr>                    <int>                       <dbl>
+    ##  1     1 Aristotle                 -384                        32.0
+    ##  2     2 Plato                     -427                        32.0
+    ##  3     3 Jesus Christ                -4                        31.9
+    ##  4     4 Socrates                  -469                        31.7
+    ##  5     5 Alexander the Great       -356                        31.6
+    ##  6     6 Leonardo da Vinci         1452                        31.5
+    ##  7     7 Julius Caesar             -100                        31.1
+    ##  8     8 Homer                     -800                        31.1
+    ##  9     9 Pythagoras                -570                        31.1
+    ## 10    10 Archimedes                -287                        31.0
 
 There are 17 variables and 10,279 observations (with all NAs removed in the new dataframe). Before removing the NAs, the full dataframe had 11,341 observations.
 
@@ -68,7 +66,7 @@ In addition, we decided to rank the historical figures to based off of their `hi
     ## 5 South America   352
     ## 6 Oceania         120
 
-Looking at simply the number of historical figures in each of the domain categories, it becomes easier to see which domain is the most popular. Specifically, the Arts dominate the `domain` variable, which is surprising because the `Institutions` domain incudes political, military, and religious figures which have dominated history. When looking at the number of historical figure by continent, Europe is the continent with the most historical figures across the ~5000 year timespan of the data with more historical figures than all other continents combined. This is not very surprising because many of the world's greatest thinkers and most influential figures came from all over Europe.
+Looking at simply the number of historical figures in each of the domain categories, it becomes easier to see which domain has the most number of historical figures. When looking at the number of historical figures by continent, Europe is the continent with the most historical figures across the ~5000 year timespan of the data with more historical figures than all other continents combined.
 
 ![](project_files/figure-markdown_github/distribution-of-index-1.png)
 
@@ -84,7 +82,9 @@ Looking at simply the number of historical figures in each of the domain categor
     ## 7 Science & Technology  23.4   23.2  1.83
     ## 8 Sports                17.7   17.3  2.86
 
-To get a better understanding of our dataset, we created a faceted histogram that shows the distribution of the historical popularity index scores for the historical figures across all of the domains in the dataset and ran summary statistics on the dataframe as a whole. The visual lets us see the true distribution of historical figures across all of the domains, letting us know which areas are the most popular and have produced the most historical figures. The median popularity index score was 22.8723 and the mean was 22.14023.
+To get a better understanding of our dataset, we created a faceted histogram that shows the distribution of the historical popularity index scores for the historical figures across all of the domains in the dataset and ran summary statistics on the dataframe as a whole. The visual lets us see the true distribution of historical figures across all of the domains, letting us know which areas are the most popular and have produced the most historical figures.
+
+We think this visual is important because it gives us a glimpse of how historical popularity index varies across the domains. We will comtinue looking at other variables to see if they contribute into the historical popularity index score.
 
 ### Section 2 - Men and Women
 
@@ -230,62 +230,62 @@ Based on the full and selected models, to have the highest popularity index scor
     ## # A tibble: 90,000 x 3
     ##    distance name.arts               name.sci                     
     ##       <dbl> <chr>                   <chr>                        
-    ##  1        0 Wolfgang Amadeus Mozart Christian Doppler            
-    ##  2        0 Johann Sebastian Bach   Ernst Karl Abbe              
-    ##  3        0 Richard Wagner          Gottfried Wilhelm von Leibniz
-    ##  4        0 Claude Monet            Antoine Lavoisier            
-    ##  5        0 Claude Monet            Rudolf Diesel                
-    ##  6        0 Claude Monet            Pierre Curie                 
-    ##  7        0 Claude Monet            Antoine Henri Becquerel      
-    ##  8        0 Claude Monet            Jacques Lacan                
-    ##  9        0 Claude Monet            Vilfredo Pareto              
-    ## 10        0 Claude Monet            Augustin Louis Cauchy        
+    ##  1       0. Wolfgang Amadeus Mozart Christian Doppler            
+    ##  2       0. Johann Sebastian Bach   Ernst Karl Abbe              
+    ##  3       0. Richard Wagner          Gottfried Wilhelm von Leibniz
+    ##  4       0. Claude Monet            Antoine Lavoisier            
+    ##  5       0. Claude Monet            Rudolf Diesel                
+    ##  6       0. Claude Monet            Pierre Curie                 
+    ##  7       0. Claude Monet            Antoine Henri Becquerel      
+    ##  8       0. Claude Monet            Jacques Lacan                
+    ##  9       0. Claude Monet            Vilfredo Pareto              
+    ## 10       0. Claude Monet            Augustin Louis Cauchy        
     ## # ... with 89,990 more rows
 
     ## # A tibble: 739 x 3
     ## # Groups:   name.arts [300]
     ##    name.arts               closest name.sci                     
     ##    <chr>                     <dbl> <chr>                        
-    ##  1 Wolfgang Amadeus Mozart     0   Christian Doppler            
+    ##  1 Wolfgang Amadeus Mozart     0.  Christian Doppler            
     ##  2 Michelangelo               15.3 Luca Pacioli                 
-    ##  3 Johann Sebastian Bach       0   Ernst Karl Abbe              
+    ##  3 Johann Sebastian Bach       0.  Ernst Karl Abbe              
     ##  4 Ludwig van Beethoven       23.2 Hermann Emil Fischer         
     ##  5 Vincent van Gogh           46.0 Gerardus Mercator            
-    ##  6 Pablo Picasso             114   Pomponius Mela               
+    ##  6 Pablo Picasso             114.  Pomponius Mela               
     ##  7 Raphael                    42.3 Luca Pacioli                 
     ##  8 Albrecht Dürer             15.6 Georg Ohm                    
     ##  9 Salvador Dalí              60.4 François Arago               
-    ## 10 Richard Wagner              0   Gottfried Wilhelm von Leibniz
+    ## 10 Richard Wagner              0.  Gottfried Wilhelm von Leibniz
     ## # ... with 729 more rows
 
     ## # A tibble: 90,000 x 3
     ##    distance name.arts             name.hum       
     ##       <dbl> <chr>                 <chr>          
-    ##  1        0 Praxiteles            Plato          
-    ##  2        0 Praxiteles            Socrates       
-    ##  3        0 Sandro Botticelli     Dante Alighieri
-    ##  4        0 Giotto di Bondone     Dante Alighieri
-    ##  5        0 Donatello             Dante Alighieri
-    ##  6        0 Filippo Brunelleschi  Dante Alighieri
-    ##  7        0 Jean-Baptiste Lully   Dante Alighieri
-    ##  8        0 Cimabue               Dante Alighieri
-    ##  9        0 Andrea del Verrocchio Dante Alighieri
-    ## 10        0 Paolo Uccello         Dante Alighieri
+    ##  1       0. Praxiteles            Plato          
+    ##  2       0. Praxiteles            Socrates       
+    ##  3       0. Sandro Botticelli     Dante Alighieri
+    ##  4       0. Giotto di Bondone     Dante Alighieri
+    ##  5       0. Donatello             Dante Alighieri
+    ##  6       0. Filippo Brunelleschi  Dante Alighieri
+    ##  7       0. Jean-Baptiste Lully   Dante Alighieri
+    ##  8       0. Cimabue               Dante Alighieri
+    ##  9       0. Andrea del Verrocchio Dante Alighieri
+    ## 10       0. Paolo Uccello         Dante Alighieri
     ## # ... with 89,990 more rows
 
     ## # A tibble: 932 x 3
     ## # Groups:   name.arts [300]
     ##    name.arts            closest name.hum           
     ##    <chr>                  <dbl> <chr>              
-    ##  1 Praxiteles               0   Plato              
-    ##  2 Praxiteles               0   Socrates           
+    ##  1 Praxiteles               0.  Plato              
+    ##  2 Praxiteles               0.  Socrates           
     ##  3 Thespis                 61.5 Pythagoras         
     ##  4 Ozzy Osbourne           36.4 William Shakespeare
     ##  5 Edward Elgar            38.4 William Shakespeare
-    ##  6 Sandro Botticelli        0   Dante Alighieri    
-    ##  7 Giotto di Bondone        0   Dante Alighieri    
-    ##  8 Donatello                0   Dante Alighieri    
-    ##  9 Filippo Brunelleschi     0   Dante Alighieri    
+    ##  6 Sandro Botticelli        0.  Dante Alighieri    
+    ##  7 Giotto di Bondone        0.  Dante Alighieri    
+    ##  8 Donatello                0.  Dante Alighieri    
+    ##  9 Filippo Brunelleschi     0.  Dante Alighieri    
     ## 10 Fra Angelico            24.1 Dante Alighieri    
     ## # ... with 922 more rows
 

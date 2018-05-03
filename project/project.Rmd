@@ -47,8 +47,7 @@ panth_mod <- panth_mod %>%
   )
 
 panth_mod %>%
-  select(full_name,rank, birth_year, historical_popularity_index) %>%
-  arrange() %>%
+  select(rank, full_name, birth_year, historical_popularity_index) %>%
   head(10)
 ```
 
@@ -71,7 +70,7 @@ panth_mod %>%
   arrange(desc(n))
 ```
 
-Looking at simply the number of historical figures in each of the domain categories, it becomes easier to see which domain is the most popular. Specifically, the Arts dominate the `domain` variable, which is surprising because the `Institutions` domain incudes political, military, and religious figures which have dominated history. When looking at the number of historical figure by continent, Europe is the continent with the most historical figures across the ~5000 year timespan of the data with more historical figures than all other continents combined. This is not very surprising because many of the world's greatest thinkers and most influential figures came from all over Europe.
+Looking at simply the number of historical figures in each of the domain categories, it becomes easier to see which domain has the most number of historical figures. When looking at the number of historical figures by continent, Europe is the continent with the most historical figures across the ~5000 year timespan of the data with more historical figures than all other continents combined.
 
 ```{r distribution-of-index}
 panth_mod %>%
@@ -88,7 +87,9 @@ panth_mod %>%
             sd = sd(historical_popularity_index))
 ```
 
-To get a better understanding of our dataset, we created a faceted histogram that shows the distribution of the historical popularity index scores for the historical figures across all of the domains in the dataset and ran summary statistics on the dataframe as a whole. The visual lets us see the true distribution of historical figures across all of the domains, letting us know which areas are the most popular and have produced the most historical figures. The median popularity index score was 22.8723 and the mean was 22.14023.
+To get a better understanding of our dataset, we created a faceted histogram that shows the distribution of the historical popularity index scores for the historical figures across all of the domains in the dataset and ran summary statistics on the dataframe as a whole. The visual lets us see the true distribution of historical figures across all of the domains, letting us know which areas are the most popular and have produced the most historical figures.
+
+We think this visual is important because it gives us a glimpse of how historical popularity index varies across the domains. We will comtinue looking at other variables to see if they contribute into the historical popularity index score.
 
 ### Section 2 - Men and Women
 
