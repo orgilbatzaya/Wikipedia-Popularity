@@ -204,56 +204,67 @@ The linear model, based on the output, is:
 
 ### Distance
 
-    ## # A tibble: 9 x 3
-    ##   distance name.arts               name.sci         
-    ##      <dbl> <chr>                   <chr>            
-    ## 1     87.3 Michelangelo            Leonardo da Vinci
-    ## 2    476   Wolfgang Amadeus Mozart Leonardo da Vinci
-    ## 3    778   Johann Sebastian Bach   Isaac Newton     
-    ## 4    780   Michelangelo            Archimedes       
-    ## 5    801   Johann Sebastian Bach   Leonardo da Vinci
-    ## 6   1116   Wolfgang Amadeus Mozart Isaac Newton     
-    ## 7   1206   Wolfgang Amadeus Mozart Archimedes       
-    ## 8   1380   Michelangelo            Isaac Newton     
-    ## 9   1594   Johann Sebastian Bach   Archimedes
+    ## # A tibble: 90,000 x 3
+    ##    distance name.arts               name.sci                     
+    ##       <dbl> <chr>                   <chr>                        
+    ##  1        0 Wolfgang Amadeus Mozart Christian Doppler            
+    ##  2        0 Johann Sebastian Bach   Ernst Karl Abbe              
+    ##  3        0 Richard Wagner          Gottfried Wilhelm von Leibniz
+    ##  4        0 Claude Monet            Antoine Lavoisier            
+    ##  5        0 Claude Monet            Rudolf Diesel                
+    ##  6        0 Claude Monet            Pierre Curie                 
+    ##  7        0 Claude Monet            Antoine Henri Becquerel      
+    ##  8        0 Claude Monet            Jacques Lacan                
+    ##  9        0 Claude Monet            Vilfredo Pareto              
+    ## 10        0 Claude Monet            Augustin Louis Cauchy        
+    ## # ... with 89,990 more rows
 
-    ## # A tibble: 3 x 3
-    ## # Groups:   name.arts [3]
-    ##   name.arts               closest name.sci         
-    ##   <chr>                     <dbl> <chr>            
-    ## 1 Wolfgang Amadeus Mozart   476   Leonardo da Vinci
-    ## 2 Michelangelo               87.3 Leonardo da Vinci
-    ## 3 Johann Sebastian Bach     778   Isaac Newton
+    ## # A tibble: 739 x 3
+    ## # Groups:   name.arts [300]
+    ##    name.arts               closest name.sci                     
+    ##    <chr>                     <dbl> <chr>                        
+    ##  1 Wolfgang Amadeus Mozart     0   Christian Doppler            
+    ##  2 Michelangelo               15.3 Luca Pacioli                 
+    ##  3 Johann Sebastian Bach       0   Ernst Karl Abbe              
+    ##  4 Ludwig van Beethoven       23.2 Hermann Emil Fischer         
+    ##  5 Vincent van Gogh           46.0 Gerardus Mercator            
+    ##  6 Pablo Picasso             114   Pomponius Mela               
+    ##  7 Raphael                    42.3 Luca Pacioli                 
+    ##  8 Albrecht Dürer             15.6 Georg Ohm                    
+    ##  9 Salvador Dalí              60.4 François Arago               
+    ## 10 Richard Wagner              0   Gottfried Wilhelm von Leibniz
+    ## # ... with 729 more rows
 
-    ## # A tibble: 100 x 3
-    ##    distance name.arts               name.hum           
-    ##       <dbl> <chr>                   <chr>              
-    ##  1     61.3 Michelangelo            Dante Alighieri    
-    ##  2    111   Raphael                 Dante Alighieri    
-    ##  3    191   Michelangelo            Virgil             
-    ##  4    214   Raphael                 Virgil             
-    ##  5    345   Wolfgang Amadeus Mozart Virgil             
-    ##  6    445   Vincent van Gogh        William Shakespeare
-    ##  7    468   Wolfgang Amadeus Mozart Dante Alighieri    
-    ##  8    482   Albrecht Dürer          Virgil             
-    ##  9    630   Albrecht Dürer          Dante Alighieri    
-    ## 10    631   Ludwig van Beethoven    William Shakespeare
-    ## # ... with 90 more rows
+    ## # A tibble: 90,000 x 3
+    ##    distance name.arts             name.hum       
+    ##       <dbl> <chr>                 <chr>          
+    ##  1        0 Praxiteles            Plato          
+    ##  2        0 Praxiteles            Socrates       
+    ##  3        0 Sandro Botticelli     Dante Alighieri
+    ##  4        0 Giotto di Bondone     Dante Alighieri
+    ##  5        0 Donatello             Dante Alighieri
+    ##  6        0 Filippo Brunelleschi  Dante Alighieri
+    ##  7        0 Jean-Baptiste Lully   Dante Alighieri
+    ##  8        0 Cimabue               Dante Alighieri
+    ##  9        0 Andrea del Verrocchio Dante Alighieri
+    ## 10        0 Paolo Uccello         Dante Alighieri
+    ## # ... with 89,990 more rows
 
-    ## # A tibble: 10 x 3
-    ## # Groups:   name.arts [10]
-    ##    name.arts               closest name.hum           
-    ##    <chr>                     <dbl> <chr>              
-    ##  1 Ludwig van Beethoven      631   William Shakespeare
-    ##  2 Vincent van Gogh          445   William Shakespeare
-    ##  3 Michelangelo               61.3 Dante Alighieri    
-    ##  4 Pablo Picasso            1541   Dante Alighieri    
-    ##  5 Raphael                   111   Dante Alighieri    
-    ##  6 Salvador Dalí             694   Dante Alighieri    
-    ##  7 Wolfgang Amadeus Mozart   345   Virgil             
-    ##  8 Johann Sebastian Bach     652   Virgil             
-    ##  9 Albrecht Dürer            482   Virgil             
-    ## 10 Richard Wagner            661   Immanuel Kant
+    ## # A tibble: 932 x 3
+    ## # Groups:   name.arts [300]
+    ##    name.arts            closest name.hum           
+    ##    <chr>                  <dbl> <chr>              
+    ##  1 Praxiteles               0   Plato              
+    ##  2 Praxiteles               0   Socrates           
+    ##  3 Thespis                 61.5 Pythagoras         
+    ##  4 Ozzy Osbourne           36.4 William Shakespeare
+    ##  5 Edward Elgar            38.4 William Shakespeare
+    ##  6 Sandro Botticelli        0   Dante Alighieri    
+    ##  7 Giotto di Bondone        0   Dante Alighieri    
+    ##  8 Donatello                0   Dante Alighieri    
+    ##  9 Filippo Brunelleschi     0   Dante Alighieri    
+    ## 10 Fra Angelico            24.1 Dante Alighieri    
+    ## # ... with 922 more rows
 
 ### The perfect historical popularity index
 

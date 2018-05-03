@@ -215,13 +215,13 @@ haversine <- function(long1, lat1, long2, lat2, round = 3) {
 panth_mod2 <- panth_mod%>%
   filter(domain == "Arts", continent == "Europe")%>%
   mutate(long.arts = longitude, lat.arts = latitude, name.arts = full_name)%>%
-  head(3)%>%
+  head(300)%>%
   select(long.arts, lat.arts, name.arts, continent)
 
 panth_mod3 <- panth_mod%>%
   filter(domain == "Science & Technology", continent == "Europe")%>%
   mutate(long.sci = longitude, lat.sci = latitude, name.sci = full_name)%>%
-  head(3)%>%
+  head(300)%>%
   select(long.sci, lat.sci, name.sci, continent)
 
 art_sci <- full_join(panth_mod2, panth_mod3, by = "continent")
@@ -250,13 +250,13 @@ art_sci_mindist%>%
 panth_mod4 <- panth_mod%>%
   filter(domain == "Humanities", continent == "Europe")%>%
   mutate(long.hum = longitude, lat.hum = latitude, name.hum = full_name)%>%
-  head(10)%>%
+  head(300)%>%
   select(long.hum, lat.hum, name.hum, continent)
 
 panth_mod5 <- panth_mod%>%
   filter(domain == "Arts", continent == "Europe")%>%
   mutate(long.arts = longitude, lat.arts = latitude, name.arts = full_name)%>%
-  head(10)%>%
+  head(300)%>%
   select(long.arts, lat.arts, name.arts, continent)
 
 hum_art <- full_join(panth_mod4, panth_mod5, by = "continent")
