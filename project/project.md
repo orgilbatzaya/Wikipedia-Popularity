@@ -18,10 +18,6 @@ By the end of our data analysis, we aim to derive the perfect combination of var
 
 ### Section 1- Introduction to the Data
 
-    ## [1] 17
-
-    ## [1] 10279
-
     ## # A tibble: 10 x 4
     ##     rank full_name           birth_year historical_popularity_index
     ##    <int> <chr>                    <int>                       <dbl>
@@ -36,50 +32,28 @@ By the end of our data analysis, we aim to derive the perfect combination of var
     ##  9     9 Pythagoras                -570                        31.1
     ## 10    10 Archimedes                -287                        31.0
 
-There are 17 variables and 10,279 observations (with all NAs removed in the new dataframe). Before removing the NAs, the full dataframe had 11,341 observations.
+There are 18 variables and 10279 observations (with all NAs removed in the new dataframe). Before removing the NAs, the full dataframe had 11,341 observations.
 
 In addition, we decided to add a `rank` variable to the dataframe to rank the historical figures based off of their `historical_popularity_index`.
 
-We have also found the top 10 figures with the highest popularity index score. They are: 1 Aristotle 2 Plato 3 Jesus Christ 4 Socrates
-5 Alexander the Great 6 Leonardo da Vinci 7 Julius Caesar 8 Homer 9 Pythagoras 10 Archimedes
+We have also found the top 10 figures with the highest popularity index score in order. They are: Aristotle, Plato, Jesus Christ, Socrates, Alexander the Great, Leonardo da Vinci, Julius Caesar, Homer, Pythagoras, Archimedes
 
 #### Introductory Visualizations
 
 ![](project_files/figure-markdown_github/page_views_visual-1.png)
 
-    ## # A tibble: 1 x 5
-    ##    rank full_name    country   continent     average_views
-    ##   <int> <chr>        <chr>     <chr>                 <int>
-    ## 1  7079 Lionel Messi Argentina South America        867939
+    ## # A tibble: 6 x 7
+    ## # Groups:   continent [6]
+    ##    rank full_name   country  continent  average_views industry  occupation
+    ##   <int> <chr>       <chr>    <chr>              <int> <chr>     <chr>     
+    ## 1  7843 Kim Kardas… United … North Ame…       1515232 Media Pe… Celebrity 
+    ## 2  6562 Cristiano … Portugal Europe           1053770 Team Spo… Soccer Pl…
+    ## 3  7079 Lionel Mes… Argenti… South Ame…        867939 Team Spo… Soccer Pl…
+    ## 4  9067 Chris Hems… Austral… Oceania           763770 Film And… Actor     
+    ## 5   548 Freddie Me… Tanzania Africa            755746 Music     Musician  
+    ## 6  8739 Manny Pacq… Philipp… Asia              659308 Individu… Boxer
 
-    ## # A tibble: 1 x 5
-    ##    rank full_name       country   continent average_views
-    ##   <int> <chr>           <chr>     <chr>             <int>
-    ## 1  9067 Chris Hemsworth Australia Oceania          763770
-
-    ## # A tibble: 1 x 5
-    ##    rank full_name      country       continent     average_views
-    ##   <int> <chr>          <chr>         <chr>                 <int>
-    ## 1  7843 Kim Kardashian United States North America       1515232
-
-    ## # A tibble: 1 x 5
-    ##    rank full_name         country  continent average_views
-    ##   <int> <chr>             <chr>    <chr>             <int>
-    ## 1  6562 Cristiano Ronaldo Portugal Europe          1053770
-
-    ## # A tibble: 1 x 5
-    ##    rank full_name      country     continent average_views
-    ##   <int> <chr>          <chr>       <chr>             <int>
-    ## 1  8739 Manny Pacquiáo Philippines Asia             659308
-
-    ## # A tibble: 1 x 5
-    ##    rank full_name       country  continent average_views
-    ##   <int> <chr>           <chr>    <chr>             <int>
-    ## 1   548 Freddie Mercury Tanzania Africa           755746
-
-Visualized here is a distribution of the average number of page views of historical figures by continent. Each point in this visual represents a historical figure's average number of Wikipedia page views. The figures with the most page views from each continent are:
-
-Lionel Messi (South America) Chris Hemsworth (Oceania) Kim Kardashian (North America) Cristiano Ronaldo (Europe) Manny Pacquiáo (Asia) Freddy Mercury (Africa)
+Visualized here is a distribution of the average number of page views, which is defined as the the average number of page views across all of the different language Wikipedia articles of the same figure, of historical figures by continent. Each point in this visual represents a historical figure's average number of Wikipedia page views. It is clear that North America has many individuals whose articles have a high average number of page views. Furthermore, the top figures who lead their continent in average page views tend to be entertainers of sorts.
 
 ![](project_files/figure-markdown_github/distribution-of-index-1.png)
 
@@ -133,7 +107,7 @@ For the first part of our analysis, we will look at the variables `domain`, `sex
     ## 5 South America   352
     ## 6 Oceania         120
 
-Looking at simply the number of historical figures in each of the domain categories, it becomes easier to see which domain has the most number of historical figures. When looking at the number of historical figures by continent, Europe is the continent with the most historical figures across the ~5000 year timespan of the data with more historical figures than all other continents combined.
+When looking at the number of historical figures by continent, Europe has the most historical figures across the ~5000 year timespan of the data with 6073 people, which is more historical figures than all other continents combined. The Arts and Institutions have the most historical figures in the dataset, with 2767 and 2753, respectively.
 
 #### Simple Linear Regression
 

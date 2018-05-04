@@ -34,37 +34,20 @@ By the end of our data analysis, we aim to derive the perfect combination of var
 ```{r filter_NAs_rank_data}
 panth_mod <- na.omit(panth)
 
-panth_mod %>%
-  ncol()
-
-panth_mod %>%
-  nrow()
-
 panth_mod <- panth_mod %>%
-  mutate(
-    rank = 1:nrow(panth_mod)
-  )
+  mutate(rank = 1:nrow(panth_mod))
 
 panth_mod %>%
   select(rank, full_name, birth_year, historical_popularity_index) %>%
   head(10)
 ```
  
-There are 17 variables and 10,279 observations (with all NAs removed in the new dataframe). Before removing the NAs, the full dataframe had 11,341 observations.
+There are `r ncol(panth_mod)` variables and `r nrow(panth_mod) ` observations (with all NAs removed in the new dataframe). Before removing the NAs, the full dataframe had 11,341 observations.
  
 In addition, we decided to add a `rank` variable to the dataframe to rank the historical figures based off of their `historical_popularity_index`.
 
-We have also found the top 10 figures with the highest popularity index score. They are:
-1 Aristotle
-2	Plato
-3	Jesus Christ
-4	Socrates	
-5	Alexander the Great	
-6	Leonardo da Vinci
-7	Julius Caesar
-8	Homer
-9	Pythagoras
-10 Archimedes
+We have also found the top 10 figures with the highest popularity index score in order. They are:
+ Aristotle, Plato, Jesus Christ, Socrates, Alexander the Great, Leonardo da Vinci, Julius Caesar, Homer, Pythagoras, Archimedes
 
 #### Introductory Visualizations
 
@@ -73,42 +56,21 @@ panth_mod %>%
   ggplot(mapping = aes(x = continent, y = average_views)) +
   geom_boxplot() + 
   coord_flip() +
-  labs(title = "Distribution of Average Page Views", y = "Page Views", 
+  labs(title = "Distribution of Average Page Views", y = "Average Page Views", 
        x = "Continent", subtitle = "by Continent")
 
+```
+```{r outlier_avg_page}
 panth_mod %>%
-  filter(continent == "South America", average_views > 600000) %>%
-  select(rank, full_name, country, continent, average_views)
+  group_by(continent) %>%
+  select(rank, full_name, country, continent, average_views,industry,occupation)%>%
+  arrange(desc(average_views))%>%
+  top_n(n = 1, wt = average_views)
 
-panth_mod %>%
-  filter(continent == "Oceania", average_views > 750000) %>%
-  select(rank, full_name, country, continent, average_views)
-
-panth_mod %>%
-  filter(continent == "North America", average_views > 1500000) %>%
-  select(rank, full_name, country, continent, average_views) 
-
-panth_mod %>%
-  filter(continent == "Europe", average_views > 1000000) %>%
-  select(rank, full_name, country, continent, average_views)
-
-panth_mod %>%
-  filter(continent == "Asia", average_views > 600000) %>%
-  select(rank, full_name, country, continent, average_views)
-
-panth_mod %>%
-  filter(continent == "Africa", average_views > 600000) %>%
-  select(rank, full_name, country, continent, average_views)
 ```
 
-Visualized here is a distribution of the average number of page views of historical figures by continent. Each point in this visual represents a historical figure's average number of Wikipedia page views. The figures with the most page views from each continent are:
+Visualized here is a distribution of the average number of page views, which is defined as the the average number of page views across all of the different language Wikipedia articles of the same figure, of historical figures by continent. Each point in this visual represents a historical figure's average number of Wikipedia page views. It is clear that North America has many individuals whose articles have a high average number of page views. Furthermore, the top figures who lead their continent in average page views tend to be entertainers of sorts.
 
-Lionel Messi (South America)
-Chris Hemsworth (Oceania)
-Kim Kardashian (North America)
-Cristiano Ronaldo (Europe)
-Manny Pacquiáo (Asia)
-Freddy Mercury (Africa)
 
 ```{r distribution-of-index}
 panth_mod %>%
@@ -134,8 +96,8 @@ The historical popularity index value measures approximately how popular the art
 (https://www.kaggle.com/mit/pantheon-project)
 
 ```{r popularity-across-globe, fig.width=13, fig.height=5}
-ggplot(panth_mod, mapping = aes(x = longitude, y = latitude, color = historical_popularity_index)) +
-  geom_point() +
+ggplot(panth_mod, mapping = aes(x = longitude, y = latitude)) +
+  geom_point(aes(color = historical_popularity_index)) +  scale_colour_gradient2() +
   theme_minimal() +
   labs(title = "Historical Popularity Index Around the World", x = "Longitude", 
        y = "Latitude", color = "Popularity Index Gradient")
@@ -157,7 +119,7 @@ panth_mod %>%
   arrange(desc(n))
 ```
 
-Looking at simply the number of historical figures in each of the domain categories, it becomes easier to see which domain has the most number of historical figures. When looking at the number of historical figures by continent, Europe is the continent with the most historical figures across the ~5000 year timespan of the data with more historical figures than all other continents combined.
+When looking at the number of historical figures by continent, Europe has the most historical figures across the ~5000 year timespan of the data with 6073 people, which is more historical figures than all other continents combined. The Arts and Institutions have the most historical figures in the dataset, with 2767 and 2753, respectively. 
 
 #### Simple Linear Regression
 
@@ -360,7 +322,6 @@ panth_mod %>%
 After filtering for the characteristics deemed most impactful on historical popularity score, we see that it does indeed result in very high ranking individuals. The top 5 in this list are all from the top 10 of the original ranking by popularity index.
 
 ## Conclusion
-
 
 
 
