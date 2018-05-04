@@ -50,11 +50,22 @@ panth_mod %>%
   select(rank, full_name, birth_year, historical_popularity_index) %>%
   head(10)
 ```
-
  
 There are 17 variables and 10,279 observations (with all NAs removed in the new dataframe). Before removing the NAs, the full dataframe had 11,341 observations.
  
-In addition, we decided to rank the historical figures to based off of their `historical_popularity_index`
+In addition, we decided to rank the historical figures to based off of their `historical_popularity_index`.
+
+### Mapping
+
+```{r popularity-across-globe, fig.width=13, fig.height=5}
+ggplot(panth_mod, mapping = aes(x = longitude, y = latitude, color = historical_popularity_index)) +
+  geom_point() +
+  theme_minimal() +
+  labs(title = "Historical Popularity Index Around the World", x = "Longitude", 
+       y = "Latitude", color = "Popularity Index Gradient")
+```
+ 
+ From this visual, we can see that the areas of the world that are generally uninhabitable or extremely rural do not have historical figures. For example, the center of South America, a large portion of North Africa, most of Russia, and a big portion of Australia. Additionally, in these countries and continents, the coast seems to have the most historical figures. 
  
 ### Section 2 - How the Variable `Domain` Affects `Historical_Popularity_Index`
 
@@ -223,23 +234,6 @@ After creating the selected model, we found that the full and selected models we
 
 Based on the full and selected models, to have the highest popularity index score, one should:
 be a man, study in the domain of the humanities, and live somewhere in the continent of South America. Additionally, the predicted popularity index score would increase if the figure was born before the year 0 (or before common era). This is because though the slope for `birth_year` is negative, the birth year itself for these figures is also negative (ie -3500), so the overall slope would be positive. 
-
-
-
-
-
-
-
-
-
-
-```{r popularity-across-globe, fig.width=13, fig.height=5}
-ggplot(panth_mod, mapping = aes(x = longitude, y = latitude, color = historical_popularity_index)) +
-  geom_point() +
-  theme_minimal() +
-  labs(title = "Historical Popularity Index Around the World", x = "Longitude", 
-       y = "Latitude", color = "Popularity Index Gradient")
-```
 
 
 
