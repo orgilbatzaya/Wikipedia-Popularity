@@ -260,6 +260,16 @@ After creating the selected model, we found that the full and selected models we
 Based on the full and selected models, to have the highest popularity index score, one should:
 be a man, study in the domain of the humanities, and live somewhere in the continent of South America. Additionally, the predicted popularity index score would increase if the figure was born before the year 0 (or before common era). This is because though the slope for `birth_year` is negative, the birth year itself for these figures is also negative (ie -3500), so the overall slope would be positive. 
 
+```{r}
+panth_mod %>%
+  filter(continent == "Europe",
+         birth_year < 0,
+         sex == "Male",
+         domain == "Humanities")%>%
+    select(rank,full_name,historical_popularity_index, occupation)
+```
+After filtering for the characteristics deemed most impactful on historical popularity score, we see that it does indeed result in very high ranking individuals. The top 5 in this list are all from the top 10 of the original ranking by popularity index.
+
 ## Conclusion
 
 
