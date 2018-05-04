@@ -115,7 +115,7 @@ panth_mod %>%
 
 Looking at simply the number of historical figures in each of the domain categories, it becomes easier to see which domain has the most number of historical figures. When looking at the number of historical figures by continent, Europe is the continent with the most historical figures across the ~5000 year timespan of the data with more historical figures than all other continents combined.
 
-### Simple Linear Regression
+#### Simple Linear Regression
 
 ```{r domain_linear_model}
 domain_m <- lm(historical_popularity_index ~ domain, data = panth_mod)
@@ -149,7 +149,7 @@ panth_mod %>%
 
 Based on the filtered dataframe, there are 1,427 women and 8,852 men that are considered historical figures of the total 10,279 historical figures. There are about 6.2 times as many historical men than women overall in the data. The timeframe of this data starts at `r panth_mod%>%arrange(birth_year)%>%select(birth_year)%>%head(1) `, or 3500 BCE, and ends at `r panth_mod%>%arrange(desc(birth_year))%>%select(birth_year)%>%head(1)`, spanning about 5000 years. This means that a mere 13.9% of women in the entire timeframe are considered historical figures.
 
-### Simple Linear Regression
+#### Simple Linear Regression
 
 ```{r estimating_popularity_sex}
 m_pop_sex <- lm(historical_popularity_index ~ sex , data = panth_mod)
@@ -169,7 +169,7 @@ glance(m_pop_sex)$r.squared
 
 We found that the r-squared for the linear model `m_pop` is 2.54%, which suggests that 2.54% of the variability of the data can be explained by sex and that the model does not fit our data very well. We think there might be a confounding variable, so we will look to see if `birth_year` is one.
 
-### Simple Linear Regression - For All Figures Born After 1920
+#### Simple Linear Regression - For All Figures Born After 1920
 
 ```{r women-after-1920}
 panth_mod%>%
@@ -203,7 +203,7 @@ We found that the r-squared for the linear model `m_pop_sex2` is 0.51%, which su
 
 ### Section 4 - How the Variable `Article_Languages` Affects `Historical_Popularity_Index`
 
-### Simple Linear Regression
+#### Simple Linear Regression
 
 ```{r article_languages_linear_model}
 artlang_m <- lm(historical_popularity_index ~ article_languages, data = panth_mod)
@@ -257,7 +257,7 @@ Interestingly, one of the historical figures has a low popularity index score, a
  
 After looking at how the variables `domain`, `sex`, and `article_languages` each affect historical popularity index, we see that they do play a role. To summarize our results and check to see if other variables affect the historical popularity index all at once, we will use a multiple linear regression full model.
  
-### Multiple Linear Regression
+### Section 5 - Multiple Linear Regression
 
 ```{r full_model}
 m_full <- lm(historical_popularity_index ~ sex +
@@ -284,7 +284,7 @@ glance(m_full)$adj.r.squared
 
 The r-squared value for the full model is 63.5%, which means that more than half of the variability of the data can be explained by the model. This is a significant increase from the sex regression model we did comparing `sex` and `historical_popularity_index` scores, which resulted in an r-squared of 2.54%. The adjusted r-squared is 63.4%. This is also a large increase from the domain model, which had an r-squared of 40%. Thus the full model has the most predictive power. 
 
-### Backwards Selection with AIC
+#### Backwards Selection with AIC
 
 ```{r backwards_selection}
 selected_model <- step(m_full, direction = "backward")
@@ -299,7 +299,7 @@ glance(selected_model)$adj.r.squared
 
 After creating the selected model, we found that the full and selected models were identical, which indicates that the full model had the best predictive power. 
 
-### The perfect historical popularity index
+#### The perfect historical popularity index
 
 Based on the full and selected models, to have the highest popularity index score, one should:
 be a man, study in the domain of the humanities, and live somewhere in the continent of South America. Additionally, the predicted popularity index score would increase if the figure was born before the year 0 (or before common era). This is because though the slope for `birth_year` is negative, the birth year itself for these figures is also negative (ie -3500), so the overall slope would be positive. 
