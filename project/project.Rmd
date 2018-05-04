@@ -230,7 +230,7 @@ Here we estimated the historical popularity index using the `sex`, `domain`, `bi
 
 The linear model, based on the output, is:
 
-`(historical_popularity_index) = 19.9(intercept) + 1.43(sexMale) + 0.335(domainBusiness & Law) + 0.275	(domainExploration) + 1.097(domainHumanities) + 0.398(domainInstitutions) + 0.763(domainPublic Figure) + 0.778(domainScience & Technology) - 4.20(domainSports) + 0.0893(article_languages)	+ 1.235	(continentAsia) + 2.063(continentEurope) + 1.322(continentNorth America	) + 0.980(continentOceania) + 2.68(continentSouth America) - 0.0235(article_languages:continentAsia) - 0.0209(article_languages:continentEurope) - 0.0227(article_languages:continentNorth America) - 0.0303(article_languages:continentOceania) - 0.0384(article_languages:continentSouth America) - 0.001813092(birth_year)`
+`(historical_popularity_index) = 20.8(intercept) + 1.43(sexMale) + 0.335(domainBusiness & Law) + 0.290	(domainExploration) + 1.099(domainHumanities) + 0.394(domainInstitutions) + 0.753(domainPublic Figure) + 0.781(domainScience & Technology) - 4.20(domainSports) + 0.0675(article_languages)	+ 0.290	(continentAsia) + 1.224(continentEurope) + 0.411(continentNorth America	) - 0.204(continentOceania) + 1.155(continentSouth America) - 0.00182(birth_year)`
 
 ```{r full_r-squared}
 glance(m_full)$r.squared
