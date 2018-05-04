@@ -66,6 +66,50 @@ We have also found the top 10 figures with the highest popularity index score. T
 9	Pythagoras
 10 Archimedes
 
+#### Introductory Visualizations
+
+```{r page_views_visual}
+panth_mod %>%
+  ggplot(mapping = aes(x = continent, y = average_views)) +
+  geom_boxplot() + 
+  coord_flip() +
+  labs(title = "Distribution of Average Page Views", y = "Page Views", 
+       x = "Continent", subtitle = "by Continent")
+
+panth_mod %>%
+  filter(continent == "South America", average_views > 600000) %>%
+  select(rank, full_name, country, continent, average_views)
+
+panth_mod %>%
+  filter(continent == "Oceania", average_views > 750000) %>%
+  select(rank, full_name, country, continent, average_views)
+
+panth_mod %>%
+  filter(continent == "North America", average_views > 1500000) %>%
+  select(rank, full_name, country, continent, average_views) 
+
+panth_mod %>%
+  filter(continent == "Europe", average_views > 1000000) %>%
+  select(rank, full_name, country, continent, average_views)
+
+panth_mod %>%
+  filter(continent == "Asia", average_views > 600000) %>%
+  select(rank, full_name, country, continent, average_views)
+
+panth_mod %>%
+  filter(continent == "Africa", average_views > 600000) %>%
+  select(rank, full_name, country, continent, average_views)
+```
+
+Visualized here is a distribution of the average number of page views of historical figures by continent. Each point in this visual represents a historical figure's average number of Wikipedia page views. The figures with the most page views from each continent are:
+
+Lionel Messi (South America)
+Chris Hemsworth (Oceania)
+Kim Kardashian (North America)
+Cristiano Ronaldo (Europe)
+Manny Pacquiáo (Asia)
+Freddy Mercury (Africa)
+
 ```{r distribution-of-index}
 panth_mod %>%
   ggplot(mapping = aes(x = historical_popularity_index)) +
@@ -257,7 +301,7 @@ Interestingly, one of the historical figures has a low popularity index score, a
  
 After looking at how the variables `domain`, `sex`, and `article_languages` each affect historical popularity index, we see that they do play a role. To summarize our results and check to see if other variables affect the historical popularity index all at once, we will use a multiple linear regression full model.
  
-### Section 5 - Multiple Linear Regression
+#### Multiple Linear Regression
 
 ```{r full_model}
 m_full <- lm(historical_popularity_index ~ sex +
