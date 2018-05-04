@@ -53,9 +53,54 @@ panth_mod %>%
 There are 17 variables and 10,279 observations (with all NAs removed in the new dataframe). Before removing the NAs, the full dataframe had 11,341 observations.
  
 In addition, we decided to add a `rank` variable to the dataframe to rank the historical figures based off of their `historical_popularity_index`.
+
+We have also found the top 10 figures with the highest popularity index score. They are:
+1 Aristotle
+2	Plato
+3	Jesus Christ
+4	Socrates	
+5	Alexander the Great	
+6	Leonardo da Vinci
+7	Julius Caesar
+8	Homer
+9	Pythagoras
+10 Archimedes
+
+```{r distribution-of-index}
+panth_mod %>%
+  ggplot(mapping = aes(x = historical_popularity_index)) +
+  geom_histogram(bins = 20) + 
+  facet_wrap(~domain) +
+  labs(title = "Distribution of Historical Popularity Index Scores", y = "Count", 
+       x = "Historical Popularity Index Score", subtitle = "by Domain")
+
+panth_mod %>%
+  group_by(domain)%>%
+  summarise(mean = mean(historical_popularity_index), 
+            median = median(historical_popularity_index), 
+            sd = sd(historical_popularity_index))
+```
+
+To get a better understanding of our dataset, we created a faceted histogram that shows the distribution of the historical popularity index scores for the historical figures across all of the domains in the dataset and ran summary statistics on the dataframe by domain. The visual lets us see the true distribution of historical figures across all of the domains, letting us know which areas are the most popular and have produced the most historical figures. We created this visual because it gives us a glimpse into how historical popularity index scores vary across the domains.
+
+### The Historical Popularity Index
+
+The historical popularity index value measures approximately how popular the article on the historical figure was and how well known the figure was. It was created by "adding information on the age of the historical character, the concentration of page views among different languages, the coefficient of variation in page views, and the number of page views in languages other than English."
+
+(https://www.kaggle.com/mit/pantheon-project)
+
+```{r popularity-across-globe, fig.width=13, fig.height=5}
+ggplot(panth_mod, mapping = aes(x = longitude, y = latitude, color = historical_popularity_index)) +
+  geom_point() +
+  theme_minimal() +
+  labs(title = "Historical Popularity Index Around the World", x = "Longitude", 
+       y = "Latitude", color = "Popularity Index Gradient")
+```
  
-For our analysis, we will look at the variables `domain`, `sex`, and `article_languages` and then make a full linear model.
+From this visual, we can see that the areas of the world that are generally uninhabitable or extremely rural do not have historical figures. For example, the center of South America, a large portion of North Africa, most of Russia, and a big portion of Australia lack a concentration of historical figures. Additionally, in these countries and continents, the coast seems to have the most historical figures. This map shows a gradient measuring the historical popularity index around the world, with the lightest points representing figures with the highest popularity index scores.
  
+For the first part of our analysis, we will look at the variables `domain`, `sex`, and `article_languages` indpendently using simple linear regression and later create a full linear model to determine which variables are most important when calculating the popularity index score of historical figures across time.
+
 ### Section 2 - How the Variable `Domain` Affects `Historical_Popularity_Index`
 
 ```{r looking_at_data}
@@ -190,7 +235,6 @@ panth_mod %>%
     color = "Continent") 
 ```
 
-
 From this visual, for historical figures from Asia and Europe, we see that as the number of languages one's article increases, the popularity index also increases. However, for Africa and the Americas, there is little upward movement in popularity as article languages increases. The regression lines for these three continents tend to stay relatively constant.
 
 ```{r greater-than-200}
@@ -260,14 +304,15 @@ After creating the selected model, we found that the full and selected models we
 Based on the full and selected models, to have the highest popularity index score, one should:
 be a man, study in the domain of the humanities, and live somewhere in the continent of South America. Additionally, the predicted popularity index score would increase if the figure was born before the year 0 (or before common era). This is because though the slope for `birth_year` is negative, the birth year itself for these figures is also negative (ie -3500), so the overall slope would be positive. 
 
-```{r}
+```{r perfect_index_score}
 panth_mod %>%
   filter(continent == "Europe",
          birth_year < 0,
          sex == "Male",
-         domain == "Humanities")%>%
+         domain == "Humanities") %>%
     select(rank,full_name,historical_popularity_index, occupation)
 ```
+
 After filtering for the characteristics deemed most impactful on historical popularity score, we see that it does indeed result in very high ranking individuals. The top 5 in this list are all from the top 10 of the original ranking by popularity index.
 
 ## Conclusion
@@ -390,50 +435,3 @@ hum_art_mindist %>%
   filter(closest == distance)%>%
   select(name.arts, closest, name.hum)
 ```
-
-
-
-
-
-
-
-the historgram
-
-```{r distribution-of-index}
-panth_mod %>%
-  ggplot(mapping = aes(x = historical_popularity_index)) +
-  geom_histogram(bins = 20) + 
-  facet_wrap(~domain) +
-  labs(title = "Distribution of Historical Popularity Index Scores", y = "Count", 
-       x = "Historical Popularity Index Score", subtitle = "by Domain")
-
-panth_mod %>%
-  group_by(domain)%>%
-  summarise(mean = mean(historical_popularity_index), 
-            median = median(historical_popularity_index), 
-            sd = sd(historical_popularity_index))
-```
-To get a better understanding of our dataset, we created a faceted histogram that shows the distribution of the historical popularity index scores for the historical figures across all of the domains in the dataset and ran summary statistics on the dataframe as a whole. The visual lets us see the true distribution of historical figures across all of the domains, letting us know which areas are the most popular and have produced the most historical figures.
-We think this visual is important because it gives us a glimpse of how historical popularity index varies across the domains. We will comtinue looking at other variables to see if they contribute into the historical popularity index score.
-
-
-
-
-
-### Mapping
-
-```{r popularity-across-globe, fig.width=13, fig.height=5}
-ggplot(panth_mod, mapping = aes(x = longitude, y = latitude, color = historical_popularity_index)) +
-  geom_point() +
-  theme_minimal() +
-  labs(title = "Historical Popularity Index Around the World", x = "Longitude", 
-       y = "Latitude", color = "Popularity Index Gradient")
-```
- 
- From this visual, we can see that the areas of the world that are generally uninhabitable or extremely rural do not have historical figures. For example, the center of South America, a large portion of North Africa, most of Russia, and a big portion of Australia. Additionally, in these countries and continents, the coast seems to have the most historical figures. 
-
-
-
-
-
-## Conclusion
