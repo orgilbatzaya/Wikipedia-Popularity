@@ -233,6 +233,19 @@ be a man, study in the domain of the humanities, and live somewhere in the conti
 
 
 
+```{r popularity-across-globe, fig.width=13, fig.height=5}
+ggplot(panth_mod, mapping = aes(x = longitude, y = latitude, color = historical_popularity_index)) +
+  geom_point() +
+  theme_minimal() +
+  labs(title = "Historical Popularity Index Around the World", x = "Longitude", 
+       y = "Latitude", color = "Popularity Index Gradient")
+```
+
+
+
+
+
+
 
 
 
