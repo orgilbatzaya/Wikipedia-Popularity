@@ -12,7 +12,8 @@ Load Data
 Introduction
 ------------
 
-The data that we obtained contains information regarding historical figures. We downloaded the data from Kaggle, but the data was collected by the Massachusetts Institute of Technology about a year ago. The data is based off of metrics from many wikipedia pages and believe the variables in the dataframe can be used to extrapolate what makes a historical figure "popular" by Wikipedia standards. By the end of our data analysis, we aim to derive the perfect combination of variables that lead to a high popularity index, which is recorded in the dataframe.
+The data that we obtained contains information regarding historical figures. We downloaded the data from Kaggle, but the data was collected by the Massachusetts Institute of Technology about a year ago. The data is based off of metrics from many wikipedia pages and believe the variables in the dataframe can be used to extrapolate what makes a historical figure "popular" by Wikipedia standards.
+By the end of our data analysis, we aim to derive the perfect combination of variables that lead to a high popularity index, which is recorded in the dataframe.
 
 It is important to note that the dataframe has been updated as recently as last year and the last historical figure's birth year recorded was 2005, suggesting that though the dataframe has not added a historical figure born after the year 2005, there is still currently data being collected on the ones already in the dataframe (ie page views, article languages, etc.).
 
@@ -40,9 +41,7 @@ There are 17 variables and 10,279 observations (with all NAs removed in the new 
 
 In addition, we decided to rank the historical figures to based off of their `historical_popularity_index`
 
-##### Reference
-
-<http://www.dummies.com/programming/r/how-to-remove-rows-with-missing-data-in-r/>
+### Section 2 - How the Variable `Domain` Affects `Historical_Popularity_Index`
 
     ## # A tibble: 8 x 2
     ##   domain                   n
@@ -86,7 +85,7 @@ To get a better understanding of our dataset, we created a faceted histogram tha
 
 We think this visual is important because it gives us a glimpse of how historical popularity index varies across the domains. We will comtinue looking at other variables to see if they contribute into the historical popularity index score.
 
-### Section 2 - Men and Women
+### Section 3 - How the Variable `Sex` Affects `Historical_Popularity_Index`
 
     ## # A tibble: 2 x 3
     ##   sex        n  prop
@@ -96,7 +95,7 @@ We think this visual is important because it gives us a glimpse of how historica
 
 Based on the filtered dataframe, there are 1,427 women and 8,852 men that are considered historical figures of the total 10,279 historical figures. There are about 6.2 times as many historical men than women overall in the data. The timeframe of this data starts at -3500, or 3500 BCE, and ends at 2005, spanning about 5000 years. This means that a mere 13.9% of women in the entire timeframe are considered historical figures.
 
-### Simple Linear Regression
+### Simple Linear Regression - For All Figures
 
     ##          term  estimate
     ## 1 (Intercept) 20.802384
@@ -111,6 +110,8 @@ The linear model, based on the output, is:
     ## [1] 0.02538845
 
 We found that the r-squared for the linear model `m_pop` is 2.54%, which suggests that 2.54% of the variability of the data can be explained by the linear model and that the model does not fit our data very well. In the next few steps, we will continue to re-evaluate our model to determine what combination of variables result in a high or low popularity index score.
+
+### Simple Linear Regression - For All Figures Born After 1920
 
     ## # A tibble: 2 x 3
     ##   sex        n  prop
@@ -132,7 +133,7 @@ The resulting linear model that only looked at the historical figures after 1920
 
 The slope of the `sexMale` variable decreased significantly from the previous analysis. This shows that time is a factor that affects the historical popularity index of women specifically.
 
-### Visual
+### Section 4 - How the Variable `Article_Languages` Affects `Historical_Popularity_Index`
 
 ![](project_files/figure-markdown_github/visualizing-index-by-popularity-1.png)
 
@@ -141,7 +142,7 @@ The slope of the `sexMale` variable decreased significantly from the previous an
     ##   <chr>                              <dbl>             <int> <chr>  
     ## 1 Jesus Christ                        31.9               214 Israel
 
-Because there are so many historical figures from Europe, there is a lot of clustering near the 50-60 language marker. Additionally, Europe and Asia's slopes are very similar. This could be because Europe has 6,073 figures with pages translated into 50 or more languages and very high popularity index scores or that Asia has 1,021 popular historical figures, but those figures have pages that have been translated into much more than 50 languages. For example, there is a historical figure that is an outlier considering Asia's spread in the visual. By filtering the data for the figure with a page translated into more than 200 languages, we identified this individual as Jesus Christ, whose Wikipedia page has been translated into 214 different languages. The fact that Jesus has his page translated into this many languages is not surprising.
+Because there are so many historical figures from Europe, there is a lot of clustering near the 50-60 language marker. Additionally, Europe and Asia's slopes are very similar. This could be because Europe has 6,073 figures with pages translated into 50 or more languages and very high popularity index scores or that Asia has 1,021 popular historical figures, but those figures have pages that have been translated into much more than 50 languages. For example, there is a historical figure that is an outlier considering Asia's spread in the visual. By filtering the data for the figure with a page translated into more than 200 languages, we identified this individual as Jesus Christ, whose Wikipedia page has been translated into 214 different languages.
 
     ## # A tibble: 1 x 4
     ##   full_name   historical_popularity_index article_languages country      
@@ -149,6 +150,8 @@ Because there are so many historical figures from Europe, there is a lot of clus
     ## 1 Corbin Bleu                        18.9               193 United States
 
 Interestingly, one of the historical figures has a low popularity index score, an outlier, but his/her wikipedia page has been translated into almost 200 different languages. After filtering the data to locate the point that had a popularity index score less than 20 and an article that was translated into more than 175 languages, we derived that the outlier historical figure from North America is Corbin Bleu, the actor from High School Musical.
+
+After looking at how the variables `domain`, `sex`, and `article_languages` each affect historical popularity index, we see that they do play a role. To summarize our results and check to see if other variables affect the historical popularity index all at once, we will use a multiple linear regression full model.
 
 ### Multiple Linear Regression
 
