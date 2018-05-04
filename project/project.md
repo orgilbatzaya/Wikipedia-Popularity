@@ -119,7 +119,7 @@ The linear model, based on the output, is:
 
     ## [1] 0.02538845
 
-We found that the r-squared for the linear model `m_pop` is 2.54%, which suggests that 2.54% of the variability of the data can be explained by the linear model and that the model does not fit our data very well. In the next few steps, we will continue to re-evaluate our model to determine what combination of variables result in a high or low popularity index score.
+We found that the r-squared for the linear model `m_pop` is 2.54%, which suggests that 2.54% of the variability of the data can be explained by the linear model and that the model does not fit our data very well. We think there might be a confounding variable, so we will look to see if `birth_year` is one.
 
 ### Simple Linear Regression - For All Figures Born After 1920
 
@@ -144,6 +144,22 @@ The resulting linear model that only looked at the historical figures after 1920
 The slope of the `sexMale` variable decreased significantly from the previous analysis. This shows that time is a factor that affects the historical popularity index of women specifically.
 
 ### Section 4 - How the Variable `Article_Languages` Affects `Historical_Popularity_Index`
+
+### Simple Linear Regression
+
+    ##                term    estimate
+    ## 1       (Intercept) 18.47995918
+    ## 2 article_languages  0.08920223
+
+Here we estimated the historical popularity index using the `article_langugaes` variable using a simple linear regression. The slope for the variable `article_languages` is 0.089, suggesting that for every one increase in the amount of languages the article has been translated, that historical figure, on average, will have an increase in their overall popularity index of 0.089 as long as all other variables are held constant.
+
+The linear model, based on the output, is:
+
+`(historical_popularity_index) = 21.839(intercept) + 0.089(article_languages)`
+
+    ## [1] 0.2158346
+
+We found that the r-squared for the linear model `artlang_m` is 21.6%, which suggests that 21.6% of the variability of the data can be explained by the linear model and that the model doesn't necessarily fit our data very well.
 
 ![](project_files/figure-markdown_github/visualizing-index-by-popularity-1.png)
 

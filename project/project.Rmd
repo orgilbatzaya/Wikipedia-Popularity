@@ -129,7 +129,7 @@ The linear model, based on the output, is:
 glance(m_pop_sex)$r.squared
 ```
 
-We found that the r-squared for the linear model `m_pop` is 2.54%, which suggests that 2.54% of the variability of the data can be explained by the linear model and that the model does not fit our data very well. In the next few steps, we will continue to re-evaluate our model to determine what combination of variables result in a high or low popularity index score.
+We found that the r-squared for the linear model `m_pop` is 2.54%, which suggests that 2.54% of the variability of the data can be explained by the linear model and that the model does not fit our data very well. We think there might be a confounding variable, so we will look to see if `birth_year` is one.
 
 ### Simple Linear Regression - For All Figures Born After 1920
 
@@ -159,6 +159,26 @@ The slope of the `sexMale` variable decreased significantly from the previous an
 
 ### Section 4 - How the Variable `Article_Languages` Affects `Historical_Popularity_Index`
 
+### Simple Linear Regression
+
+```{r article_languages_linear_model}
+artlang_m <- lm(historical_popularity_index ~ article_languages, data = panth_mod)
+tidy(artlang_m) %>%
+  select(term, estimate)
+```
+
+Here we estimated the historical popularity index using the `article_langugaes` variable using a simple linear regression. The slope for the variable `article_languages` is 0.089, suggesting that for every one increase in the amount of languages the article has been translated, that historical figure, on average, will have an increase in their overall popularity index of 0.089 as long as all other variables are held constant.
+ 
+The linear model, based on the output, is:
+ 
+`(historical_popularity_index) = 21.839(intercept) + 0.089(article_languages)`
+
+```{r r-squared_article_languages}
+glance(artlang_m)$r.squared
+```
+
+We found that the r-squared for the linear model `artlang_m` is 21.6%, which suggests that 21.6% of the variability of the data can be explained by the linear model and that the model doesn't necessarily fit our data very well.
+
 ```{r visualizing-index-by-popularity}
 panth_mod %>%
   filter(article_languages > 50 & continent != "Oceania")%>%
@@ -186,7 +206,6 @@ panth_mod %>%
 ```
 
 Interestingly, one of the historical figures has a low popularity index score, an outlier, but his/her wikipedia page has been translated into almost 200 different languages. After filtering the data to locate the point that had a popularity index score less than 20 and an article that was translated into more than 175 languages, we derived that the outlier historical figure from North America is Corbin Bleu, the actor from High School Musical.
- 
  
 After looking at how the variables `domain`, `sex`, and `article_languages` each affect historical popularity index, we see that they do play a role. To summarize our results and check to see if other variables affect the historical popularity index all at once, we will use a multiple linear regression full model.
  
