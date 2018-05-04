@@ -165,7 +165,9 @@ panth_mod %>%
                        color = factor(continent))) + geom_point(alpha = .5) + 
     geom_smooth(method = "lm", se = FALSE)+
     labs(x = "Number of Article Languages", y = "Popularity Index", 
-    title = "Effect of the number of languages the article is translated into on popularity index", color = "Continent") 
+    title =
+      "Effect of # of languages the article is translated into on popularity index", 
+    color = "Continent") 
 ```
 
 ```{r greater-than-200}
