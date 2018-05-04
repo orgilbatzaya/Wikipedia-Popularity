@@ -82,13 +82,17 @@ Looking at simply the number of historical figures in each of the domain categor
 
 Here we estimated the historical popularity index using the `domain` variable using a simple linear regression. The slope for the level in `domain` named `Business & Law` is 0.502, suggesting that historical figures who belong in the `Business & Law` domain have, on average, an increase in their overall popularity index of 0.502 as long as all other variables are held constant.
 
+In this model, the largest coefficient belongs to the domain of `Humanities`. With all else held constant, historical figures who belong to the domain of `Humanities` have a historical popularity index that is, on average, 2.448 higher than the intercept.
+
+The least coefficient belongs to `Sports`. With all else held constant, historical figures who belong to `Sports`, have an index that is on average, 4.11 lower than the intercept.
+
 The linear model, based on the output, is:
 
 `(historical_popularity_index) = 21.839(intercept) + 0.502(domainBusiness & Law) + 1.710(domainExploration) + 2.448(domainHumanities) + 1.716(domainInstitutions) + 0.532(domainPublic Figure) + 1.534(Science & Technology) - 4.112(domainSports)`
 
     ## [1] 0.4011846
 
-We found that the r-squared for the linear model `domain_m` is 40.1%, which suggests that 40.1% of the variability of the data can be explained by the linear model and that the model does fit our data pretty well.
+We found that the r-squared for the linear model `domain_m` is 40.1%, which suggests that 40.1% of the variability of the data can be explained by the domain of the historical figure.
 
 ### Section 3 - How the Variable `Sex` Affects `Historical_Popularity_Index`
 
@@ -114,7 +118,7 @@ The linear model, based on the output, is:
 
     ## [1] 0.02538845
 
-We found that the r-squared for the linear model `m_pop` is 2.54%, which suggests that 2.54% of the variability of the data can be explained by the linear model and that the model does not fit our data very well. We think there might be a confounding variable, so we will look to see if `birth_year` is one.
+We found that the r-squared for the linear model `m_pop` is 2.54%, which suggests that 2.54% of the variability of the data can be explained by sex and that the model does not fit our data very well. We think there might be a confounding variable, so we will look to see if `birth_year` is one.
 
 ### Simple Linear Regression - For All Figures Born After 1920
 
@@ -140,7 +144,7 @@ The slope of the `sexMale` variable decreased significantly from the previous an
 
     ## [1] 0.005101232
 
-We found that the r-squared for the linear model `m_pop_sex2` is 0.51%, which suggests that 0.51% of the variability of the data can be explained by the linear model and that the model does not fit our data very well at all. The fact that the r-squared value went down makes sense because it is harder to differentiate between men and women, in terms of their historical popularity index score.
+We found that the r-squared for the linear model `m_pop_sex2` is 0.51%, which suggests that 0.51% of the variability of the data can be explained by the linear model and that the model does not fit our data very well at all. The fact that the r-squared value went down makes sense because it is harder to differentiate between men and women, in terms of their historical popularity index score. But in larger picture, we see that sex as a predictor does not impact the variability to a large extent and there are other variables like domain which are more impactful.
 
 ### Section 4 - How the Variable `Article_Languages` Affects `Historical_Popularity_Index`
 
@@ -162,12 +166,16 @@ We found that the r-squared for the linear model `artlang_m` is 21.6%, which sug
 
 ![](project_files/figure-markdown_github/visualizing-index-by-popularity-1.png)
 
-    ## # A tibble: 1 x 4
-    ##   full_name    historical_popularity_index article_languages country
-    ##   <chr>                              <dbl>             <int> <chr>  
-    ## 1 Jesus Christ                        31.9               214 Israel
+From this visual, for historical figures from Asia and Europe, we see that as the number of languages one's article increases, the popularity index also increases. However, for Africa and the Americas, there is little upward movement in popularity as article languages increases. The regression lines for these three continents tend to stay relatively constant.
 
-Because there are so many historical figures from Europe, there is a lot of clustering near the 50-60 language marker. Additionally, Europe and Asia's slopes are very similar. This could be because Europe has 6,073 figures with pages translated into 50 or more languages and very high popularity index scores or that Asia has 1,021 popular historical figures, but those figures have pages that have been translated into much more than 50 languages. For example, there is a historical figure that is an outlier considering Asia's spread in the visual. By filtering the data for the figure with a page translated into more than 200 languages, we identified this individual as Jesus Christ, whose Wikipedia page has been translated into 214 different languages.
+    ## # A tibble: 3 x 5
+    ##   full_name     historical_popular… article_languages country  occupation 
+    ##   <chr>                       <dbl>             <int> <chr>    <chr>      
+    ## 1 Jesus Christ                 31.9               214 Israel   Religious …
+    ## 2 Muhammad                     30.6               150 Saudi A… Religious …
+    ## 3 Qin Shi Huang                29.5               144 China    Politician
+
+There is a historical figure that is an outlier considering Asia's spread in the visual. By filtering the data for the figure with a page translated into more than 200 languages, we identified this individual as Jesus Christ, whose Wikipedia page has been translated into 214 different languages. The next highest was Muhammed, whose article has 150 languages. Both were historical figures.
 
     ## # A tibble: 1 x 4
     ##   full_name   historical_popularity_index article_languages country      
@@ -180,28 +188,23 @@ After looking at how the variables `domain`, `sex`, and `article_languages` each
 
 ### Multiple Linear Regression
 
-    ##                                        term     estimate
-    ## 1                               (Intercept) 19.904940468
-    ## 2                                   sexMale  1.430356106
-    ## 3                      domainBusiness & Law  0.334560092
-    ## 4                         domainExploration  0.275254286
-    ## 5                          domainHumanities  1.097207712
-    ## 6                        domainInstitutions  0.397500049
-    ## 7                       domainPublic Figure  0.763276129
-    ## 8                domainScience & Technology  0.778088066
-    ## 9                              domainSports -4.201724123
-    ## 10                        article_languages  0.089262210
-    ## 11                            continentAsia  1.234794023
-    ## 12                          continentEurope  2.062914933
-    ## 13                   continentNorth America  1.321529547
-    ## 14                         continentOceania  0.979711141
-    ## 15                   continentSouth America  2.677561833
-    ## 16                               birth_year -0.001813092
-    ## 17          article_languages:continentAsia -0.023467037
-    ## 18        article_languages:continentEurope -0.020964963
-    ## 19 article_languages:continentNorth America -0.022734323
-    ## 20       article_languages:continentOceania -0.030285172
-    ## 21 article_languages:continentSouth America -0.038432329
+    ##                          term     estimate
+    ## 1                 (Intercept) 20.793011611
+    ## 2                     sexMale  1.430580174
+    ## 3        domainBusiness & Law  0.334893828
+    ## 4           domainExploration  0.290909608
+    ## 5            domainHumanities  1.099204078
+    ## 6          domainInstitutions  0.394141870
+    ## 7         domainPublic Figure  0.753314854
+    ## 8  domainScience & Technology  0.781376261
+    ## 9                domainSports -4.204874910
+    ## 10          article_languages  0.067488020
+    ## 11              continentAsia  0.289772051
+    ## 12            continentEurope  1.223777083
+    ## 13     continentNorth America  0.411299202
+    ## 14           continentOceania -0.203625981
+    ## 15     continentSouth America  1.154744369
+    ## 16                 birth_year -0.001821584
 
 Here we estimated the historical popularity index using the `sex`, `domain`, `birth_year`, `article_languages`, and `continent` variables. We also included the interaction between continent and article languages. We would interpret the slope the same way we did with the simple linear regression above that had the `sex` variable only.
 
@@ -209,53 +212,49 @@ The linear model, based on the output, is:
 
 `(historical_popularity_index) = 19.9(intercept) + 1.43(sexMale) + 0.335(domainBusiness & Law) + 0.275  (domainExploration) + 1.097(domainHumanities) + 0.398(domainInstitutions) + 0.763(domainPublic Figure) + 0.778(domainScience & Technology) - 4.20(domainSports) + 0.0893(article_languages) + 1.235 (continentAsia) + 2.063(continentEurope) + 1.322(continentNorth America ) + 0.980(continentOceania) + 2.68(continentSouth America) - 0.0235(article_languages:continentAsia) - 0.0209(article_languages:continentEurope) - 0.0227(article_languages:continentNorth America) - 0.0303(article_languages:continentOceania) - 0.0384(article_languages:continentSouth America) - 0.001813092(birth_year)`
 
-    ## [1] 0.6347138
+    ## [1] 0.6340561
 
-    ## [1] 0.6340016
+    ## [1] 0.6335213
 
-The r-squared value for the full model is 63.5%, which means that more than half of the variability of the data can be explained by the model. This is a significant increase from the first regression model we did comparing `sex` and `historical_popularity_index` scores, which resulted in an r-squared of 2.54%. The adjusted r-squared is 63.4%.
+The r-squared value for the full model is 63.5%, which means that more than half of the variability of the data can be explained by the model. This is a significant increase from the sex regression model we did comparing `sex` and `historical_popularity_index` scores, which resulted in an r-squared of 2.54%. The adjusted r-squared is 63.4%. This is also a large increase from the domain model, which had an r-squared of 40%. Thus the full model has the most predictive power.
 
 ### Backwards Selection with AIC
 
-    ## Start:  AIC=14673.49
+    ## Start:  AIC=14681.98
     ## historical_popularity_index ~ sex + domain + article_languages + 
-    ##     continent + birth_year + continent * article_languages
+    ##     continent + birth_year
     ## 
-    ##                               Df Sum of Sq   RSS   AIC
-    ## <none>                                     42672 14674
-    ## - article_languages:continent  5      76.8 42749 14682
-    ## - sex                          1    2179.4 44851 15184
-    ## - birth_year                   1    6089.7 48761 16043
-    ## - domain                       7   28066.2 70738 19855
+    ##                     Df Sum of Sq   RSS   AIC
+    ## <none>                           42749 14682
+    ## - continent          5    1963.5 44712 15134
+    ## - sex                1    2181.9 44931 15192
+    ## - birth_year         1    6182.5 48931 16068
+    ## - article_languages  1   13893.0 56642 17573
+    ## - domain             7   28195.2 70944 19875
 
-    ##                                        term     estimate
-    ## 1                               (Intercept) 19.904940468
-    ## 2                                   sexMale  1.430356106
-    ## 3                      domainBusiness & Law  0.334560092
-    ## 4                         domainExploration  0.275254286
-    ## 5                          domainHumanities  1.097207712
-    ## 6                        domainInstitutions  0.397500049
-    ## 7                       domainPublic Figure  0.763276129
-    ## 8                domainScience & Technology  0.778088066
-    ## 9                              domainSports -4.201724123
-    ## 10                        article_languages  0.089262210
-    ## 11                            continentAsia  1.234794023
-    ## 12                          continentEurope  2.062914933
-    ## 13                   continentNorth America  1.321529547
-    ## 14                         continentOceania  0.979711141
-    ## 15                   continentSouth America  2.677561833
-    ## 16                               birth_year -0.001813092
-    ## 17          article_languages:continentAsia -0.023467037
-    ## 18        article_languages:continentEurope -0.020964963
-    ## 19 article_languages:continentNorth America -0.022734323
-    ## 20       article_languages:continentOceania -0.030285172
-    ## 21 article_languages:continentSouth America -0.038432329
+    ##                          term     estimate
+    ## 1                 (Intercept) 20.793011611
+    ## 2                     sexMale  1.430580174
+    ## 3        domainBusiness & Law  0.334893828
+    ## 4           domainExploration  0.290909608
+    ## 5            domainHumanities  1.099204078
+    ## 6          domainInstitutions  0.394141870
+    ## 7         domainPublic Figure  0.753314854
+    ## 8  domainScience & Technology  0.781376261
+    ## 9                domainSports -4.204874910
+    ## 10          article_languages  0.067488020
+    ## 11              continentAsia  0.289772051
+    ## 12            continentEurope  1.223777083
+    ## 13     continentNorth America  0.411299202
+    ## 14           continentOceania -0.203625981
+    ## 15     continentSouth America  1.154744369
+    ## 16                 birth_year -0.001821584
 
-    ## [1] 43846.03
+    ## [1] 43854.52
 
-    ## [1] 0.6347138
+    ## [1] 0.6340561
 
-    ## [1] 0.6340016
+    ## [1] 0.6335213
 
 After creating the selected model, we found that the full and selected models were identical, which indicates that the full model had the best predictive power.
 

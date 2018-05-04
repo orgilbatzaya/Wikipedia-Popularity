@@ -79,6 +79,10 @@ tidy(domain_m) %>%
 ```
 
 Here we estimated the historical popularity index using the `domain` variable using a simple linear regression. The slope for the level in `domain` named `Business & Law` is 0.502, suggesting that historical figures who belong in the `Business & Law` domain have, on average, an increase in their overall popularity index of 0.502 as long as all other variables are held constant.
+
+In this model, the largest coefficient belongs to the domain of `Humanities`. With all else held constant, historical figures who belong to the domain of `Humanities` have a historical popularity index that is, on average, 2.448 higher than the intercept. 
+
+The least coefficient belongs to `Sports`. With all else held constant, historical figures who belong to `Sports`, have an index that is on average, 4.11 lower than the intercept. 
  
 The linear model, based on the output, is:
  
@@ -88,7 +92,7 @@ The linear model, based on the output, is:
 glance(domain_m)$r.squared
 ```
 
-We found that the r-squared for the linear model `domain_m` is 40.1%, which suggests that 40.1% of the variability of the data can be explained by the linear model and that the model does fit our data pretty well.
+We found that the r-squared for the linear model `domain_m` is 40.1%, which suggests that 40.1% of the variability of the data can be explained by the domain of the historical figure. 
  
 ### Section 3 - How the Variable `Sex` Affects `Historical_Popularity_Index`
 
@@ -118,7 +122,7 @@ The linear model, based on the output, is:
 glance(m_pop_sex)$r.squared
 ```
 
-We found that the r-squared for the linear model `m_pop` is 2.54%, which suggests that 2.54% of the variability of the data can be explained by the linear model and that the model does not fit our data very well. We think there might be a confounding variable, so we will look to see if `birth_year` is one.
+We found that the r-squared for the linear model `m_pop` is 2.54%, which suggests that 2.54% of the variability of the data can be explained by sex and that the model does not fit our data very well. We think there might be a confounding variable, so we will look to see if `birth_year` is one.
 
 ### Simple Linear Regression - For All Figures Born After 1920
 
@@ -150,7 +154,7 @@ The slope of the `sexMale` variable decreased significantly from the previous an
 glance(m_pop_sex2)$r.squared
 ```
 
-We found that the r-squared for the linear model `m_pop_sex2` is 0.51%, which suggests that 0.51% of the variability of the data can be explained by the linear model and that the model does not fit our data very well at all. The fact that the r-squared value went down makes sense because it is harder to differentiate between men and women, in terms of their historical popularity index score.
+We found that the r-squared for the linear model `m_pop_sex2` is 0.51%, which suggests that 0.51% of the variability of the data can be explained by the linear model and that the model does not fit our data very well at all. The fact that the r-squared value went down makes sense because it is harder to differentiate between men and women, in terms of their historical popularity index score. But in larger picture, we see that sex as a predictor does not impact the variability to a large extent and there are other variables like domain which are more impactful. 
 
 ### Section 4 - How the Variable `Article_Languages` Affects `Historical_Popularity_Index`
 
@@ -176,7 +180,7 @@ We found that the r-squared for the linear model `artlang_m` is 21.6%, which sug
 
 ```{r visualizing-index-by-popularity}
 panth_mod %>%
-  filter(article_languages > 50 & continent != "Oceania")%>%
+  filter(article_languages > 75 & continent != "Oceania")%>%
   ggplot(mapping = aes(y = historical_popularity_index, x = article_languages,
                        color = factor(continent))) + geom_point(alpha = .5) + 
     geom_smooth(method = "lm", se = FALSE) +
@@ -186,13 +190,18 @@ panth_mod %>%
     color = "Continent") 
 ```
 
+
+From this visual, for historical figures from Asia and Europe, we see that as the number of languages one's article increases, the popularity index also increases. However, for Africa and the Americas, there is little upward movement in popularity as article languages increases. The regression lines for these three continents tend to stay relatively constant.
+
 ```{r greater-than-200}
 panth_mod %>%
-  select(full_name, historical_popularity_index, article_languages, country) %>%
-  filter(article_languages > 200)
+  filter(continent == "Asia")%>%
+  select(full_name, historical_popularity_index, article_languages, country,occupation) %>%
+  arrange(desc(article_languages))%>%
+  head(3)
 ```
 
-Because there are so many historical figures from Europe, there is a lot of clustering near the 50-60 language marker. Additionally, Europe and Asia's slopes are very similar. This could be because Europe has 6,073 figures with pages translated into 50 or more languages and very high popularity index scores or that Asia has 1,021 popular historical figures, but those figures have pages that have been translated into much more than 50 languages. For example, there is a historical figure that is an outlier considering Asia's spread in the visual. By filtering the data for the figure with a page translated into more than 200 languages, we identified this individual as Jesus Christ, whose Wikipedia page has been translated into 214 different languages.
+There is a historical figure that is an outlier considering Asia's spread in the visual. By filtering the data for the figure with a page translated into more than 200 languages, we identified this individual as Jesus Christ, whose Wikipedia page has been translated into 214 different languages. The next highest was Muhammed, whose article has 150 languages. Both were historical figures.
 
 ```{r who-is-the-outlier}
 panth_mod %>%
@@ -211,8 +220,7 @@ m_full <- lm(historical_popularity_index ~ sex +
                domain +
                article_languages +
                continent +
-               birth_year +
-               continent * article_languages,
+               birth_year,
              data = panth_mod)
 tidy(m_full) %>%
   select(term, estimate)
@@ -230,7 +238,7 @@ glance(m_full)$r.squared
 glance(m_full)$adj.r.squared
 ```
 
-The r-squared value for the full model is 63.5%, which means that more than half of the variability of the data can be explained by the model. This is a significant increase from the first regression model we did comparing `sex` and `historical_popularity_index` scores, which resulted in an r-squared of 2.54%. The adjusted r-squared is 63.4%. 
+The r-squared value for the full model is 63.5%, which means that more than half of the variability of the data can be explained by the model. This is a significant increase from the sex regression model we did comparing `sex` and `historical_popularity_index` scores, which resulted in an r-squared of 2.54%. The adjusted r-squared is 63.4%. This is also a large increase from the domain model, which had an r-squared of 40%. Thus the full model has the most predictive power. 
 
 ### Backwards Selection with AIC
 
