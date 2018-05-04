@@ -198,7 +198,11 @@ The linear model, based on the output, is:
 
 ```{r full_r-squared}
 glance(m_full)$r.squared
+
+glance(m_full)$adj.r.squared
 ```
+
+The r-squared value for the full model is 63.5%, which means that more than half of the variability of the data can be explained by the model. This is a significant increase from the first regression model we did comparing `sex` and `historical_popularity_index` scores, which resulted in an r-squared of 2.54%. The adjusted r-squared is 63.4%. 
 
 ### Backwards Selection with AIC
 
@@ -208,13 +212,19 @@ selected_model <- step(m_full, direction = "backward")
 tidy(selected_model) %>%
   select(term, estimate)
 
-glance(m_full)$AIC
+glance(selected_model)$AIC
+glance(selected_model)$r.squared
+glance(selected_model)$adj.r.squared
 ```
+
+After creating the selected model, we found that the full and selected models were identical, which indicates that the full model had the best predictive power. 
 
 ### The perfect historical popularity index
 
 Based on the full and selected models, to have the highest popularity index score, one should:
-be a man, study in the domain of the humanities, and live somewhere in the continent of South America.
+be a man, study in the domain of the humanities, and live somewhere in the continent of South America. Additionally, the predicted popularity index score would increase if the figure was born before the year 0 (or before common era). This is because though the slope for `birth_year` is negative, the birth year itself for these figures is also negative (ie -3500), so the overall slope would be positive. 
+
+
 
 
 
