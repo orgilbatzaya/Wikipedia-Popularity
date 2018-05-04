@@ -73,23 +73,27 @@ From this visual, we can see that the areas of the world that are generally unin
 
 Looking at simply the number of historical figures in each of the domain categories, it becomes easier to see which domain has the most number of historical figures. When looking at the number of historical figures by continent, Europe is the continent with the most historical figures across the ~5000 year timespan of the data with more historical figures than all other continents combined.
 
-![](project_files/figure-markdown_github/distribution-of-index-1.png)
+### Simple Linear Regression
 
-    ## # A tibble: 8 x 4
-    ##   domain                mean median    sd
-    ##   <chr>                <dbl>  <dbl> <dbl>
-    ## 1 Arts                  21.8   22.4  3.06
-    ## 2 Business & Law        22.3   22.6  2.36
-    ## 3 Exploration           23.5   23.4  2.85
-    ## 4 Humanities            24.3   24.3  2.21
-    ## 5 Institutions          23.6   23.8  2.37
-    ## 6 Public Figure         22.4   22.8  3.03
-    ## 7 Science & Technology  23.4   23.2  1.83
-    ## 8 Sports                17.7   17.3  2.86
+    ##                         term   estimate
+    ## 1                (Intercept) 21.8387078
+    ## 2       domainBusiness & Law  0.5023786
+    ## 3          domainExploration  1.7101377
+    ## 4           domainHumanities  2.4482581
+    ## 5         domainInstitutions  1.7164494
+    ## 6        domainPublic Figure  0.5322192
+    ## 7 domainScience & Technology  1.5341595
+    ## 8               domainSports -4.1121942
 
-To get a better understanding of our dataset, we created a faceted histogram that shows the distribution of the historical popularity index scores for the historical figures across all of the domains in the dataset and ran summary statistics on the dataframe as a whole. The visual lets us see the true distribution of historical figures across all of the domains, letting us know which areas are the most popular and have produced the most historical figures.
+Here we estimated the historical popularity index using the `domain` variable using a simple linear regression. The slope for the level in `domain` named `Business & Law` is 0.502, suggesting that historical figures who belong in the `Business & Law` domain have, on average, an increase in their overall popularity index of 0.502 as long as all other variables are held constant.
 
-We think this visual is important because it gives us a glimpse of how historical popularity index varies across the domains. We will comtinue looking at other variables to see if they contribute into the historical popularity index score.
+The linear model, based on the output, is:
+
+`(historical_popularity_index) = 21.839(intercept) + 0.502(domainBusiness & Law) + 1.710(domainExploration) + 2.448(domainHumanities) + 1.716(domainInstitutions) + 0.532(domainPublic Figure) + 1.534(Science & Technology) - 4.112(domainSports)`
+
+    ## [1] 0.4011846
+
+We found that the r-squared for the linear model `domain_m` is 40.1%, which suggests that 40.1% of the variability of the data can be explained by the linear model and that the model does fit our data pretty well. In the next few steps, we will continue to re-evaluate our model to determine what combination of variables result in a high or low popularity index score.
 
 ### Section 3 - How the Variable `Sex` Affects `Historical_Popularity_Index`
 
@@ -307,6 +311,24 @@ Based on the full and selected models, to have the highest popularity index scor
     ##  9 Filippo Brunelleschi     0.  Dante Alighieri    
     ## 10 Fra Angelico            24.1 Dante Alighieri    
     ## # ... with 922 more rows
+
+the historgram
+
+![](project_files/figure-markdown_github/distribution-of-index-1.png)
+
+    ## # A tibble: 8 x 4
+    ##   domain                mean median    sd
+    ##   <chr>                <dbl>  <dbl> <dbl>
+    ## 1 Arts                  21.8   22.4  3.06
+    ## 2 Business & Law        22.3   22.6  2.36
+    ## 3 Exploration           23.5   23.4  2.85
+    ## 4 Humanities            24.3   24.3  2.21
+    ## 5 Institutions          23.6   23.8  2.37
+    ## 6 Public Figure         22.4   22.8  3.03
+    ## 7 Science & Technology  23.4   23.2  1.83
+    ## 8 Sports                17.7   17.3  2.86
+
+To get a better understanding of our dataset, we created a faceted histogram that shows the distribution of the historical popularity index scores for the historical figures across all of the domains in the dataset and ran summary statistics on the dataframe as a whole. The visual lets us see the true distribution of historical figures across all of the domains, letting us know which areas are the most popular and have produced the most historical figures. We think this visual is important because it gives us a glimpse of how historical popularity index varies across the domains. We will comtinue looking at other variables to see if they contribute into the historical popularity index score.
 
 Conclusion
 ----------
