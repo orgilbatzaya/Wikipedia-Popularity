@@ -13,9 +13,8 @@ Introduction
 ------------
 
 The data that we obtained contains information regarding historical figures. We downloaded the data from Kaggle, but the data was collected by the Massachusetts Institute of Technology about a year ago. The data is based off of metrics from many wikipedia pages and believe the variables in the dataframe can be used to extrapolate what makes a historical figure "popular" by Wikipedia standards.
-By the end of our data analysis, we aim to derive the perfect combination of variables that lead to a high popularity index, which is recorded in the dataframe.
 
-It is important to note that the dataframe has been updated as recently as last year and the last historical figure's birth year recorded was 2005, suggesting that though the dataframe has not added a historical figure born after the year 2005, there is still currently data being collected on the ones already in the dataframe (ie page views, article languages, etc.).
+By the end of our data analysis, we aim to derive the perfect combination of variables that lead to a high popularity index, which is recorded in the dataframe.
 
 ### Section 1- Introduction to the Data
 
@@ -39,13 +38,9 @@ It is important to note that the dataframe has been updated as recently as last 
 
 There are 17 variables and 10,279 observations (with all NAs removed in the new dataframe). Before removing the NAs, the full dataframe had 11,341 observations.
 
-In addition, we decided to rank the historical figures to based off of their `historical_popularity_index`.
+In addition, we decided to add a `rank` variable to the dataframe to rank the historical figures based off of their `historical_popularity_index`.
 
-### Mapping
-
-![](project_files/figure-markdown_github/popularity-across-globe-1.png)
-
-From this visual, we can see that the areas of the world that are generally uninhabitable or extremely rural do not have historical figures. For example, the center of South America, a large portion of North Africa, most of Russia, and a big portion of Australia. Additionally, in these countries and continents, the coast seems to have the most historical figures.
+For our analysis, we will look at the variables `domain`, `sex`, and `article_languages` and then make a full linear model.
 
 ### Section 2 - How the Variable `Domain` Affects `Historical_Popularity_Index`
 
@@ -93,7 +88,7 @@ The linear model, based on the output, is:
 
     ## [1] 0.4011846
 
-We found that the r-squared for the linear model `domain_m` is 40.1%, which suggests that 40.1% of the variability of the data can be explained by the linear model and that the model does fit our data pretty well. In the next few steps, we will continue to re-evaluate our model to determine what combination of variables result in a high or low popularity index score.
+We found that the r-squared for the linear model `domain_m` is 40.1%, which suggests that 40.1% of the variability of the data can be explained by the linear model and that the model does fit our data pretty well.
 
 ### Section 3 - How the Variable `Sex` Affects `Historical_Popularity_Index`
 
@@ -105,7 +100,7 @@ We found that the r-squared for the linear model `domain_m` is 40.1%, which sugg
 
 Based on the filtered dataframe, there are 1,427 women and 8,852 men that are considered historical figures of the total 10,279 historical figures. There are about 6.2 times as many historical men than women overall in the data. The timeframe of this data starts at -3500, or 3500 BCE, and ends at 2005, spanning about 5000 years. This means that a mere 13.9% of women in the entire timeframe are considered historical figures.
 
-### Simple Linear Regression - For All Figures
+### Simple Linear Regression
 
     ##          term  estimate
     ## 1 (Intercept) 20.802384
@@ -143,6 +138,10 @@ The resulting linear model that only looked at the historical figures after 1920
 
 The slope of the `sexMale` variable decreased significantly from the previous analysis. This shows that time is a factor that affects the historical popularity index of women specifically.
 
+    ## [1] 0.005101232
+
+We found that the r-squared for the linear model `m_pop_sex2` is 0.51%, which suggests that 0.51% of the variability of the data can be explained by the linear model and that the model does not fit our data very well at all. The fact that the r-squared value went down makes sense because it is harder to differentiate between men and women, in terms of their historical popularity index score.
+
 ### Section 4 - How the Variable `Article_Languages` Affects `Historical_Popularity_Index`
 
 ### Simple Linear Regression
@@ -151,7 +150,7 @@ The slope of the `sexMale` variable decreased significantly from the previous an
     ## 1       (Intercept) 18.47995918
     ## 2 article_languages  0.08920223
 
-Here we estimated the historical popularity index using the `article_langugaes` variable using a simple linear regression. The slope for the variable `article_languages` is 0.089, suggesting that for every one increase in the amount of languages the article has been translated, that historical figure, on average, will have an increase in their overall popularity index of 0.089 as long as all other variables are held constant.
+Here we estimated the historical popularity index using the `article_langugaes` variable on a simple linear regression model. The slope for the variable `article_languages` is 0.089, suggesting that for every one increase in the amount of languages the article has been translated into, that historical figure, on average, will have an increase in their overall popularity index of 0.089 as long as all other variables are held constant.
 
 The linear model, based on the output, is:
 
@@ -159,7 +158,7 @@ The linear model, based on the output, is:
 
     ## [1] 0.2158346
 
-We found that the r-squared for the linear model `artlang_m` is 21.6%, which suggests that 21.6% of the variability of the data can be explained by the linear model and that the model doesn't necessarily fit our data very well.
+We found that the r-squared for the linear model `artlang_m` is 21.6%, which suggests that 21.6% of the variability of the data can be explained by the linear model and that the model doesn't necessarily fit our data very well, but it fits it significantly better than the sex variable.
 
 ![](project_files/figure-markdown_github/visualizing-index-by-popularity-1.png)
 
@@ -264,6 +263,9 @@ After creating the selected model, we found that the full and selected models we
 
 Based on the full and selected models, to have the highest popularity index score, one should: be a man, study in the domain of the humanities, and live somewhere in the continent of South America. Additionally, the predicted popularity index score would increase if the figure was born before the year 0 (or before common era). This is because though the slope for `birth_year` is negative, the birth year itself for these figures is also negative (ie -3500), so the overall slope would be positive.
 
+Conclusion
+----------
+
 ### Distance
 
     ## # A tibble: 90,000 x 3
@@ -345,6 +347,12 @@ the historgram
     ## 8 Sports                17.7   17.3  2.86
 
 To get a better understanding of our dataset, we created a faceted histogram that shows the distribution of the historical popularity index scores for the historical figures across all of the domains in the dataset and ran summary statistics on the dataframe as a whole. The visual lets us see the true distribution of historical figures across all of the domains, letting us know which areas are the most popular and have produced the most historical figures. We think this visual is important because it gives us a glimpse of how historical popularity index varies across the domains. We will comtinue looking at other variables to see if they contribute into the historical popularity index score.
+
+### Mapping
+
+![](project_files/figure-markdown_github/popularity-across-globe-1.png)
+
+From this visual, we can see that the areas of the world that are generally uninhabitable or extremely rural do not have historical figures. For example, the center of South America, a large portion of North Africa, most of Russia, and a big portion of Australia. Additionally, in these countries and continents, the coast seems to have the most historical figures.
 
 Conclusion
 ----------
