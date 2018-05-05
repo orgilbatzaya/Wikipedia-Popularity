@@ -25,7 +25,7 @@ panth <- read_csv("data/cdatabase.csv",
 
 ## Introduction
  
-The data that we obtained contains information regarding historical figures. We downloaded the data from Kaggle, but the data was collected by the Massachusetts Institute of Technology about a year ago. The data is based off of metrics from many wikipedia pages and believe the variables in the dataframe can be used to extrapolate what makes a historical figure "popular" by Wikipedia standards.
+The data that we obtained contains information  about prominent historical figures who were born from as far back as 3500 BCE to those born in 2005. We downloaded the data from Kaggle, but the data was collected by the Massachusetts Institute of Technology about a year ago. The data is based off of metrics from many wikipedia pages and we believe the variables in the dataframe can be used to extrapolate what makes a historical figure "popular" on Wikipedia, the internet's leading encyclopedia.
  
 By the end of our data analysis, we aim to derive the perfect combination of variables that lead to a high popularity index, which is recorded in the dataframe.
  
@@ -66,6 +66,9 @@ panth_mod %>%
   coord_flip() +
   labs(title = "Distribution of Average Page Views", y = "Average Page Views", 
        x = "Continent", subtitle = "by Continent")
+panth_mod%>%
+  group_by(continent)%>%
+  summarise(median = median(average_views))
 ```
 
 ```{r outlier_avg_page}
@@ -77,7 +80,7 @@ panth_mod %>%
 
 ```
 
-Visualized here is a distribution of the average number of page views, which is defined as the the average number of page views across all of the different language Wikipedia articles of the same figure, of historical figures by continent. Each point in this visual represents a historical figure's average number of Wikipedia page views. It is clear that North America has many individuals whose articles have a high average number of page views. Furthermore, the top figures who lead their continent in average page views tend to be entertainers of sorts.
+Visualized here is a distribution of the average number of page views, which is defined as the average number of page views across all of the different language Wikipedia articles of the same figure, of historical figures, by continent. Each point in this visual represents a historical figure's average number of Wikipedia page views. It is clear that North America has many individuals whose articles have a high average number of page views. The median average page views for North American historical figures is 136059, which was over twice as large as the next highest median, that of South America. Furthermore, the top figures who lead their continent in average page views tend to be entertainers of sorts (athletes, actors, musicians).
 
 ```{r prop_top1000}
 panth_mod %>%
@@ -106,6 +109,7 @@ From this visual, we can see that the areas of the world that are generally unin
 For the first part of our analysis, we will look at the variables `domain`, `sex`, and `article_languages` indpendently using simple linear regression and later create a full linear model to determine which variables are most important when calculating the popularity index score of historical figures across time.
 
 ### Section 2 - How the Variable `Domain` Affects `Historical_Popularity_Index`
+
 ```{r distribution-of-index}
 panth_mod %>%
   ggplot(mapping = aes(x = historical_popularity_index)) +
@@ -126,7 +130,7 @@ panth_mod %>%
   arrange(desc(n))
 ```
 
-The Arts and Institutions have the most historical figures in the dataset, with 2767 and 2753, respectively. Exploration and Business & Law had the least number of people with 103 and 88. Looking at the summary statistics, all domains except Sports had similar means and medians (historical popularity index), which were near 22, while Sports had values near 17. 
+The Arts and Institutions have the most historical figures in the dataset, with 2767 and 2753, respectively. Exploration and Business & Law had the least number of people with 103 and 88. Looking at the summary statistics, all domains except Sports had similar means and medians (historical popularity index), which were near 22, while Sports had mean/median near 17. 
 
 #### Simple Linear Regression
 
@@ -136,12 +140,14 @@ tidy(domain_m) %>%
   select(term, estimate)
 ```
 
-Here we estimated the historical popularity index using the `domain` variable using a simple linear regression. The slope for the level in `domain` named `Business & Law` is 0.502, suggesting that historical figures who belong in the `Business & Law` domain have, on average, an increase in their overall popularity index of 0.502 as long as all other variables are held constant.
+Here we estimated the historical popularity index using the `domain` variable as an explanatory variable.
+
+With all else held constant, the model predicts that for historical figures who are under the domain `Arts` (intercept), have a historical popularity index of 21.8, on average.
 
 In this model, the largest coefficient belongs to the domain of `Humanities`. With all else held constant, historical figures who belong to the domain of `Humanities` have a historical popularity index that is, on average, 2.448 higher than the intercept. 
 
-The least coefficient belongs to `Sports`. With all else held constant, historical figures who belong to `Sports`, have an index that is on average, 4.11 lower than the intercept. 
- 
+The least coefficient belongs to `Sports`. With all else held constant, historical figures who belong to `Sports`, have an index that is on average, 4.11 lower than the intercept.
+
 The linear model, based on the output, is:
  
 `(historical_popularity_index) = 21.839(intercept) + 0.502(domainBusiness & Law) + 1.710(domainExploration) + 2.448(domainHumanities) + 1.716(domainInstitutions) + 0.532(domainPublic Figure) + 1.534(Science & Technology) - 4.112(domainSports)`
@@ -160,7 +166,7 @@ panth_mod %>%
   mutate(prop = n/sum(n))
 ```
 
-Based on the filtered dataframe, there are 1,427 women and 8,852 men that are considered historical figures of the total 10,279 historical figures. There are about 6.2 times as many historical men than women overall in the data. The timeframe of this data starts at `r panth_mod%>%arrange(birth_year)%>%select(birth_year)%>%head(1) `, or 3500 BCE, and ends at `r panth_mod%>%arrange(desc(birth_year))%>%select(birth_year)%>%head(1)`, spanning about 5000 years. This means that a mere 13.9% of women in the entire timeframe are considered historical figures.
+Based on the filtered dataframe, there are 1,427 women and 8,852 men that are considered historical figures of the total 10,279 historical figures. There are about 6.2 times as many historical men than women overall in the data. The timeframe of this data starts at `r panth_mod%>%arrange(birth_year)%>%select(birth_year)%>%head(1) `, or 3500 BCE, and ends at `r panth_mod%>%arrange(desc(birth_year))%>%select(birth_year)%>%head(1)`, spanning about 5500 years. This means that only 13.9% of all the recorded historical figures were women.
 
 #### Simple Linear Regression
 
@@ -170,7 +176,8 @@ tidy(m_pop_sex) %>%
   select(term, estimate)
 ```
 
-Here we estimated the historical popularity index using the `sex` variable using a simple linear regression. The slope for the categorical variable `sexMale` is 1.55, suggesting that historical figures who are men have, on average, an increase in their overall popularity index of 1.55 as long as all other variables are held constant. 
+Here we estimated the historical popularity index using the `sex` as an explanatory variable.
+With all else held constant, when the figure is a woman (intercept), her historical popularity index is predicted to be, on average, 20.8. However, the coefficient for the categorical variable `sexMale` is 1.55, suggesting that historical figures who are men have, on average, an increase in their overall popularity index of 1.55 as long as all other variables are held constant. 
  
 The linear model, based on the output, is:
  
@@ -180,7 +187,7 @@ The linear model, based on the output, is:
 glance(m_pop_sex)$r.squared
 ```
 
-We found that the r-squared for the linear model `m_pop` is 2.54%, which suggests that 2.54% of the variability of the data can be explained by sex and that the model does not fit our data very well. We think there might be a confounding variable, so we will look to see if `birth_year` is one.
+We found that the r-squared for the linear model `m_pop` is 2.54%, which suggests that 2.54% of the variability of the data can be explained by sex and thus the model does not fit our data very well. We think there might be a confounding variable, so we will look to see if `birth_year` is one.
 
 #### Simple Linear Regression - For All Figures Born After 1920
 
@@ -191,7 +198,7 @@ panth_mod%>%
   mutate(prop = n/sum(n))
 ```
 
-For historical figures born after 1920, there are about 4 times as many male historical figures than female figures. This is intriguing because in this 85 year timeframe from 1920 - 2005, we have 1053 historical women out of a total of 1427 women in the entire timeframe. 
+For historical figures born after 1920, there are about 4 times as many male historical figures than female figures (which is an improvement over the factor of 6.2). This is intriguing because in this 85 year timeframe from 1920 - 2005, we have 1053 historical women out of a total of 1427 women, or 74%, in the entire timeframe. 
 
 ```{r new_m_pop_sex}
 m_pop_sex2 <- lm(historical_popularity_index ~ sex , data = panth_mod %>%
@@ -201,12 +208,14 @@ tidy(m_pop_sex2) %>%
 ```
 
 In the previous model, we predicted the `historical_popularity_index` by `sex` across the entire ~5000 year time period of the data. The result was that historical figures who were men had, on average and with all other variables held constant, a popularity index score that was 1.55 points higher than that of women who were historical figures. However, in this model, we thought it would be interesting to analyze the 85 year timeframe after the year 1920, when women were given the right to vote in the U.S. and when, later in the century, women across the world where also granted greater rights. As a result, women made up about 20% of the historical figures as opposed to making up 13.9% of the historical figure population in the previous analysis.
+
+Here, with all else held constant, males are predicted a historical popularity index that 0.58 higher than that of women (intercept), on average. With all else held constant, women are predicted an index of 19.6, on average.
  
 The resulting linear model that only looked at the historical figures after 1920 is as follows:
  
 `(historical_popularity_index) = 19.6(intercept) + 0.569(sexMale)`
  
-The slope of the `sexMale` variable decreased significantly from the previous analysis. This shows that time is a factor that affects the historical popularity index of women specifically.
+The slope of the `sexMale` variable decreased significantly from the previous analysis (1.55 down to .57). This shows that birth year affected the historical popularity index model when sex is treated as an explantory variable.
 
 ```{r r-squared_after_1920}
 glance(m_pop_sex2)$r.squared
@@ -224,7 +233,7 @@ tidy(artlang_m) %>%
   select(term, estimate)
 ```
 
-Here we estimated the historical popularity index using the `article_langugaes` variable on a simple linear regression model. The slope for the variable `article_languages` is 0.089, suggesting that for every one increase in the amount of languages the article has been translated into, that historical figure, on average, will have an increase in their overall popularity index of 0.089 as long as all other variables are held constant.
+Here we estimated the historical popularity index using the `article_langugaes` explanatory variable on a simple linear regression model. The model predicts that an article which had no translations (intercept) is expected to have a historical popularity index of 18.48, with all else held constant. The slope for the variable `article_languages` is 0.089, suggesting that for every new language the article has been translated into, that historical figure, on average, will have an increase in their overall popularity index of 0.089 as long as all other variables are held constant.
  
 The linear model, based on the output, is:
  
@@ -248,7 +257,7 @@ panth_mod %>%
     color = "Continent") 
 ```
 
-From this visual, for historical figures from Asia and Europe, we see that as the number of languages one's article increases, the popularity index also increases. However, for Africa and the Americas, there is little upward movement in popularity as article languages increases. The regression lines for these three continents tend to stay relatively constant.
+From this visual, for historical figures from Asia and Europe, we see that as the number of languages one's article increases, the popularity index also increases. However, for Africa and the Americas, there is little upward movement in popularity as article languages increases. The regression lines for these three continents tend to stay relatively constant. Only those data points with more than 75 translations were analyzed here in order to minimize the heavy overlap and clustering in the low ranges if all historical figures's articles were allowed.
 
 ```{r greater-than-200}
 panth_mod %>%
@@ -258,7 +267,7 @@ panth_mod %>%
   head(3)
 ```
 
-There is a historical figure that is an outlier considering Asia's spread in the visual. By filtering the data for the figure with a page translated into more than 200 languages, we identified this individual as Jesus Christ, whose Wikipedia page has been translated into 214 different languages. The next highest was Muhammed, whose article has 150 languages. Both were historical figures.
+There is a historical figure that is an outlier considering Asia's spread in the visual. By filtering the data for the figure with a page translated into more than 200 languages, we identified this individual as Jesus Christ, whose Wikipedia page has been translated into 214 different languages. The next highest was Muhammed, whose article has 150 languages. Both were religious figures.
 
 ```{r who-is-the-outlier}
 panth_mod %>%
@@ -283,7 +292,15 @@ tidy(m_full) %>%
   select(term, estimate)
 ```
 
-Here we estimated the historical popularity index using the `sex`, `domain`, `birth_year`, `article_languages`, and `continent` variables. We also included the interaction between continent and article languages. We would interpret the slope the same way we did with the simple linear regression above that had the `sex` variable only.
+Here we estimated the historical popularity index using  `sex`, `domain`, `birth_year`, `article_languages`, and `continent` as explanatory variables. 
+With all else held constant, when one is a female, belongs to the Art domain, has no article translations, is from Africa, and was born in the year 0 (intercept), the model predicts that their historical popularity index is 20.79, on average.
+
+The peaks:
+male (1.43), humanities (1.099), many translations (0.067 each), Europe (1.22), and born before the year
+0(-.001) because the birth_year coefficient is negative and BCE years are coded as negative values, so the product is positive. When these variables are true or maximized if they are numerical, with all else constant, the historical popularity index is predicted to increase by their collective sum.
+
+The lows:
+female(0), Sports (-4.2), few translations (0.067), Oceania (-.20), and born after year 0 (-.001). When these variables are true or maximized if numerical, then the model predicts the historical popularity index to rise by their low sum (might actually decrease) when all else is held constant.
 
 The linear model, based on the output, is:
 
@@ -315,7 +332,7 @@ After creating the selected model, we found that the full and selected models we
 #### The perfect historical popularity index
 
 Based on the full and selected models, to have the highest popularity index score, one should:
-be a man, study in the domain of the humanities, and live somewhere in the continent of South America. Additionally, the predicted popularity index score would increase if the figure was born before the year 0 (or before common era). This is because though the slope for `birth_year` is negative, the birth year itself for these figures is also negative (ie -3500), so the overall slope would be positive. 
+be a man, study in the domain of the humanities, live somewhere in Europe, have many translations of their article, and be born before the Common era. 
 
 ```{r perfect_index_score}
 panth_mod %>%
@@ -323,15 +340,17 @@ panth_mod %>%
          birth_year < 0,
          sex == "Male",
          domain == "Humanities") %>%
-    select(rank, full_name, historical_popularity_index, occupation)
+    select(rank, full_name, historical_popularity_index, article_languages,
+           birth_year,continent,domain, occupation)
 ```
 
 After filtering for the characteristics deemed most impactful on historical popularity score, we see that it does indeed result in very high ranking individuals. The top 5 in this list are all from the top 10 of the original ranking by popularity index.
 
 ## Conclusion
-When we found the data, we thought it would be interesting to analyze what makes a person popular on Wikipedia by MIT’s standards, or rather how the historical figures held up against each other based on MIT’s calculated Historical Popularity index. After thorough analysis that began with visualizing popularity index scores across the world and calculating summary statistics based on the figures’ average page views, we started to find that there were inconsistencies among the historical figures’ popularity scores and their page views. For example, figures with the highest number of average page views across the continents are entertainers with mediocre popularity scores; these are historical figures like Chris Hemsworth, Kim Kardashian, and Lionel Messi. Additionally, the top 10 figures with the highest popularity index scores were all European men who studied the humanities, with the exception of Archimedes, who studied math, and Alexander the Great, who was a military figure. From analyzing the interactions between the variables of this dataset, we have gathered that the world is very possibly more interested in figures who have shaped our society than figures who seek to entertain.To answer our research question, which focused on finding the variables/characteristics that maximized a historical figure’s popularity index score, we created a full model and a selected model, though the selected model, created using the AIC, kept all of the full model’s variables, suggesting that our full model had the strongest predictive power.  We concluded that a man from Europe who studied the humanities and lived before the common era would have the highest popularity score. When we filtered our dataframe for these variables, many of the resulting figures were already in the list of top 10 figures with the highest popularity index scores. 
 
-As for the reliability and validity of the data, we find that because we used an already-calculated score for our main analysis (popularity index), we were subjected to MIT’s calculations of the scores and their interpretations of the variables that went into calculating the historical popularity index variable. To improve our data analysis, we could have used the entire dataframe instead of using a filtered one that removed ~1000 observations. This could have resulted in some greater change in the model results and ultimately changed our entire analysis. 
+When we found the data, we thought it would be interesting to analyze what makes a person popular on Wikipedia by MIT’s standards, or rather how the historical figures held up against each other based on MIT’s calculated Historical Popularity index. After thorough analysis that began with visualizing popularity index scores across the world and calculating summary statistics based on the figures’ average page views, we started to find that there were inconsistencies among the historical figures’ popularity scores and their page views. For example, figures with the highest number of average page views across the continents are entertainers with mediocre popularity scores; these are historical figures like Chris Hemsworth, Kim Kardashian, and Lionel Messi. Additionally, the top 10 figures with the highest popularity index scores were all European men who studied the humanities, with the exception of Archimedes, who studied math, and Alexander the Great, who was a military figure. From analyzing the interactions between the variables of this dataset, we have gathered that the world is very possibly more interested in figures who have shaped our society than figures who seek to entertain.To answer our research question, which focused on finding the variables/characteristics that maximized a historical figure’s popularity index score, we created a full model and a selected model, though the selected model, created using the AIC, kept all of the full model’s variables, suggesting that our full model had the strongest predictive power.  We concluded that a man from Europe who studied the humanities and lived before the common era (born before the year 0) would have the highest popularity score. When we filtered our dataframe for these requirements, many of the resulting figures were already in the list of top 10 figures with the highest popularity index scores. 
+
+As for the reliability and validity of the data, we find that because we used an already-calculated score for our main analysis (popularity index), we were subjected to MIT’s calculations of the scores and their interpretations of the variables that went into calculating the historical popularity index variable. Besides that, the data is very well compiled and organized. It represents the population of famous figures throughout history so the validity is there. To improve our data analysis, we could have instead made our popularity metric the average number of page views since this variable is raw data that was not tampered with. In our analysis, the individuals with Wikipedia pages with a high average view amount differed greatly from those with high "popularity" indices. MIT's variable tends to favor ancient Greek and Roman writers and philosophers whose teachings have influenced much of Western thought and science. However, in order to make our study more contemporary, we could look at what makes people like Leo Messi, Chris Hemsworth, or Kim Kardashian more "readable" on Wikipedia. 
 
 If we were able to start the project over, we would choose to web scrape our own data in order to have the data we specifically needed to conduct the analyses we wanted to. For example, we wanted to conduct hypothesis testing on our dataset, but came to the realization that our dataframe represented a population rather than a random sample of historical figures, so any of the findings of our test couldn’t be applied to the general population because we already had the population with us. Furthermore, if we had had more time and more knowledge, we would have liked to create an outline of the world map and plot the points of our dataframe onto that outline to get a better visual of the world. Additionally, with more information and some help, we would have liked to continue the project by conducting timeline analyses to observe how the passage of time affected the historical popularity index scores among the different domains. 
 
