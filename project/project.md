@@ -6,6 +6,8 @@ Duke Squirrels
 Load Packages
 -------------
 
+    ## Warning: running command 'timedatectl' had status 1
+
 Load Data
 ---------
 
@@ -21,16 +23,16 @@ By the end of our data analysis, we aim to derive the perfect combination of var
     ## # A tibble: 10 x 5
     ##     rank full_name           occupation    birth_year historical_populari…
     ##    <int> <chr>               <chr>              <int>                <dbl>
-    ##  1     1 Aristotle           Philosopher         -384                 32.0
-    ##  2     2 Plato               Philosopher         -427                 32.0
-    ##  3     3 Jesus Christ        Religious Fi…         -4                 31.9
-    ##  4     4 Socrates            Philosopher         -469                 31.7
-    ##  5     5 Alexander the Great Military Per…       -356                 31.6
+    ##  1     1 Aristotle           Philosopher        - 384                 32.0
+    ##  2     2 Plato               Philosopher        - 427                 32.0
+    ##  3     3 Jesus Christ        Religious Fi…      -   4                 31.9
+    ##  4     4 Socrates            Philosopher        - 469                 31.7
+    ##  5     5 Alexander the Great Military Per…      - 356                 31.6
     ##  6     6 Leonardo da Vinci   Inventor            1452                 31.5
-    ##  7     7 Julius Caesar       Politician          -100                 31.1
-    ##  8     8 Homer               Writer              -800                 31.1
-    ##  9     9 Pythagoras          Philosopher         -570                 31.1
-    ## 10    10 Archimedes          Mathematician       -287                 31.0
+    ##  7     7 Julius Caesar       Politician         - 100                 31.1
+    ##  8     8 Homer               Writer             - 800                 31.1
+    ##  9     9 Pythagoras          Philosopher        - 570                 31.1
+    ## 10    10 Archimedes          Mathematician      - 287                 31.0
 
 There are 18 variables and 10279 observations (with all NAs removed in the new dataframe). Before removing the NAs, the full dataframe had 11,341 observations.
 
@@ -55,14 +57,14 @@ Europe has the most historical figures in the dataset with 6073, followed by Nor
 ![](project_files/figure-markdown_github/page_views_visual-1.png)
 
     ## # A tibble: 6 x 2
-    ##   continent      median
-    ##   <chr>           <dbl>
-    ## 1 Africa         33138.
-    ## 2 Asia           39032.
-    ## 3 Europe         36472.
-    ## 4 North America 136059.
-    ## 5 Oceania        51652.
-    ## 6 South America  65920.
+    ##   continent     median
+    ##   <chr>          <dbl>
+    ## 1 Africa         33138
+    ## 2 Asia           39032
+    ## 3 Europe         36472
+    ## 4 North America 136059
+    ## 5 Oceania        51652
+    ## 6 South America  65920
 
     ## # A tibble: 6 x 7
     ## # Groups:   continent [6]
@@ -253,6 +255,20 @@ Interestingly, one of the historical figures has a low popularity index score, a
 
 After looking at how the variables `domain`, `sex`, and `article_languages` each affect historical popularity index, we see that they do play a role. To summarize our results and check to see if other variables affect the historical popularity index all at once, we will use a multiple linear regression full model.
 
+    ## # A tibble: 1 x 5
+    ##   full_name     historical_popularity_… article_languag… country continent
+    ##   <chr>                           <dbl>            <int> <chr>   <chr>    
+    ## 1 Masiela Lusha                    13.6               77 Albania Europe
+
+The outlier from Europe can be identified as Masiela Lusha, who has a low popularity index score of 13.63, but her article has been translated into 77 different languages.
+
+    ## # A tibble: 1 x 5
+    ##   full_name     historical_popularit… article_languages country continent 
+    ##   <chr>                         <dbl>             <int> <chr>   <chr>     
+    ## 1 Nathalia Dill                  15.7                96 Brazil  South Ame…
+
+The outlier from South America can be identified as Nathalia Dill, who has a low popularity index score of 15.7, but her article has been translated into 96 different languages.
+
 #### Multiple Linear Regression
 
     ##                          term     estimate
@@ -341,10 +357,10 @@ Based on the full and selected models, to have the highest popularity index scor
     ##  3     4 Socrates               31.7              137       -469 Europe   
     ##  4     8 Homer                  31.1              141       -800 Europe   
     ##  5     9 Pythagoras             31.1              114       -570 Europe   
-    ##  6    30 Virgil                 29.9              114        -70 Europe   
+    ##  6    30 Virgil                 29.9              114       - 70 Europe   
     ##  7    35 Sophocles              29.7              100       -496 Europe   
     ##  8    46 Epicurus               29.5               68       -341 Europe   
-    ##  9    53 Ovid                   29.3               88        -43 Europe   
+    ##  9    53 Ovid                   29.3               88       - 43 Europe   
     ## 10    66 Aeschylus              29.1               74       -525 Europe   
     ## # ... with 39 more rows, and 2 more variables: domain <chr>,
     ## #   occupation <chr>

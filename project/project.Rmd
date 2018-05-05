@@ -278,7 +278,23 @@ panth_mod %>%
 Interestingly, one of the historical figures has a low popularity index score, an outlier, but his/her wikipedia page has been translated into almost 200 different languages. After filtering the data to locate the point that had a popularity index score less than 20 and an article that was translated into more than 175 languages, we derived that the outlier historical figure from North America is Corbin Bleu, the actor from High School Musical.
  
 After looking at how the variables `domain`, `sex`, and `article_languages` each affect historical popularity index, we see that they do play a role. To summarize our results and check to see if other variables affect the historical popularity index all at once, we will use a multiple linear regression full model.
- 
+
+```{r who-is-the-outlier-Europe}
+panth_mod %>%
+  select(full_name, historical_popularity_index, article_languages, country, continent) %>%
+  filter(historical_popularity_index < 15, article_languages > 70, continent == "Europe")
+```
+
+The outlier from Europe can be identified as Masiela Lusha, who has a low popularity index score of 13.63, but her article has been translated into 77 different languages. 
+
+```{r who-is-the-outlier-S-Am}
+panth_mod %>%
+  select(full_name, historical_popularity_index, article_languages, country, continent) %>%
+  filter(historical_popularity_index < 20, article_languages > 85, continent == "South America")
+```
+
+The outlier from South America can be identified as Nathalia Dill, who has a low popularity index score of 15.7, but her article has been translated into 96 different languages. 
+
 #### Multiple Linear Regression
 
 ```{r full_model}
