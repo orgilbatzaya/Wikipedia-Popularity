@@ -38,7 +38,19 @@ In addition, we decided to add a `rank` variable to the dataframe to rank the hi
 
 We have also found the top 10 figures with the highest popularity index score in order. They are: Aristotle, Plato, Jesus Christ, Socrates, Alexander the Great, Leonardo da Vinci, Julius Caesar, Homer, Pythagoras, Archimedes
 
-#### Introductory Visualizations
+#### Introductory Exploratory Analysis
+
+    ## # A tibble: 6 x 2
+    ##   continent         n
+    ##   <chr>         <int>
+    ## 1 Europe         6073
+    ## 2 North America  2351
+    ## 3 Asia           1021
+    ## 4 Africa          362
+    ## 5 South America   352
+    ## 6 Oceania         120
+
+Europe has the most historical figures in the dataset with 6073, followed by North America with 2351, and then by Asia, which has 1021.
 
 ![](project_files/figure-markdown_github/page_views_visual-1.png)
 
@@ -55,25 +67,21 @@ We have also found the top 10 figures with the highest popularity index score in
 
 Visualized here is a distribution of the average number of page views, which is defined as the the average number of page views across all of the different language Wikipedia articles of the same figure, of historical figures by continent. Each point in this visual represents a historical figure's average number of Wikipedia page views. It is clear that North America has many individuals whose articles have a high average number of page views. Furthermore, the top figures who lead their continent in average page views tend to be entertainers of sorts.
 
-![](project_files/figure-markdown_github/distribution-of-index-1.png)
+    ## # A tibble: 6 x 3
+    ##   continent         n    prop
+    ##   <chr>         <int>   <dbl>
+    ## 1 Africa           43 0.0430 
+    ## 2 Asia            148 0.148  
+    ## 3 Europe          708 0.708  
+    ## 4 North America    90 0.0900 
+    ## 5 Oceania           1 0.00100
+    ## 6 South America    10 0.0100
 
-    ## # A tibble: 8 x 4
-    ##   domain                mean median    sd
-    ##   <chr>                <dbl>  <dbl> <dbl>
-    ## 1 Arts                  21.8   22.4  3.06
-    ## 2 Business & Law        22.3   22.6  2.36
-    ## 3 Exploration           23.5   23.4  2.85
-    ## 4 Humanities            24.3   24.3  2.21
-    ## 5 Institutions          23.6   23.8  2.37
-    ## 6 Public Figure         22.4   22.8  3.03
-    ## 7 Science & Technology  23.4   23.2  1.83
-    ## 8 Sports                17.7   17.3  2.86
-
-To get a better understanding of our dataset, we created a faceted histogram that shows the distribution of the historical popularity index scores for the historical figures across all of the domains in the dataset and ran summary statistics on the dataframe by domain. The visual lets us see the true distribution of historical figures across all of the domains, letting us know which areas are the most popular and have produced the most historical figures. We created this visual because it gives us a glimpse into how historical popularity index scores vary across the domains.
+Even though North America had many individuals with high average number of page views, they only contribute to 9% of the top 1000 figures ranked by historical popularity index. This tells us that historical popularity index likely does not weigh average page views as highly as other variables. A high average number of page views does not mean a high ranking in terms of historical popularity. As evidenced by the top average view earners such as Kim Kardashian or Ronaldo, who have low ranks in historical popularity.
 
 ### The Historical Popularity Index
 
-The historical popularity index value measures approximately how popular the article on the historical figure was and how well known the figure was. It was created by "adding information on the age of the historical character, the concentration of page views among different languages, the coefficient of variation in page views, and the number of page views in languages other than English."
+According to the official codebook from kaggle, the historical popularity index value measures approximately how popular the article on the historical figure was and how well known the figure was. It was created by "adding information on the age of the historical character, the concentration of page views among different languages, the coefficient of variation in page views, and the number of page views in languages other than English."
 
 (<https://www.kaggle.com/mit/pantheon-project>)
 
@@ -84,6 +92,20 @@ From this visual, we can see that the areas of the world that are generally unin
 For the first part of our analysis, we will look at the variables `domain`, `sex`, and `article_languages` indpendently using simple linear regression and later create a full linear model to determine which variables are most important when calculating the popularity index score of historical figures across time.
 
 ### Section 2 - How the Variable `Domain` Affects `Historical_Popularity_Index`
+
+![](project_files/figure-markdown_github/distribution-of-index-1.png)
+
+    ## # A tibble: 8 x 3
+    ##   domain                mean median
+    ##   <chr>                <dbl>  <dbl>
+    ## 1 Arts                  21.8   22.4
+    ## 2 Business & Law        22.3   22.6
+    ## 3 Exploration           23.5   23.4
+    ## 4 Humanities            24.3   24.3
+    ## 5 Institutions          23.6   23.8
+    ## 6 Public Figure         22.4   22.8
+    ## 7 Science & Technology  23.4   23.2
+    ## 8 Sports                17.7   17.3
 
     ## # A tibble: 8 x 2
     ##   domain                   n
@@ -97,17 +119,7 @@ For the first part of our analysis, we will look at the variables `domain`, `sex
     ## 7 Business & Law         103
     ## 8 Exploration             88
 
-    ## # A tibble: 6 x 2
-    ##   continent         n
-    ##   <chr>         <int>
-    ## 1 Europe         6073
-    ## 2 North America  2351
-    ## 3 Asia           1021
-    ## 4 Africa          362
-    ## 5 South America   352
-    ## 6 Oceania         120
-
-When looking at the number of historical figures by continent, Europe has the most historical figures across the ~5000 year timespan of the data with 6073 people, which is more historical figures than all other continents combined. The Arts and Institutions have the most historical figures in the dataset, with 2767 and 2753, respectively.
+The Arts and Institutions have the most historical figures in the dataset, with 2767 and 2753, respectively. Exploration and Business & Law had the least number of people with 103 and 88. Looking at the summary statistics, all domains except Sports had similar means and medians (historical popularity index), which were near 22, while Sports had values near 17.
 
 #### Simple Linear Regression
 

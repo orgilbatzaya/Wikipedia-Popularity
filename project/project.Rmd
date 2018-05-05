@@ -49,7 +49,15 @@ In addition, we decided to add a `rank` variable to the dataframe to rank the hi
 We have also found the top 10 figures with the highest popularity index score in order. They are:
  Aristotle, Plato, Jesus Christ, Socrates, Alexander the Great, Leonardo da Vinci, Julius Caesar, Homer, Pythagoras, Archimedes
 
-#### Introductory Visualizations
+#### Introductory Exploratory Analysis
+
+```{r counting_continents} 
+panth_mod %>%
+  count(continent) %>%
+  arrange(desc(n))
+```
+
+Europe  has the most historical figures in the dataset with 6073, followed by North America with 2351, and then by Asia, which has 1021.
 
 ```{r page_views_visual}
 panth_mod %>%
@@ -71,27 +79,17 @@ panth_mod %>%
 
 Visualized here is a distribution of the average number of page views, which is defined as the the average number of page views across all of the different language Wikipedia articles of the same figure, of historical figures by continent. Each point in this visual represents a historical figure's average number of Wikipedia page views. It is clear that North America has many individuals whose articles have a high average number of page views. Furthermore, the top figures who lead their continent in average page views tend to be entertainers of sorts.
 
-
-```{r distribution-of-index}
+```{r prop_top1000}
 panth_mod %>%
-  ggplot(mapping = aes(x = historical_popularity_index)) +
-  geom_histogram(bins = 20) + 
-  facet_wrap(~domain) +
-  labs(title = "Distribution of Historical Popularity Index Scores", y = "Count", 
-       x = "Historical Popularity Index Score", subtitle = "by Domain")
-
-panth_mod %>%
-  group_by(domain)%>%
-  summarise(mean = mean(historical_popularity_index), 
-            median = median(historical_popularity_index), 
-            sd = sd(historical_popularity_index))
+  top_n(n = 1000, wt = historical_popularity_index)%>%
+  count(continent)%>%
+  mutate(prop = n/sum(n))
 ```
-
-To get a better understanding of our dataset, we created a faceted histogram that shows the distribution of the historical popularity index scores for the historical figures across all of the domains in the dataset and ran summary statistics on the dataframe by domain. The visual lets us see the true distribution of historical figures across all of the domains, letting us know which areas are the most popular and have produced the most historical figures. We created this visual because it gives us a glimpse into how historical popularity index scores vary across the domains.
+Even though North America had many individuals with high average number of page views, they only contribute to 9% of the top 1000 figures ranked by historical popularity index. This tells us that historical popularity index likely does not weigh average page views as highly as other variables. A high average number of page views does not mean a high ranking in terms of historical popularity. As evidenced by the top average view earners such as Kim Kardashian or Ronaldo, who have low ranks in historical popularity.
 
 ### The Historical Popularity Index
 
-The historical popularity index value measures approximately how popular the article on the historical figure was and how well known the figure was. It was created by "adding information on the age of the historical character, the concentration of page views among different languages, the coefficient of variation in page views, and the number of page views in languages other than English."
+According to the official codebook from kaggle, the historical popularity index value measures approximately how popular the article on the historical figure was and how well known the figure was. It was created by "adding information on the age of the historical character, the concentration of page views among different languages, the coefficient of variation in page views, and the number of page views in languages other than English."
 
 (https://www.kaggle.com/mit/pantheon-project)
 
@@ -108,18 +106,27 @@ From this visual, we can see that the areas of the world that are generally unin
 For the first part of our analysis, we will look at the variables `domain`, `sex`, and `article_languages` indpendently using simple linear regression and later create a full linear model to determine which variables are most important when calculating the popularity index score of historical figures across time.
 
 ### Section 2 - How the Variable `Domain` Affects `Historical_Popularity_Index`
+```{r distribution-of-index}
+panth_mod %>%
+  ggplot(mapping = aes(x = historical_popularity_index)) +
+  geom_histogram(bins = 30) + 
+  facet_wrap(~domain) +
+  labs(title = "Distribution of Historical Popularity Index Scores", y = "Count", 
+       x = "Historical Popularity Index Score", subtitle = "by Domain")
+
+panth_mod %>%
+  group_by(domain)%>%
+  summarise(mean = mean(historical_popularity_index), 
+            median = median(historical_popularity_index))
+```
 
 ```{r looking_at_data}
 panth_mod %>%
   count(domain) %>%
   arrange(desc(n))
-
-panth_mod %>%
-  count(continent) %>%
-  arrange(desc(n))
 ```
 
-When looking at the number of historical figures by continent, Europe has the most historical figures across the ~5000 year timespan of the data with 6073 people, which is more historical figures than all other continents combined. The Arts and Institutions have the most historical figures in the dataset, with 2767 and 2753, respectively. 
+The Arts and Institutions have the most historical figures in the dataset, with 2767 and 2753, respectively. Exploration and Business & Law had the least number of people with 103 and 88. Looking at the summary statistics, all domains except Sports had similar means and medians (historical popularity index), which were near 22, while Sports had values near 17. 
 
 #### Simple Linear Regression
 
@@ -322,33 +329,6 @@ panth_mod %>%
 After filtering for the characteristics deemed most impactful on historical popularity score, we see that it does indeed result in very high ranking individuals. The top 5 in this list are all from the top 10 of the original ranking by popularity index.
 
 ## Conclusion
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
