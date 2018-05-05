@@ -38,7 +38,7 @@ panth_mod <- panth_mod %>%
   mutate(rank = 1:nrow(panth_mod))
 
 panth_mod %>%
-  select(rank, full_name, birth_year, historical_popularity_index) %>%
+  select(rank, full_name, occupation, birth_year, historical_popularity_index) %>%
   head(10)
 ```
  
@@ -66,8 +66,8 @@ panth_mod %>%
   coord_flip() +
   labs(title = "Distribution of Average Page Views", y = "Average Page Views", 
        x = "Continent", subtitle = "by Continent")
-
 ```
+
 ```{r outlier_avg_page}
 panth_mod %>%
   group_by(continent) %>%
@@ -134,9 +134,7 @@ The Arts and Institutions have the most historical figures in the dataset, with 
 domain_m <- lm(historical_popularity_index ~ domain, data = panth_mod)
 tidy(domain_m) %>%
   select(term, estimate)
-
 ```
-
 
 Here we estimated the historical popularity index using the `domain` variable using a simple linear regression. The slope for the level in `domain` named `Business & Law` is 0.502, suggesting that historical figures who belong in the `Business & Law` domain have, on average, an increase in their overall popularity index of 0.502 as long as all other variables are held constant.
 
@@ -194,7 +192,6 @@ panth_mod%>%
 ```
 
 For historical figures born after 1920, there are about 4 times as many male historical figures than female figures. This is intriguing because in this 85 year timeframe from 1920 - 2005, we have 1053 historical women out of a total of 1427 women in the entire timeframe. 
-
 
 ```{r new_m_pop_sex}
 m_pop_sex2 <- lm(historical_popularity_index ~ sex , data = panth_mod %>%
@@ -326,13 +323,16 @@ panth_mod %>%
          birth_year < 0,
          sex == "Male",
          domain == "Humanities") %>%
-    select(rank,full_name,historical_popularity_index, occupation)
+    select(rank, full_name, historical_popularity_index, occupation)
 ```
 
 After filtering for the characteristics deemed most impactful on historical popularity score, we see that it does indeed result in very high ranking individuals. The top 5 in this list are all from the top 10 of the original ranking by popularity index.
 
 ## Conclusion
+When we found the data, we thought it would be interesting to analyze what makes a person popular on Wikipedia by MIT’s standards, or rather how the historical figures held up against each other based on MIT’s calculated Historical Popularity index. After thorough analysis that began with visualizing popularity index scores across the world and calculating summary statistics based on the figures’ average page views, we started to find that there were inconsistencies among the historical figures’ popularity scores and their page views. For example, figures with the highest number of average page views across the continents are entertainers with mediocre popularity scores; these are historical figures like Chris Hemsworth, Kim Kardashian, and Lionel Messi. Additionally, the top 10 figures with the highest popularity index scores were all European men who studied the humanities, with the exception of Archimedes, who studied math, and Alexander the Great, who was a military figure. From analyzing the interactions between the variables of this dataset, we have gathered that the world is very possibly more interested in figures who have shaped our society than figures who seek to entertain.To answer our research question, which focused on finding the variables/characteristics that maximized a historical figure’s popularity index score, we created a full model and a selected model, though the selected model, created using the AIC, kept all of the full model’s variables, suggesting that our full model had the strongest predictive power.  We concluded that a man from Europe who studied the humanities and lived before the common era would have the highest popularity score. When we filtered our dataframe for these variables, many of the resulting figures were already in the list of top 10 figures with the highest popularity index scores. 
 
+As for the reliability and validity of the data, we find that because we used an already-calculated score for our main analysis (popularity index), we were subjected to MIT’s calculations of the scores and their interpretations of the variables that went into calculating the historical popularity index variable. To improve our data analysis, we could have used the entire dataframe instead of using a filtered one that removed ~1000 observations. This could have resulted in some greater change in the model results and ultimately changed our entire analysis. 
 
+If we were able to start the project over, we would choose to web scrape our own data in order to have the data we specifically needed to conduct the analyses we wanted to. For example, we wanted to conduct hypothesis testing on our dataset, but came to the realization that our dataframe represented a population rather than a random sample of historical figures, so any of the findings of our test couldn’t be applied to the general population because we already had the population with us. Furthermore, if we had had more time and more knowledge, we would have liked to create an outline of the world map and plot the points of our dataframe onto that outline to get a better visual of the world. Additionally, with more information and some help, we would have liked to continue the project by conducting timeline analyses to observe how the passage of time affected the historical popularity index scores among the different domains. 
 
 

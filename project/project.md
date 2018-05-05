@@ -6,6 +6,8 @@ Duke Squirrels
 Load Packages
 -------------
 
+    ## Warning: running command 'timedatectl' had status 1
+
 Load Data
 ---------
 
@@ -18,19 +20,19 @@ By the end of our data analysis, we aim to derive the perfect combination of var
 
 ### Section 1- Introduction to the Data
 
-    ## # A tibble: 10 x 4
-    ##     rank full_name           birth_year historical_popularity_index
-    ##    <int> <chr>                    <int>                       <dbl>
-    ##  1     1 Aristotle                 -384                        32.0
-    ##  2     2 Plato                     -427                        32.0
-    ##  3     3 Jesus Christ                -4                        31.9
-    ##  4     4 Socrates                  -469                        31.7
-    ##  5     5 Alexander the Great       -356                        31.6
-    ##  6     6 Leonardo da Vinci         1452                        31.5
-    ##  7     7 Julius Caesar             -100                        31.1
-    ##  8     8 Homer                     -800                        31.1
-    ##  9     9 Pythagoras                -570                        31.1
-    ## 10    10 Archimedes                -287                        31.0
+    ## # A tibble: 10 x 5
+    ##     rank full_name           occupation    birth_year historical_populari…
+    ##    <int> <chr>               <chr>              <int>                <dbl>
+    ##  1     1 Aristotle           Philosopher        - 384                 32.0
+    ##  2     2 Plato               Philosopher        - 427                 32.0
+    ##  3     3 Jesus Christ        Religious Fi…      -   4                 31.9
+    ##  4     4 Socrates            Philosopher        - 469                 31.7
+    ##  5     5 Alexander the Great Military Per…      - 356                 31.6
+    ##  6     6 Leonardo da Vinci   Inventor            1452                 31.5
+    ##  7     7 Julius Caesar       Politician         - 100                 31.1
+    ##  8     8 Homer               Writer             - 800                 31.1
+    ##  9     9 Pythagoras          Philosopher        - 570                 31.1
+    ## 10    10 Archimedes          Mathematician      - 287                 31.0
 
 There are 18 variables and 10279 observations (with all NAs removed in the new dataframe). Before removing the NAs, the full dataframe had 11,341 observations.
 
@@ -334,3 +336,9 @@ After filtering for the characteristics deemed most impactful on historical popu
 
 Conclusion
 ----------
+
+When we found the data, we thought it would be interesting to analyze what makes a person popular on Wikipedia by MIT’s standards, or rather how the historical figures held up against each other based on MIT’s calculated Historical Popularity index. After thorough analysis that began with visualizing popularity index scores across the world and calculating summary statistics based on the figures’ average page views, we started to find that there were inconsistencies among the historical figures’ popularity scores and their page views. For example, figures with the highest number of average page views across the continents are entertainers with mediocre popularity scores; these are historical figures like Chris Hemsworth, Kim Kardashian, and Lionel Messi. Additionally, the top 10 figures with the highest popularity index scores were all European men who studied the humanities, with the exception of Archimedes, who studied math, and Alexander the Great, who was a military figure. From analyzing the interactions between the variables of this dataset, we have gathered that the world is very possibly more interested in figures who have shaped our society than figures who seek to entertain.To answer our research question, which focused on finding the variables/characteristics that maximized a historical figure’s popularity index score, we created a full model and a selected model, though the selected model, created using the AIC, kept all of the full model’s variables, suggesting that our full model had the strongest predictive power. We concluded that a man from Europe who studied the humanities and lived before the common era would have the highest popularity score. When we filtered our dataframe for these variables, many of the resulting figures were already in the list of top 10 figures with the highest popularity index scores.
+
+As for the reliability and validity of the data, we find that because we used an already-calculated score for our main analysis (popularity index), we were subjected to MIT’s calculations of the scores and their interpretations of the variables that went into calculating the historical popularity index variable. To improve our data analysis, we could have used the entire dataframe instead of using a filtered one that removed ~1000 observations. This could have resulted in some greater change in the model results and ultimately changed our entire analysis.
+
+If we were able to start the project over, we would choose to web scrape our own data in order to have the data we specifically needed to conduct the analyses we wanted to. For example, we wanted to conduct hypothesis testing on our dataset, but came to the realization that our dataframe represented a population rather than a random sample of historical figures, so any of the findings of our test couldn’t be applied to the general population because we already had the population with us. Furthermore, if we had had more time and more knowledge, we would have liked to create an outline of the world map and plot the points of our dataframe onto that outline to get a better visual of the world. Additionally, with more information and some help, we would have liked to continue the project by conducting timeline analyses to observe how the passage of time affected the historical popularity index scores among the different domains.
