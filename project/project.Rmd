@@ -134,7 +134,9 @@ The Arts and Institutions have the most historical figures in the dataset, with 
 domain_m <- lm(historical_popularity_index ~ domain, data = panth_mod)
 tidy(domain_m) %>%
   select(term, estimate)
+
 ```
+
 
 Here we estimated the historical popularity index using the `domain` variable using a simple linear regression. The slope for the level in `domain` named `Business & Law` is 0.502, suggesting that historical figures who belong in the `Business & Law` domain have, on average, an increase in their overall popularity index of 0.502 as long as all other variables are held constant.
 
@@ -192,6 +194,7 @@ panth_mod%>%
 ```
 
 For historical figures born after 1920, there are about 4 times as many male historical figures than female figures. This is intriguing because in this 85 year timeframe from 1920 - 2005, we have 1053 historical women out of a total of 1427 women in the entire timeframe. 
+
 
 ```{r new_m_pop_sex}
 m_pop_sex2 <- lm(historical_popularity_index ~ sex , data = panth_mod %>%
